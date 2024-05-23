@@ -3,12 +3,12 @@ import React from 'react';
 import useViewModel from './Home.viewmodel';
 
 const Home = () => {
-  useViewModel();
-  return (
-    <View>
-      <Text>Home</Text>
-    </View>
-  );
+    useViewModel();
+    return (
+        <View>
+            <Text>Home</Text>
+        </View>
+    );
 };
 
 export default Home;

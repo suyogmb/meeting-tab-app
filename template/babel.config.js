@@ -1,4 +1,4 @@
 module.exports = {
-  presets: ['module:@react-native/babel-preset', '@babel/preset-env'],
-  plugins: ['transform-remove-console'],
+    presets: ['module:@react-native/babel-preset'],
+    plugins: [['transform-remove-console', {exclude: ['error', 'warn']}]],
 };

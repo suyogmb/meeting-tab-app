@@ -13,22 +13,33 @@ import {store} from './src/redux/store';
 import Toast from 'react-native-toast-message';
 import LanguageProvider from './src/hocs/LanguageProvider';
 import {ThemeProvider} from './src/contexts/ThemeContext';
+import analytics from '@react-native-firebase/analytics';
 
 function App(): React.JSX.Element {
-  useEffect(() => {}, []);
-  return (
-    <>
-      <Provider store={store}>
-        <LanguageProvider>
-          <ThemeProvider>
-            <RootStackNavigator />
-          </ThemeProvider>
-        </LanguageProvider>
-      </Provider>
+    // ...
 
-      <Toast />
-    </>
-  );
+    useEffect(() => {
+        try {
+            (async () => {
+                const appInstanceId = await analytics().getAppInstanceId();
+
+                console.log('APP INSTANTANCE', appInstanceId);
+            })();
+        } catch (error) {}
+    }, []);
+    return (
+        <>
+            <Provider store={store}>
+                <LanguageProvider>
+                    <ThemeProvider>
+                        <RootStackNavigator />
+                    </ThemeProvider>
+                </LanguageProvider>
+            </Provider>
+
+            <Toast />
+        </>
+    );
 }
 
 export default App;

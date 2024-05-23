@@ -5,15 +5,15 @@ import {AUTH_STACK_NAVIGATOR} from './routes';
 import LoginScreen from '../screens/AuthScreens/Login/Login';
 
 const AuthStackNavigator = () => {
-  const Stack = createNativeStackNavigator();
-  return (
-    <Stack.Navigator>
-      <Stack.Screen
-        name={AUTH_STACK_NAVIGATOR.LOGIN_SCREEN}
-        component={LoginScreen}
-      />
-    </Stack.Navigator>
-  );
+    const Stack = createNativeStackNavigator();
+    return (
+        <Stack.Navigator>
+            <Stack.Screen
+                name={AUTH_STACK_NAVIGATOR.LOGIN_SCREEN}
+                component={LoginScreen}
+            />
+        </Stack.Navigator>
+    );
 };
 
 export default AuthStackNavigator;

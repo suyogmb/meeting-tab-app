@@ -1,5 +1,5 @@
 const useViewModel = () => {
-  return {};
+    return {};
 };
 
 export default useViewModel;

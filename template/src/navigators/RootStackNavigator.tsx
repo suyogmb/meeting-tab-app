@@ -5,12 +5,8 @@ import MainStackNavigator from './MainStackNavigator';
 import AuthStackNavigator from './AuthStackNavigator';
 
 const RootStackNavigator = () => {
-  const {isLogin} = useTypedSelector(state => state.appReducer);
+    const {isLogin} = useTypedSelector((state) => state.appReducer);
 
-  return (
-    <NavigationContainer>
-      {isLogin ? <MainStackNavigator /> : <AuthStackNavigator />}
-    </NavigationContainer>
-  );
+    return <NavigationContainer>{isLogin ? <MainStackNavigator /> : <AuthStackNavigator />}</NavigationContainer>;
 };
 export default RootStackNavigator;
