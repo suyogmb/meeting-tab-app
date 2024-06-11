@@ -1,12 +1,31 @@
-import {NavigationContainer} from '@react-navigation/native';
+import {createNavigationContainerRef, NavigationContainer} from '@react-navigation/native';
 import React from 'react';
+import analytics from '@react-native-firebase/analytics';
+import BootSplash from 'react-native-bootsplash';
 import useTypedSelector from '../hooks/useTypedSelector';
 import MainStackNavigator from './MainStackNavigator';
 import AuthStackNavigator from './AuthStackNavigator';
+import ErrorHandler from '../components/ErrorHandler';
+
+const navigationRef = createNavigationContainerRef();
 
 const RootStackNavigator = () => {
-    const {isLogin} = useTypedSelector((state) => state.appReducer);
+    const {accessToken} = useTypedSelector((state) => state.appReducer);
 
-    return <NavigationContainer>{isLogin ? <MainStackNavigator /> : <AuthStackNavigator />}</NavigationContainer>;
+    return (
+        <ErrorHandler>
+            <NavigationContainer
+                ref={navigationRef}
+                onReady={() => BootSplash.hide({fade: true})}
+                onStateChange={async () => {
+                    await analytics().logScreenView({
+                        screen_name: navigationRef.current?.getCurrentRoute()?.name,
+                    });
+                }}
+            >
+                {accessToken ? <MainStackNavigator /> : <AuthStackNavigator />}
+            </NavigationContainer>
+        </ErrorHandler>
+    );
 };
 export default RootStackNavigator;

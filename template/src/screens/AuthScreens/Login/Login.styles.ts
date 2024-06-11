@@ -2,12 +2,12 @@ import {StyleSheet} from 'react-native';
 import {ThemeOptions, useTheme} from '../../../contexts/ThemeContext';
 
 export const useStyles = () => {
-    const {theme, setTheme} = useTheme();
+    const {themeColors} = useTheme();
 
     return StyleSheet.create({
         container: {
             flex: 1,
-            backgroundColor: theme === ThemeOptions.dark ? 'black' : 'white',
+            backgroundColor: themeColors.background,
         },
         logo: {
             height: 60,

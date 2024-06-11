@@ -6,7 +6,7 @@ import HomeTabNavigator from './HomeTabNavigator';
 const MainStackNavigator = () => {
     const Stack = createNativeStackNavigator();
     return (
-        <Stack.Navigator>
+        <Stack.Navigator screenOptions={{headerShown: false}}>
             <Stack.Screen
                 name={MAIN_STACK_NAVIGATOR.HOME_TAB_NAVIGATOR}
                 component={HomeTabNavigator}

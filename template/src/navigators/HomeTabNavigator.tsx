@@ -8,7 +8,7 @@ const HomeTabNavigator = () => {
 
     //TODO: Add screens
     return (
-        <Tab.Navigator>
+        <Tab.Navigator screenOptions={{headerShown: false}}>
             <Tab.Screen
                 name={HOME_TAB_NAVIGATOR.HOME}
                 component={Home}
