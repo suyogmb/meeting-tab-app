@@ -10,22 +10,22 @@ import ErrorHandler from '../components/ErrorHandler';
 const navigationRef = createNavigationContainerRef();
 
 const RootStackNavigator = () => {
-    const {accessToken} = useTypedSelector((state) => state.appReducer);
+  const {accessToken} = useTypedSelector((state) => state.appReducer);
 
-    return (
-        <ErrorHandler>
-            <NavigationContainer
-                ref={navigationRef}
-                onReady={() => BootSplash.hide({fade: true})}
-                onStateChange={async () => {
-                    await analytics().logScreenView({
-                        screen_name: navigationRef.current?.getCurrentRoute()?.name,
-                    });
-                }}
-            >
-                {accessToken ? <MainStackNavigator /> : <AuthStackNavigator />}
-            </NavigationContainer>
-        </ErrorHandler>
-    );
+  return (
+    <ErrorHandler>
+      <NavigationContainer
+        ref={navigationRef}
+        onReady={() => BootSplash.hide({fade: true})}
+        onStateChange={async () => {
+          await analytics().logScreenView({
+            screen_name: navigationRef.current?.getCurrentRoute()?.name,
+          });
+        }}
+      >
+        {accessToken ? <MainStackNavigator /> : <AuthStackNavigator />}
+      </NavigationContainer>
+    </ErrorHandler>
+  );
 };
 export default RootStackNavigator;
