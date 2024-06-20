@@ -2,10 +2,10 @@ import React from 'react';
 import {View, TextInput, Button, TouchableOpacity} from 'react-native';
 import useViewModel from './Login.viewmodel';
 import {useStyles} from './Login.styles';
-import Logo from '../../../assets/logosvg.svg';
-import {useTheme} from '../../../contexts/ThemeContext';
-import {Text} from '../../../components';
+import Logo from 'assets/logosvg.svg';
 import Image from 'components/Image';
+import {useTheme} from 'contexts/ThemeContext';
+import {Text} from 'components';
 
 const themes = ['dark', 'light', 'other'];
 
@@ -32,11 +32,8 @@ const Login = () => {
       </View>
       <View style={{flexDirection: 'row'}}>
         <Image source={require('../../../assets/logo.png')} />
-
-        <Logo
-          height={60}
-          width={60}
-        />
+        {/* SVG EXAMPLE****** */}
+        <Image source={Logo} />
       </View>
       <TextInput
         style={styles.input}

@@ -2,10 +2,10 @@ import {createNavigationContainerRef, NavigationContainer} from '@react-navigati
 import React from 'react';
 import analytics from '@react-native-firebase/analytics';
 import BootSplash from 'react-native-bootsplash';
-import useTypedSelector from '../hooks/useTypedSelector';
 import MainStackNavigator from './MainStackNavigator';
 import AuthStackNavigator from './AuthStackNavigator';
-import ErrorHandler from '../components/ErrorHandler';
+import {ErrorHandler} from 'components';
+import useTypedSelector from 'hooks/useTypedSelector';
 
 const navigationRef = createNavigationContainerRef();
 
