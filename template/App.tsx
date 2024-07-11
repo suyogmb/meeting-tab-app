@@ -16,31 +16,31 @@ import {ThemeProvider} from './src/contexts/ThemeContext';
 import analytics from '@react-native-firebase/analytics';
 
 function App(): React.JSX.Element {
-    // ...
+  // ...
 
-    useEffect(() => {
-        try {
-            (async () => {
-                const appInstanceId = await analytics().getAppInstanceId();
-                await analytics().logAppOpen();
+  useEffect(() => {
+    try {
+      (async () => {
+        const appInstanceId = await analytics().getAppInstanceId();
+        await analytics().logAppOpen();
 
-                console.log('APP INSTANTANCE', appInstanceId);
-            })();
-        } catch (error) {}
-    }, []);
-    return (
-        <>
-            <Provider store={store}>
-                <LanguageProvider>
-                    <ThemeProvider>
-                        <RootStackNavigator />
-                    </ThemeProvider>
-                </LanguageProvider>
-            </Provider>
+        console.log('APP INSTANTANCE', appInstanceId);
+      })();
+    } catch (error) {}
+  }, []);
+  return (
+    <>
+      <Provider store={store}>
+        <LanguageProvider>
+          <ThemeProvider>
+            <RootStackNavigator />
+          </ThemeProvider>
+        </LanguageProvider>
+      </Provider>
 
-            <Toast />
-        </>
-    );
+      <Toast />
+    </>
+  );
 }
 
 export default App;
