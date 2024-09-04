@@ -1,3 +1,5 @@
+import {Dispatch} from 'redux';
+
 enum APP_ACTIONS_TYPES {
   IS_LOGIN = 'IS_LOGIN',
 }
@@ -13,7 +15,7 @@ const getUserProfile = async () => {
 };
 
 const login = () => {
-  return async (dispatch) => {
+  return async (dispatch: Dispatch) => {
     try {
       console.log('DISPATCH');
 

@@ -1,6 +1,7 @@
 import {Text as RNText, StyleSheetProperties, TextStyle} from 'react-native';
 import React from 'react';
 import {useTheme} from '../contexts/ThemeContext';
+import {getTypographyStyle, TypographyStyleEnum} from 'assets/fonts/typography';
 
 interface TextProps {
   style?: StyleSheetProperties;
@@ -11,8 +12,8 @@ const Text = ({children, style}: TextProps) => {
   const {themeColors} = useTheme();
   const defaultStyles: TextStyle = {
     color: themeColors.text,
-    fontFamily: 'Poppins-Regular',
     textTransform: 'capitalize',
+    ...getTypographyStyle(TypographyStyleEnum.BODY),
   };
   return <RNText style={{...defaultStyles, ...style}}>{children}</RNText>;
 };
