@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {ThemeOptions, useTheme} from '../../../contexts/ThemeContext';
+import {useTheme} from '../../../contexts/ThemeContext';
 
 export const useStyles = () => {
   const {themeColors} = useTheme();
