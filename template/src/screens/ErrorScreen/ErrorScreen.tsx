@@ -1,7 +1,7 @@
 import {View, Text} from 'react-native';
 import React from 'react';
 
-const ErrorScreen = ({error}) => {
+const ErrorScreen = () => {
   return (
     <View>
       <Text>ErrorScreen</Text>

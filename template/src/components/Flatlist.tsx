@@ -1,3 +1,4 @@
+import React from 'react';
 import {FlashList} from '@shopify/flash-list';
 
 type FlashListProps = React.ComponentProps<typeof FlashList>;
