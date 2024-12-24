@@ -9,6 +9,11 @@ export default [
   {languageOptions: {globals: globals.browser}},
   {plugins: {'@typescript-eslint': tseslint, import: pluginImport}},
   {
+    env: {
+      node: true, // Enable Node.js global variables and scoping
+    },
+  },
+  {
     rules: {
       'no-unused-vars': 'warn',
       'no-undef': 'warn',
