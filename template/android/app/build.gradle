@@ -3,6 +3,8 @@ apply plugin: "org.jetbrains.kotlin.android"
 apply plugin: "com.facebook.react"
 apply plugin: "com.google.gms.google-services"
 apply plugin: 'com.google.firebase.crashlytics'
+apply plugin: 'newrelic'
+
 
 project.ext.envConfigFiles = [
    productiondebug: ".env.production",
