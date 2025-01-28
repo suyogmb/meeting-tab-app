@@ -1,12 +1,6 @@
 import React from 'react';
 import {useTranslation} from 'react-i18next';
-import {
-  View,
-  StyleSheet,
-  ActivityIndicator,
-  Text,
-  ColorValue,
-} from 'react-native';
+import {View, StyleSheet, ActivityIndicator, Text, ColorValue} from 'react-native';
 
 type Props = {
   size: 'small' | 'large';
@@ -17,7 +11,10 @@ const Loader = ({size, color}: Props) => {
   const {t} = useTranslation();
   return (
     <View style={styles.loaderContainer}>
-      <ActivityIndicator size={size} color={color} />
+      <ActivityIndicator
+        size={size}
+        color={color}
+      />
       <Text style={styles.loaderTextStyle}>{t('loading.title')}</Text>
     </View>
   );

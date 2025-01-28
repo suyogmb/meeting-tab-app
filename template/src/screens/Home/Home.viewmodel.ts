@@ -2,12 +2,13 @@ import newRelic from "newrelic-react-native-agent";
 
 const useViewModel = () => {
 
+
     const onRecordBreadCrumbsClick = () => {
         newRelic.recordBreadcrumb("shoe", {"shoeColor": "blue","shoesize": 9,"shoeLaces": true});
         newRelic.recordBreadcrumb("UserLogin", {"userId": 12345, "username": "john_doe", "loginMethod": "email"});
     }
 
-    const startInteraction = async () => {
+    const startInteraction = async () => { 
         //In this example We are trying to show the badApiLoad
         console.log("Inside start Interactions")
         const interactionId = await newRelic.startInteraction('StartLoadBadApiCall');
@@ -102,6 +103,7 @@ const getSessionId =async()=>{
 }
 
     return {onRecordBreadCrumbsClick, startInteraction, stopInteraction, recordCustomMetrics, recordCustomErrors, tractHTTPRequest, trackFailingHTTPTransactions, shutDownAgent, testCrash, recordCustomAttribute,recordIncrementSessionAttribute, recordCustomEvents, getSessionId};
+
 };
 
 export default useViewModel;

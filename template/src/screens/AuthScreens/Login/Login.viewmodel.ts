@@ -4,14 +4,15 @@ import newRelic from 'newrelic-react-native-agent';
 import {useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {useDispatch} from 'react-redux';
-import {login} from 'redux/actions';
+import {useStyles} from './Login.styles';
 
 const useViewModel = () => {
   const [username, setUsername] = useState<string>('jayesh');
   const [password, setPassword] = useState<string>('');
-
-  const {t} = useTranslation();
   const navigation = useNavigation();
+
+  const styles = useStyles();
+  const {t} = useTranslation();
   const dispatch = useDispatch();
 
   const onSubmit = async () => {
@@ -26,7 +27,7 @@ const useViewModel = () => {
       console.log('ERR', error);
     }
   };
-  return {username, password, setUsername, setPassword, onSubmit, t};
+  return {username, password, setUsername, setPassword, onSubmit, styles, t};
 };
 
 export default useViewModel;
