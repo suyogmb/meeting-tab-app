@@ -1,7 +1,7 @@
 import {Text as RNText, StyleSheetProperties, TextStyle} from 'react-native';
 import React from 'react';
 import {useTheme} from '../contexts/ThemeContext';
-import {getTypographyStyle, TypographyStyleEnum} from 'utils/Typography';
+import {getTypographyStyle, TypographyStyleEnum} from '../utils/Typography';
 
 interface TextProps {
   style?: StyleSheetProperties;
