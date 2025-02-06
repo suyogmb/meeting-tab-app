@@ -1693,7 +1693,7 @@ PODS:
     - React-logger (= 0.77.0)
     - React-perflogger (= 0.77.0)
     - React-utils (= 0.77.0)
-  - RNBootSplash (5.5.3):
+  - RNBootSplash (6.3.3):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -2167,7 +2167,7 @@ SPEC CHECKSUMS:
   ReactAppDependencyProvider: 3d947e9d62f351c06c71497e1be897e6006dc303
   ReactCodegen: e92a1659b32705bd8ee0d2ba016d6993a4ade05b
   ReactCommon: a02340b2a1a76f3703298a4680bb03277ca87440
-  RNBootSplash: a1975a1c3ddec9439bbe718961fc2aca0224d918
+  RNBootSplash: 02e47bb315b0a99e67866fcdbed05234817bbfc8
   RNFBAnalytics: 3f336502732e51de9f5a5be8b5e3df879bf2eca7
   RNFBApp: 9acbe359ef3559d6f8ca5c350db471f2b352f98a
   RNFBCrashlytics: a4a66785997e629313ec8005a0811765738239fd
@@ -2176,7 +2176,7 @@ SPEC CHECKSUMS:
   RNScreens: 6a595af73186eb6b85dfd82ded47d67989ae14b5
   RNSVG: dc2927c9dc1b5aa514b92f72fa7c511d5fc12a2a
   SocketRocket: d4aabe649be1e368d1318fdf28a022d714d65748
-  Yoga: a02547b38d23cb589dc29e25554b1dc3724c2d6b
+  Yoga: 93a4c16be50e6f29a7ef8e2b19505d7857c651fb
 
 PODFILE CHECKSUM: 262af8da8c9355d69632247819fab3867da55fa2
 
