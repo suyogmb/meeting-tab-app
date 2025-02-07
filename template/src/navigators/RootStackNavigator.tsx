@@ -10,7 +10,7 @@ import useTypedSelector from 'hooks/useTypedSelector';
 const navigationRef = createNavigationContainerRef();
 
 const RootStackNavigator = () => {
-  const {accessToken} = useTypedSelector((state) => state.appReducer);
+  const {accessToken} = useTypedSelector((state) => state.app);
 
   return (
     <ErrorHandler>
