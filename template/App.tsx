@@ -22,8 +22,7 @@ function App(): React.JSX.Element {
     try {
       (async () => {
         const appInstanceId = await analytics().getAppInstanceId();
-        await analytics().logAppOpen();
-
+        await analytics().logEvent('app_open');
         console.log('APP INSTANTANCE', appInstanceId);
       })();
     } catch (error) {}
