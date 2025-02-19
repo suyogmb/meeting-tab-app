@@ -1,6 +1,6 @@
 import {useTheme} from 'contexts/ThemeContext';
 import React from 'react';
-import {TextInput, KeyboardTypeOptions, TextInputProps as RNTextInputProps, View, StyleSheet} from 'react-native';
+import {TextInput, KeyboardTypeOptions, View, StyleSheet} from 'react-native';
 import Text from './Text';
 import {getTypographyStyle, TypographyStyleEnum} from '../utils/Typography';
 
@@ -11,7 +11,7 @@ interface TextInputProps {
   keyboardType?: KeyboardTypeOptions;
   autoCapitalize?: 'none';
   secureTextEntry?: boolean;
-  style?: RNTextInputProps['style'];
+  style?: {};
   isError?: boolean;
   errorMsg?: string;
 }
@@ -32,7 +32,7 @@ const TextInputComponent = ({
   return (
     <View style={styles.container}>
       <TextInput
-        style={{color: themeColors.inputValue, ...style}}
+        style={{...style, color: themeColors.inputValue}}
         placeholder={placeholder}
         onChangeText={onChangeText}
         value={value}

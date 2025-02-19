@@ -5,6 +5,14 @@ import {useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {useStyles} from './Login.styles';
 import {isEmptyOrNull, isValidEmail, isValidPassword} from '../../../utils/ValidationUtils';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+
+type AuthStackParamList = {
+  HOME: undefined;
+  HOME_DETAILS: {data?: object};
+};
+
+type NavigationProp = NativeStackNavigationProp<AuthStackParamList, 'HOME'>;
 
 const useViewModel = () => {
   const [username, setUsername] = useState<string>('');
@@ -14,17 +22,17 @@ const useViewModel = () => {
   const [usernameErrorMsg, setUsernameErrorMsg] = useState<string>('');
   const [passwordErrorMsg, setPasswordErrorMsg] = useState<string>('');
 
-  const navigation = useNavigation();
+  const navigation = useNavigation<NavigationProp>();
 
   const styles = useStyles();
   const {t} = useTranslation();
 
   const onSubmit = async () => {
     try {
-      newRelic.recordCustomEvent('LoginAttempt', {
+      newRelic.recordCustomEvent('LoginAttempt', 'EventName', {
         username,
         timestamp: new Date().toISOString(),
-      });
+      } as unknown as Map<string, any>);
       if (isEmptyOrNull(username)) {
         setIsUsernameSet(true);
         setUsernameErrorMsg('Email is required.');
@@ -43,8 +51,8 @@ const useViewModel = () => {
       }
 
       if (!isValidPassword(password, 6)) {
-        setIsUsernameSet(true);
-        setPasswordErrorMsg('Password must be at least 8 characters.');
+        setIsPasswordSet(true);
+        setPasswordErrorMsg('Password must be at least 6 characters.');
         return;
       }
       navigation.navigate(AUTH_STACK_NAVIGATOR.HOME);

@@ -14,7 +14,8 @@ export const useStyles = () => {
       alignContent: 'center',
       alignItems: 'center',
       alignSelf: 'center',
-      marginTop: 100,
+      marginTop: 200,
+      marginBottom: 40,
     },
     title: {
       fontSize: 24,
@@ -25,7 +26,7 @@ export const useStyles = () => {
       height: 40,
       borderColor: 'gray',
       borderWidth: 1,
-      marginBottom: 12,
+      marginBottom: 20,
       paddingHorizontal: 10,
       width: '100%',
       marginVertical: 16,
@@ -38,8 +39,8 @@ export const useStyles = () => {
     safeArea: {
       flex: 1,
     },
-    btnStyle:{
-      marginTop:16
-    }
+    btnStyle: {
+      marginTop: 40,
+    },
   });
 };

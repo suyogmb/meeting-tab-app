@@ -12,6 +12,7 @@ import {AppDispatch} from 'redux/app/store';
 
 // Mock dependencies
 jest.mock('react-redux', () => ({
+  ...jest.requireActual('react-redux'),
   useDispatch: jest.fn(),
 }));
 jest.mock('hooks/useTypedSelector', () => jest.fn());
@@ -35,7 +36,7 @@ describe('Home Screen', () => {
     jest.clearAllMocks();
     // Mock Redux dispatch
     mockDispatch = jest.fn();
-    (useDispatch as jest.Mock).mockReturnValue(mockDispatch as AppDispatch);
+    (useDispatch as unknown as jest.Mock).mockReturnValue(mockDispatch as AppDispatch);
 
     // Mock navigation
     mockNavigation = {navigate: jest.fn()} as any;

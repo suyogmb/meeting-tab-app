@@ -73,7 +73,7 @@ const Home = () => {
         value={isEnabled}
         onValueChange={(newVal) => toggleSwitch(newVal)}
         trackColor={{false: themeColors.primary[50], true: themeColors.primary[10]}}
-        thumbColor={isEnabled ? themeColors.primary[90] : themeColors.secondary}
+        thumbColor={isEnabled ? themeColors.primary[90] : themeColors.primary[50]}
       />
     );
   };

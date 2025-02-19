@@ -39,6 +39,7 @@ export const useStyles = () => {
     },
     listMain: {
       margin: 16,
+      marginTop: 40,
     },
     detailsPageImage: {
       width: '100%',

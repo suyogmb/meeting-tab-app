@@ -1,6 +1,7 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import {Endpoints} from '../../../networkConfig/Endpoints';
 import HTTPService from '../../../networkConfig/HttpServices';
+import {ThunkActions} from '../../../redux/constants';
 
 export interface Movie {
   name?: string;
@@ -16,26 +17,24 @@ const initialState: DashboardState = {
   movieData: [],
 };
 
-// Define the expected response type
-interface DashboardResponse {
-  name?: string;
-  imageurl?: string;
-  publisher?: string;
-}
-
 // Define the error response type
 interface ErrorResponse {
-  message: string;
+  message?: string;
 }
 
 export const getMoviesData = createAsyncThunk<
-  DashboardResponse, // Success response type
+  Movie[], // Success response type
   void, // Argument type (none in this case)
   {rejectValue: ErrorResponse} // Rejected response type
->('home/dashboard', async (_, {dispatch, rejectWithValue, fulfillWithValue}) => {
+>(ThunkActions.GET_MOVIES, async (_, {rejectWithValue, fulfillWithValue}) => {
   try {
     const response = await HTTPService.get(Endpoints.Movies);
-    return fulfillWithValue(response);
+    // Ensure response is an array before using fulfillWithValue
+    if (Array.isArray(response)) {
+      return fulfillWithValue(response) as unknown as Movie[];
+    } else {
+      return fulfillWithValue([response]) as unknown as Movie[]; // Wrap single object in an array
+    }
   } catch (error: any) {
     return rejectWithValue({message: error.message || 'Something went wrong'});
   }

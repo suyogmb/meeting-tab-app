@@ -1,5 +1,14 @@
-import axios, {AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse} from 'axios';
+import axios, {
+  AxiosError,
+  AxiosInstance,
+  AxiosRequestConfig,
+  AxiosResponse,
+  InternalAxiosRequestConfig,
+  Method,
+} from 'axios';
 import {getItem, storeItem} from '../utils/AsyncStorage';
+import {ERROR_CODES, TOAST_TYPE} from '../utils/Constants';
+import Toast from 'react-native-toast-message';
 const AUTHORIZATION = 'Authorization';
 
 interface ApiResponse<T = any> {
@@ -31,27 +40,30 @@ const processQueue = (error: any, token: string | null = null) => {
 };
 
 // Attach the access token to requests
-axiosInstance.interceptors.request.use(async (config: AxiosRequestConfig) => {
+axiosInstance.interceptors.request.use(async (config: InternalAxiosRequestConfig) => {
   const token = await getItem('token'); // Retrieve token from storage
   if (token) {
-    config.headers![AUTHORIZATION] = `Bearer ${token}`;
+    config.headers.Authorization = `Bearer ${token}`;
   }
   return config;
 });
+
+// Extend InternalAxiosRequestConfig to include _retry
+interface CustomAxiosRequestConfig extends InternalAxiosRequestConfig {
+  _retry?: boolean;
+}
 
 // Handle response errors
 axiosInstance.interceptors.response.use(
   (response: AxiosResponse<ApiResponse>) => response,
   async (error: AxiosError) => {
-    const originalRequest = error.config!;
+    const originalRequest = error.config as CustomAxiosRequestConfig;
 
     if (error.response) {
       const {status} = error.response;
 
-      if (status === 401) {
+      if (status === ERROR_CODES.UNAUTHORIZED) {
         if (!originalRequest._retry) {
-          originalRequest._retry = true;
-
           if (!isRefreshing) {
             isRefreshing = true;
             try {
@@ -78,10 +90,13 @@ axiosInstance.interceptors.response.use(
             })
             .catch((err) => Promise.reject(err));
         }
-      } else if (status === 403) {
+      } else if (status === ERROR_CODES.FORBIDDEN) {
         logoutUser();
-      } else if (status === 500) {
-        console.error('Server error. Please try again later.');
+      } else if (status === ERROR_CODES.INTERNAL_SERVER_ERROR) {
+        Toast.show({
+          type: TOAST_TYPE.ERROR,
+          text1: 'Server error. Please try again later.',
+        });
       }
     }
 
@@ -111,49 +126,61 @@ function logoutUser() {
 }
 
 export default class HTTPService {
-  static async get<T>(url: string, params?: Record<string, any>): Promise<ApiResponse<T>> {
+  private static async request<T>(
+    method: Method,
+    url: string,
+    body?: any,
+    params?: Record<string, any>,
+    config?: AxiosRequestConfig,
+  ): Promise<ApiResponse<T>> {
     try {
-      const response = await axiosInstance.get<ApiResponse<T>>(url, {params});
-      return response?.data;
+      const response = await axiosInstance.request<ApiResponse<T>>({
+        method,
+        url,
+        data: body,
+        params,
+        ...config,
+      });
+
+      return response.data;
     } catch (error) {
-      throw handleError(error);
+      throw this.handleError(error);
     }
+  }
+
+  // Unified error handler
+  private static handleError(error: any): Error {
+    if (axios.isAxiosError(error)) {
+      const message = error.response?.data?.message || error.message;
+      console.error('API Error:', message);
+      return new Error(message);
+    }
+    return new Error('Something went wrong');
+  }
+
+  static async get<T>(url: string, params?: Record<string, any>): Promise<ApiResponse<T>> {
+    return this.request<T>('get', url, undefined, params);
   }
 
   static async post<T>(url: string, body?: any): Promise<ApiResponse<T>> {
-    try {
-      const response = await axiosInstance.post<ApiResponse<T>>(url, body);
-      return response.data;
-    } catch (error) {
-      throw handleError(error);
-    }
+    return this.request<T>('post', url, body);
   }
 
   static async put<T>(url: string, body?: any): Promise<ApiResponse<T>> {
-    try {
-      const response = await axiosInstance.put<ApiResponse<T>>(url, body);
-      return response.data;
-    } catch (error) {
-      throw handleError(error);
-    }
+    return this.request<T>('put', url, body);
   }
 
   static async delete<T>(url: string, body?: any): Promise<ApiResponse<T>> {
-    try {
-      const response = await axiosInstance.delete<ApiResponse<T>>(url, {data: body});
-      return response.data;
-    } catch (error) {
-      throw handleError(error);
-    }
+    return this.request<T>('delete', url, body);
   }
 }
 
-// Unified error handler
-function handleError(error: any): Error {
-  if (axios.isAxiosError(error)) {
-    const message = error.response?.data?.message || error.message;
-    console.error('API Error:', message);
-    return new Error(message);
-  }
-  return new Error('Something went wrong');
-}
+// // Unified error handler
+// function handleError(error: any): Error {
+//   if (axios.isAxiosError(error)) {
+//     const message = error.response?.data?.message || error.message;
+//     console.error('API Error:', message);
+//     return new Error(message);
+//   }
+//   return new Error('Something went wrong');
+// }

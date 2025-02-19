@@ -8,7 +8,7 @@ interface HeaderProps {
   title: string;
   showBackButton?: boolean;
   onBackPress?: () => void;
-  rightComponent?: React.ReactNode; // Custom right-side component (e.g., button, icon)
+  rightComponent?: React.ReactNode;
 }
 
 const Header = ({title = 'Header', showBackButton = true, onBackPress, rightComponent}: HeaderProps) => {
@@ -16,15 +16,21 @@ const Header = ({title = 'Header', showBackButton = true, onBackPress, rightComp
   const {themeColors} = useTheme();
 
   return (
-    <View style={styles.container}>
+    <View
+      style={{
+        ...styles.container,
+        backgroundColor: themeColors.headerBackground,
+        borderBottomColor: themeColors.borderBottomColor,
+      }}
+    >
       {/* Left - Back Button */}
       {showBackButton ? (
         <TouchableOpacity
           onPress={onBackPress || (() => navigation.goBack())}
-          style={{...styles.iconButton}}
+          style={styles.iconButton}
         >
           <Image
-            style={{...styles.icon, tintColor: themeColors.text}}
+            style={[styles.icon, {tintColor: themeColors.text}]}
             source={require('../assets/back.png')}
             resizeMode="contain"
           />
@@ -49,6 +55,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+    borderBottomWidth: 1,
+    shadowColor: '#000',
+    shadowOffset: {width: 0, height: 2},
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3, // Shadow for Android
   },
   iconButton: {
     padding: 8,
@@ -56,13 +70,15 @@ const styles = StyleSheet.create({
   title: {
     textAlign: 'center',
     flex: 1,
+    fontSize: 18,
+    fontWeight: '600',
   },
   placeholder: {
     width: 30,
   },
   icon: {
-    height: 30,
-    width: 30,
+    height: 24,
+    width: 24,
   },
 });
 
