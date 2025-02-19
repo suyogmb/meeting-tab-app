@@ -7,10 +7,12 @@ import React from 'react';
 import App from '../App';
 
 // Note: import explicitly to use the types shipped with jest.
-import {test,it} from '@jest/globals';
+import {test} from '@jest/globals';
 
-import {render} from '@testing-library/react-native';
+import {render, waitFor} from '@testing-library/react-native';
 
-it('renders correctly', () => {
-  render(<App />);
+test('renders correctly', async () => {
+  await waitFor(async () => {
+    render(<App />);
+  });
 });

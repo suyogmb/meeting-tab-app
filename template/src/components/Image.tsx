@@ -10,7 +10,7 @@ const Image = ({source: Source, style, ...props}: CustomImageProps) => {
     return (
       <RNImage
         {...props}
-        source={{uri: Source.toString()}}
+        source={Source}
         style={style}
       />
     );

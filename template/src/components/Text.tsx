@@ -4,8 +4,8 @@ import {useTheme} from '../contexts/ThemeContext';
 import {getTypographyStyle, TypographyStyleEnum} from '../utils/Typography';
 
 interface TextProps {
-  style?: StyleSheetProperties;
-  children: React.JSX.Element;
+  style?: TextStyle;
+  children: React.ReactNode;
 }
 
 const Text = ({children, style}: TextProps) => {

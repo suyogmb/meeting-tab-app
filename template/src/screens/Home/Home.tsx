@@ -1,184 +1,101 @@
-import {View, Text, TouchableOpacity, ScrollView} from 'react-native';
-import React from 'react';
+import {
+  StatusBar,
+  View,
+  SafeAreaView,
+  Text,
+  FlatList,
+  ListRenderItem,
+  Image,
+  TouchableOpacity,
+  Switch,
+} from 'react-native';
+import React, {useEffect} from 'react';
+import {useDispatch} from 'react-redux';
+import {getMoviesData} from '../../redux/reducer/DashboardSlice';
+import useTypedSelector from 'hooks/useTypedSelector';
 import useViewModel from './Home.viewmodel';
-import ReusableButton from 'components/ReusableButton';
+import {AppDispatch} from '../../redux/app/store';
+import {getTypographyStyle, TypographyStyleEnum} from '../../utils/Typography';
+import {Header} from 'components';
+import {useNavigation} from '@react-navigation/native';
+import {AUTH_STACK_NAVIGATOR} from 'navigators/routes';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {useTheme} from '../../contexts/ThemeContext';
+type AuthStackParamList = {
+  HOME: undefined;
+  HOME_DETAILS: {data: object}; // Expecting data to be an object
+};
 
 const Home = () => {
-  const {onRecordBreadCrumbsClick, startInteraction, stopInteraction, recordCustomMetrics, recordCustomErrors, tractHTTPRequest,trackFailingHTTPTransactions, shutDownAgent, testCrash, recordCustomAttribute, recordIncrementSessionAttribute, recordCustomEvents, getSessionId} =  useViewModel();
+  const {styles, t, isEnabled, toggleSwitch} = useViewModel();
+  const {movieData} = useTypedSelector((state) => state.dashboard);
+  const dispatch = useDispatch<AppDispatch>();
+  const navigation = useNavigation<NativeStackNavigationProp<AuthStackParamList>>();
+  const {themeColors} = useTheme();
+
+  useEffect(() => {
+    dispatch(getMoviesData());
+  }, []);
+
+  const onPressItem = (item: object) => {
+    navigation.navigate(AUTH_STACK_NAVIGATOR.HOME_DETAILS, {data: item});
+  };
+
+  const renderItem: ListRenderItem<any> = ({item}) => {
     return (
-        <ScrollView>
-            <Text style={{color: 'black', fontWeight: "500", marginHorizontal: 30,fontSize: 16,marginTop: 20,}}>Record BreadCrumbs</Text>
-            <ReusableButton
-                title="Record Breadcrumbs"
-                style={{                    
-                backgroundColor: '#58c6fd',
-                marginTop: 10,
-                marginHorizontal: 30,
-                borderRadius: 25,
-                
-                }}
-                textStyle={{ fontSize: 20, fontWeight: '600' }}
-                onPress={() => onRecordBreadCrumbsClick()}
-            />
-
-            <Text style={{color: 'black', fontWeight: "500", marginHorizontal: 30,fontSize: 16,marginTop: 20,}}>Track a method as an interaction</Text>
-            <ReusableButton
-                title="Start Interactions"
-                style={{                    
-                backgroundColor: '#58c6fd',
-                marginTop: 10,
-                marginHorizontal: 30,
-                borderRadius: 25,
-                
-                }}
-                textStyle={{ fontSize: 20, fontWeight: '600' }}
-                onPress={() => startInteraction()}
-            />
-            <ReusableButton
-                title="Stop Interactions"
-                style={{                    
-                backgroundColor: '#58c6fd',
-                marginTop: 10,
-                marginHorizontal: 30,
-                borderRadius: 25,
-                
-                }}
-                textStyle={{ fontSize: 20, fontWeight: '600' }}
-                onPress={() => stopInteraction()}
-            />
-
-            <Text style={{color: 'black', fontWeight: "500", marginHorizontal: 30,fontSize: 16,marginTop: 20,}}>Record custom metrics</Text>
-            <ReusableButton
-                title="Record custom Metrics"
-                style={{                    
-                backgroundColor: '#58c6fd',
-                marginTop: 10,
-                marginHorizontal: 30,
-                borderRadius: 25,
-                
-                }}
-                textStyle={{ fontSize: 20, fontWeight: '600' }}
-                onPress={() => recordCustomMetrics()}
-            />
-
-            <Text style={{color: 'black', fontWeight: "500", marginHorizontal: 30,fontSize: 16,marginTop: 20,}}>Record custom Errors</Text>
-            <ReusableButton
-                title="Record custom Errors"
-                style={{                    
-                backgroundColor: '#58c6fd',
-                marginTop: 10,
-                marginHorizontal: 30,
-                borderRadius: 25,
-                
-                }}
-                textStyle={{ fontSize: 20, fontWeight: '600' }}
-                onPress={() => recordCustomErrors()}
-            />
-
-            <Text style={{color: 'black', fontWeight: "500", marginHorizontal: 30,fontSize: 16,marginTop: 20,}}>Track custom network requests and failures.</Text>
-            <ReusableButton
-                title="Track Http Request"
-                style={{                    
-                backgroundColor: '#58c6fd',
-                marginTop: 10,
-                marginHorizontal: 30,
-                borderRadius: 25,
-                
-                }}
-                textStyle={{ fontSize: 20, fontWeight: '600' }}
-                onPress={() => tractHTTPRequest()}
-            />
-            <ReusableButton
-                title="Track Failing Http Transactions"
-                style={{                    
-                backgroundColor: '#58c6fd',
-                marginTop: 10,
-                marginHorizontal: 30,
-                borderRadius: 25,
-                
-                }}
-                textStyle={{ fontSize: 20, fontWeight: '600' }}
-                onPress={() => trackFailingHTTPTransactions()}
-            />
-
-            <Text style={{color: 'black', fontWeight: "500", marginHorizontal: 30,fontSize: 16,marginTop: 20,}}>Shutdown The Agent</Text>
-            <ReusableButton
-                title="Shutdown the Agent"
-                style={{                    
-                backgroundColor: '#58c6fd',
-                marginTop: 10,
-                marginHorizontal: 30,
-                borderRadius: 25,
-                
-                }}
-                textStyle={{ fontSize: 20, fontWeight: '600' }}
-                onPress={() => shutDownAgent()}
-            />  
-            <Text style={{color: 'black', fontWeight: "500", marginHorizontal: 30,fontSize: 16,marginTop: 20,}}>Test Crash Reporting</Text>
-            <ReusableButton
-                title="Test Crash Reporting "
-                style={{                    
-                backgroundColor: '#58c6fd',
-                marginTop: 10,
-                marginHorizontal: 30,
-                borderRadius: 25,
-                
-                }}
-                textStyle={{ fontSize: 20, fontWeight: '600' }}
-                onPress={() => testCrash()}
-            />  
-
-            <Text style={{color: 'black', fontWeight: "500", marginHorizontal: 30,fontSize: 16,marginTop: 20,}}>Record custom attributes and events.</Text>
-            <ReusableButton
-                title="Record Custom Attributes"
-                style={{                    
-                backgroundColor: '#58c6fd',
-                marginTop: 10,
-                marginHorizontal: 30,
-                borderRadius: 25,
-                
-                }}
-                textStyle={{ fontSize: 20, fontWeight: '600' }}
-                onPress={() => recordCustomAttribute()}
-            />  
-            <ReusableButton
-                title="Increment Session Count Attribute"
-                style={{                    
-                backgroundColor: '#58c6fd',
-                marginTop: 10,
-                marginHorizontal: 30,
-                borderRadius: 25,
-                
-                }}
-                textStyle={{ fontSize: 20, fontWeight: '600' }}
-                onPress={() => recordIncrementSessionAttribute()}
-            />  
-            <ReusableButton
-                title="Record Custom Event"
-                style={{                    
-                backgroundColor: '#58c6fd',
-                marginTop: 10,
-                marginHorizontal: 30,
-                borderRadius: 25,
-                
-                }}
-                textStyle={{ fontSize: 20, fontWeight: '600' }}
-                onPress={() => recordCustomEvents()}
-            /> 
-            <ReusableButton
-                title="Get Current Session Id"
-                style={{                    
-                backgroundColor: '#58c6fd',
-                marginTop: 10,
-                marginHorizontal: 30,
-                borderRadius: 25,
-                
-                }}
-                textStyle={{ fontSize: 20, fontWeight: '600' }}
-                onPress={() => getSessionId()}
-            />
-        </ScrollView>
+      <TouchableOpacity
+        style={styles.listView}
+        onPress={() => onPressItem(item)}
+      >
+        <Image
+          source={{uri: item?.imageurl}}
+          style={styles.image}
+          resizeMode="cover"
+        />
+        <View>
+          <Text style={{...styles.subText, ...getTypographyStyle(TypographyStyleEnum.LABEL)}}>{item.name}</Text>
+          <Text style={{...styles.subText, ...getTypographyStyle(TypographyStyleEnum.LABEL)}}>{item.publisher}</Text>
+          <Text style={{...styles.subText, ...getTypographyStyle(TypographyStyleEnum.LABEL)}}>
+            {item.firstappearance}
+          </Text>
+        </View>
+      </TouchableOpacity>
     );
+  };
+
+  const flatListItemSeparator = () => {
+    return <View style={styles.dashboardFlatListSeparator} />;
+  };
+
+  const RenderRightComp = () => {
+    return (
+      <Switch
+        value={isEnabled}
+        onValueChange={(newVal) => toggleSwitch(newVal)}
+        trackColor={{false: themeColors.primary[50], true: themeColors.primary[10]}}
+        thumbColor={isEnabled ? themeColors.primary[90] : themeColors.secondary}
+      />
+    );
+  };
+
+  return (
+    <View style={styles.container}>
+      <SafeAreaView style={styles.safeView}>
+        <Header
+          title={t('dashboard.list.title')}
+          rightComponent={<RenderRightComp />}
+        />
+        <StatusBar />
+        <FlatList
+          data={movieData ?? []}
+          renderItem={renderItem}
+          keyExtractor={(item, index) => index.toString()}
+          ItemSeparatorComponent={flatListItemSeparator}
+          style={styles.listMain}
+        />
+      </SafeAreaView>
+    </View>
+  );
 };
 
 export default Home;

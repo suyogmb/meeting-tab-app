@@ -16,7 +16,6 @@ import {ThemeProvider} from './src/contexts/ThemeContext';
 import analytics from '@react-native-firebase/analytics';
 
 function App(): React.JSX.Element {
-  // ...
 
   useEffect(() => {
     try {

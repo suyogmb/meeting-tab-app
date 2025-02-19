@@ -2,6 +2,7 @@ import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {AUTH_STACK_NAVIGATOR} from './routes';
 import {Login, Home} from 'screens';
+import DetailsScreen from 'screens/Home/DetailScreen';
 
 const AuthStackNavigator = () => {
   const Stack = createNativeStackNavigator();
@@ -18,6 +19,13 @@ const AuthStackNavigator = () => {
       <Stack.Screen
         name={AUTH_STACK_NAVIGATOR.HOME}
         component={Home}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name={AUTH_STACK_NAVIGATOR.HOME_DETAILS}
+        component={DetailsScreen}
         options={{
           headerShown: false,
         }}
