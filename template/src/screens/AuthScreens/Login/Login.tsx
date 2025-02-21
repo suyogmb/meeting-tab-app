@@ -1,38 +1,58 @@
 import React from 'react';
-import {View, TextInput, Button} from 'react-native';
+import {SafeAreaView, View} from 'react-native';
 import useViewModel from './Login.viewmodel';
-import Logo from 'assets/logosvg.svg';
 import Image from 'components/Image';
+import ReusableButton from 'components/ReusableButton';
+import TextInputComponent from 'components/TextInput';
 
 const Login = () => {
-  const {username, password, setPassword, setUsername, onSubmit, styles, t} = useViewModel();
+  const {
+    username,
+    password,
+    isPasswordSet,
+    isUsernameSet,
+    usernameErrorMsg,
+    passwordErrorMsg,
+    handleUserNameChange,
+    handlePasswordChange,
+    onSubmit,
+    styles,
+    t,
+  } = useViewModel();
 
   return (
     <View style={styles.container}>
-      <View style={{flexDirection: 'row'}}>
-        <Image source={require('../../../assets/logo.png')} />
-        {/* SVG EXAMPLE****** */}
-        <Image source={Logo} />
-      </View>
-      <TextInput
-        style={styles.input}
-        placeholder={t('login.input.email.placeholder')}
-        value={username}
-        onChangeText={setUsername}
-        keyboardType="email-address"
-        autoCapitalize="none"
-      />
-      <TextInput
-        style={styles.input}
-        placeholder={t('login.input.password.placeholder')}
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry
-      />
-      <Button
-        title={t('login.button.title')}
-        onPress={onSubmit}
-      />
+      <SafeAreaView style={styles.safeArea}>
+        <View style={styles.logo}>
+          <Image source={require('../../../assets/logo.png')} />
+        </View>
+        <View style={styles.subContainer}>
+          <TextInputComponent
+            style={styles.input}
+            placeholder={t('login.input.email.placeholder')}
+            value={username}
+            onChangeText={handleUserNameChange}
+            keyboardType="email-address"
+            autoCapitalize="none"
+            isError={isUsernameSet}
+            errorMsg={usernameErrorMsg}
+          />
+          <TextInputComponent
+            style={styles.input}
+            placeholder={t('login.input.password.placeholder')}
+            value={password}
+            onChangeText={handlePasswordChange}
+            secureTextEntry
+            isError={isPasswordSet}
+            errorMsg={passwordErrorMsg}
+          />
+          <ReusableButton
+            title={t('login.button.title')}
+            onPress={onSubmit}
+            style={styles.btnStyle}
+          />
+        </View>
+      </SafeAreaView>
     </View>
   );
 };

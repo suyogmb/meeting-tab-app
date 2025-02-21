@@ -7,12 +7,15 @@ export const useStyles = () => {
   return StyleSheet.create({
     container: {
       flex: 1,
-      justifyContent: 'center',
       backgroundColor: themeColors.background,
     },
     logo: {
-      height: 60,
-      width: 60,
+      flexDirection: 'row',
+      alignContent: 'center',
+      alignItems: 'center',
+      alignSelf: 'center',
+      marginTop: 200,
+      marginBottom: 40,
     },
     title: {
       fontSize: 24,
@@ -23,8 +26,21 @@ export const useStyles = () => {
       height: 40,
       borderColor: 'gray',
       borderWidth: 1,
-      marginBottom: 12,
+      marginBottom: 20,
       paddingHorizontal: 10,
+      width: '100%',
+      marginVertical: 16,
+      borderRadius: 8,
+    },
+    subContainer: {
+      margin: 16,
+      flex: 1,
+    },
+    safeArea: {
+      flex: 1,
+    },
+    btnStyle: {
+      marginTop: 40,
     },
   });
 };

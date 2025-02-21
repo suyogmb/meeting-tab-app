@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {createContext, useContext, useState} from 'react';
 import {ThemeOptions} from '../types/types';
 import {colors} from '../theme/colors';
 
@@ -14,14 +14,14 @@ const initialContext: ThemeContextType = {
   themeColors: colors[ThemeOptions.dark],
 };
 
-const ThemeContext = React.createContext<ThemeContextType>(initialContext);
+const ThemeContext = createContext<ThemeContextType>(initialContext);
 
 const useTheme = () => {
   return useContext(ThemeContext);
 };
 
 const ThemeProvider = ({children}: {children: React.ReactNode}) => {
-  const [theme, setThemeState] = React.useState<ThemeOptions>(ThemeOptions.dark);
+  const [theme, setThemeState] = useState<ThemeOptions>(ThemeOptions.dark);
   const themeColors = colors[theme];
 
   const setTheme = (value: ThemeOptions) => {

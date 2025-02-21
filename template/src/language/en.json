@@ -2,5 +2,13 @@
   "login.button.title": "Login",
   "loading.title": "Loading...",
   "login.input.email.placeholder": "Email",
-  "login.input.password.placeholder": "Password"
+  "login.input.password.placeholder": "Password",
+  "dashboard.list.title": "Movie List",
+  "dashboard.detail.title": "Movie Details",
+  "dashboard.button.title": "Back",
+  "dashboard.detail.name": "Name",
+  "dashboard.detail.team": "Team",
+  "dashboard.detail.firstAppearance": "First Appearance",
+  "dashboard.detail.publisher": "Publisher",
+  "dashboard.detail.bio": "Bio"
 }
