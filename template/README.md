@@ -1,108 +1,131 @@
-ReactNative - BoilerPlate
-Mindbowsers Biolerplate for RN
+# Mindbowser React Native Boilerplate
 
-This project is a React Native boilerplate that can be used to kickstart a mobile application with a cleaner architecture.
+## Overview
+This project is a React Native boilerplate designed to help developers kickstart mobile applications with a clean and optimized architecture.
 
-The boilerplate provides an optimized architecture for building solid cross-platform mobile applications through separation of concerns between the UI and business logic.
+The boilerplate provides a structured approach to separating concerns between UI and business logic, ensuring scalability and maintainability.
 
-Requirements
-Node 16 or greater is required. Development for iOS requires a Mac and Xcode 13.3.1 or up, and will target iOS 13 and up.
+---
 
-You also need to install the dependencies required by React Native.
-Go to the React Native environment setup, then select React Native CLI Quickstart tab.
-Follow instructions for your given development OS and target OS.
+## Requirements
+- **Node.js**: Version 16 or greater.
+- **iOS Development**:
+  - macOS with Xcode 13.3.1 or later.
+  - Targeting iOS 13 and above.
+- **React Native Environment Setup**:
+  - Follow the [React Native CLI Quickstart](https://reactnative.dev/docs/environment-setup) instructions for your OS.
 
-Boilerplate Highlights
-Some of the key highlights of this boilerplate is as below:
+---
 
-Core
-React Native for views.
-React Navigation handles in-app navigation.
-Javascript for adding JavaScript Environment.
-Redux manages application state.
-React Redux to use React-Redux bindings.
-Utilities
-React Native Bootsplash to avoid white screen at start of app.
-Redux Thunk makes side effects (i.e. asynchronous things like data fetching) in React/Redux applications easier and better.
-Axios for API calls.
-HTTP Service Base service class for API calls.
-Navigation Service Navigation Service class to navigate without navigation props.
-Button Custom button component that extends Pressable and enhances it with various helpful props.
-Developer Experience
-Prettier for linting.
-ESLint for code analysing
-Flipper for debugging.
-Refer below link incase of issues configuring ESLint and Prettier: https://github.com/vasilestefirta/react-native-eslint-prettier-example
+## Boilerplate Highlights
+### **Core Technologies**
+- **React Native**: For UI components.
+- **React Navigation**: For in-app navigation.
+- **JavaScript**: The main programming language.
+- **Redux**: For global state management.
+- **React Redux**: React bindings for Redux.
 
-Directory Structure
+### **Utilities**
+- **React Native Bootsplash**: Prevents white screen on startup.
+- **Redux Toolkit**: Simplifies async Redux actions.
+- **Axios**: For API calls.
+- **HTTP Service**: Base service class for API calls.
+- **Navigation Service**: Provides navigation functions independent of props.
+- **Custom Button Component**: Extends `Pressable` with additional functionality.
+
+### **Developer Experience**
+- **Prettier**: Code formatting.
+- **ESLint**: Code linting and analysis.
+- **Flipper**: Debugging tool.
+- [ESLint & Prettier Setup](https://github.com/vasilestefirta/react-native-eslint-prettier-example)
+
+---
+
+## Directory Structure
+```
 .
-├── **tests** # Test cases container folder.
-├── android # Android specific files container folder.
-├── ios # iOS specific files container folder.
-├── node_modules # Node Packages.
-├── resources # Font files that are copied to native folder when building.
-├── src # Source code.
-| ├── containers # App Container file.
-| ├── navigation # Navigation components and wrappers.
-│ │ ├── AppNavigator.js # Container file for all routes.
-│ │ ├── NavigationService.js # File with Navigation functions navigate, replace, go back etc..
-| ├── networkConfig # API call related files and general services related files.
-│ │ ├── Endpoints.js # File for all API url's.
-│ │ ├── HttpServices.js # Helper methods for API request - POST, GET, PUT, DELETE etc..
-│ ├── redux # Container folder specific redux.
-│ │ ├── actions # Redux thunk action functions.
-│ │ ├── reducers # Reducer functions for redux.
-│ │ ├── store.js # Store for redux states.
-│ │ ├── reducers.js # Container file for combined reducers.
-│ │ ├── ReduxTypes.js # redux action types constant file.
-│ │ ├── index.js # store creation function and related file.
-| ├── res # Container folder for res files.
-│ │ ├── images # Container folder for image files.
-│ ├── components # Container folder for reusable components through out the app.
-│ │ ├── Button.js # Contains reusable button component.
-│ ├── screens # Container folder for all screen level components.
-│ ├── theme # Container folder for Colors, Theme related files.
-│ │ ├── Colors.js # Contains all color constants at one place.
-│ │ ├── Theme.js # Config file for setting theme - light, dark etc..
-│ ├── utils # Container folder for helper functions.
-├── .gitignore # Tells git which files to ignore.
-├── .prettierrc # Rules for prettier linter.
-├── App.js # App main route.
-├── index.js # Initial/Entry file to run the app.
-├── package.json # Package configuration.
-├── .env # env configuration base file
-├── .env.production # Can run app with Production URL and Constants
-├── .env.developement # Can run app with Developement URL and Constants
-├── .env.staging # Can run app with Staging URL and Constants
-├── .env.qa # Can run app with QA URL and Constants
-Start
-To create a new project using the boilerplate simply run :
+├── tests               # Test cases container.
+├── android             # Android-specific files.
+├── ios                 # iOS-specific files.
+├── node_modules        # Installed Node.js packages.
+├── resources           # Fonts and assets.
+├── src                 # Source code.
+│   ├── containers      # App container files.
+│   ├── navigation      # Navigation components.
+│   │   ├── AppNavigator.js  # Main route container.
+│   │   ├── NavigationService.js  # Navigation helper functions.
+│   ├── networkConfig   # API-related files.
+│   │   ├── Endpoints.js  # API URLs.
+│   │   ├── HttpServices.js  # API request methods (GET, POST, etc.).
+│   ├── redux           # Redux store and reducers.
+│   │   ├── actions     # Thunk action functions.
+│   │   ├── reducers    # Reducers.
+│   │   ├── store.js    # Redux store.
+│   │   ├── reducers.js # Combined reducers.
+│   │   ├── ReduxTypes.js # Redux action types.
+│   ├── res             # Resource files.
+│   │   ├── images      # Image assets.
+│   ├── components      # Reusable UI components.
+│   │   ├── Button.js   # Custom button component.
+│   ├── screens         # App screens.
+│   ├── theme           # Theme and color settings.
+│   │   ├── Colors.js   # Color constants.
+│   │   ├── Theme.js    # Light/Dark theme settings.
+│   ├── utils           # Helper functions.
+├── .gitignore          # Git ignore settings.
+├── .prettierrc         # Prettier configuration.
+├── App.js              # Main app entry.
+├── index.js            # Initial entry point.
+├── package.json        # Project dependencies and scripts.
+├── .env                # Base environment file.
+├── .env.production     # Production environment configuration.
+├── .env.development    # Development environment configuration.
+├── .env.staging        # Staging environment configuration.
+├── .env.qa             # QA environment configuration.
+```
 
-$ npx react-native init MyApp --template https://bitbucket.org/Mindbowser/reactnative-boilerplate2.0
-Assuming you have all the requirements installed, you can run the project by running:
+---
 
-yarn start to start the metro bundler, in a dedicated terminal
-yarn <platform> to run the platform application (remember to start a simulator or connect a device)
-Developer can run app with multiple environments (prod,dev,stage,qa) by using following commands
-(Below commands are also available under Scripts in package.json)
+## Getting Started
+### **Create a New Project**
+To create a new React Native project using this boilerplate, run:
+```sh
+npx react-native init MyApp --template https://bitbucket.org/Mindbowser/reactnative-boilerplate2.0
+```
 
-Android
-yarn android:staging - To run app on staging environment
-yarn android:staging-release - To run app on staging release environment
-yarn android:dev - To run app on developement environment
-yarn android:dev-release - To run app on developement release environment
-yarn android:prod - To run app on production environment
-yarn android:prod-release - To run app on production release environment
-yarn android:qa - To run app on qa environment
-yarn android:qa-release - To run app on qa release environment
+### **Run the Project**
+Ensure you have all dependencies installed, then execute:
+```sh
+yarn start  # Start the Metro bundler
+yarn <platform>  # Run the app on the chosen platform (iOS/Android)
+```
 
-./gradlew assembleStagingRelease - To create staging environment build (.apk)
-./gradlew assembleProductionRelease - To create production environment build (.apk)
-./gradlew assembleQaRelease - To create QA environment build (.apk)
-./gradlew assembleDevelopmentRelease - To create development environment build (.apk)
+### **Running with Multiple Environments**
+You can run the app with different environments (production, development, staging, QA) using:
 
-iOS
-yarn ios:production - To run app on production environment
-yarn ios:development - To run app on developement environment
-yarn ios:staging - To run app on staging environment
-yarn ios:qa - To run app on qa environment
+#### **Android Commands**
+```sh
+yarn android:staging          # Run on staging
+yarn android:staging-release  # Run staging release
+yarn android:dev              # Run on development
+yarn android:dev-release      # Run development release
+yarn android:prod             # Run on production
+yarn android:prod-release     # Run production release
+yarn android:qa               # Run on QA
+yarn android:qa-release       # Run QA release
+```
+#### **Build APKs for Android**
+```sh
+./gradlew assembleStagingRelease      # Create a staging build APK
+./gradlew assembleProductionRelease   # Create a production build APK
+./gradlew assembleQaRelease           # Create a QA build APK
+./gradlew assembleDevelopmentRelease  # Create a development build APK
+```
+
+#### **iOS Commands**
+```sh
+yarn ios:production  # Run on production
+yarn ios:development # Run on development
+yarn ios:staging     # Run on staging
+yarn ios:qa          # Run on QA
+```
