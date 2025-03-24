@@ -6,13 +6,13 @@
  */
 
 import React, {useEffect} from 'react';
-import RootStackNavigator from './src/navigators/RootStackNavigator';
-import {Provider} from 'react-redux';
-import store from './src/redux/app/store';
-import Toast from 'react-native-toast-message';
-import LanguageProvider from './src/hocs/LanguageProvider';
-import {ThemeProvider} from './src/contexts/ThemeContext';
 import analytics from '@react-native-firebase/analytics';
+import Toast from 'react-native-toast-message';
+import {Provider} from 'react-redux';
+import {ThemeProvider} from './src/contexts/ThemeContext';
+import LanguageProvider from './src/hocs/LanguageProvider';
+import RootStackNavigator from './src/navigators/RootStackNavigator';
+import store from './src/redux/app/store';
 
 function App(): React.JSX.Element {
   useEffect(() => {
@@ -22,7 +22,9 @@ function App(): React.JSX.Element {
         await analytics().logEvent('app_open');
         console.log('APP INSTANTANCE', appInstanceId);
       })();
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   }, []);
   return (
     <>
