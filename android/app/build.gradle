@@ -102,16 +102,20 @@ android {
         applicationId "com.rntstemplate"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
-        versionName "1.0.0"
         multiDexEnabled true
     }
     signingConfigs {
         debug {
-            storeFile file('debug.keystore')
-            storePassword 'android'
-            keyAlias 'androiddebugkey'
-            keyPassword 'android'
+            def flavor = gradle.startParameter.taskNames.find { it.contains("Production") } ? "PROD" :
+             gradle.startParameter.taskNames.find { it.contains("Staging") } ? "STAGE" :
+             gradle.startParameter.taskNames.find { it.contains("Qa") } ? "QA" :
+             gradle.startParameter.taskNames.find { it.contains("Uat") } ? "UAT" : "DEV"
+
+            storeFile file("${project.properties["${flavor}_UPLOAD_STORE_FILE"]}")
+            storePassword project.properties["${flavor}_UPLOAD_STORE_PASSWORD"]
+            keyAlias project.properties["${flavor}_UPLOAD_KEY_ALIAS"]
+            keyPassword project.properties["${flavor}_UPLOAD_KEY_PASSWORD"]
+
         }
     }
 
@@ -122,30 +126,40 @@ android {
             applicationId "com.rntstemplate"
             targetSdkVersion rootProject.ext.targetSdkVersion
             resValue "string", "build_config_package", "com.rntstemplate"
+            versionCode 1
+            versionName "1.0.0-prod"
         }
         staging {
             minSdkVersion rootProject.ext.minSdkVersion
             applicationId "com.rntstemplate.staging"
             targetSdkVersion rootProject.ext.targetSdkVersion
             resValue "string", "build_config_package", "com.rntstemplate"
+            versionCode 1
+            versionName "1.0.0-stage"
         }
         development {
             minSdkVersion rootProject.ext.minSdkVersion
             applicationId "com.rntstemplate.development"
             targetSdkVersion rootProject.ext.targetSdkVersion
             resValue "string", "build_config_package", "com.rntstemplate"
+            versionCode 1
+            versionName "1.0.0-dev"
         }
         qa {
             minSdkVersion rootProject.ext.minSdkVersion
             applicationId "com.rntstemplate.qa"
             targetSdkVersion rootProject.ext.targetSdkVersion
             resValue "string", "build_config_package", "com.rntstemplate"
+            versionCode 1
+            versionName "1.0.0-qa"
         }
         uat {
             minSdkVersion rootProject.ext.minSdkVersion
             applicationId "com.rntstemplate.uat"
             targetSdkVersion rootProject.ext.targetSdkVersion
             resValue "string", "build_config_package", "com.rntstemplate"
+            versionCode 1
+            versionName "1.0.0-uat"
         }
     }
     buildTypes {
