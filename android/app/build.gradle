@@ -14,7 +14,9 @@ project.ext.envConfigFiles = [
    stagingrelease: ".env.staging",
    stagingdebug: ".env.staging",
    qarelease: ".env.qa",
-   qadebug: ".env.qa"
+   qadebug: ".env.qa",
+   uatrelease: ".env.uat",
+   uatdebug: ".env.uat"
 ]
 
 apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
@@ -133,10 +135,15 @@ android {
             targetSdkVersion rootProject.ext.targetSdkVersion
             resValue "string", "build_config_package", "com.rntstemplate"
         }
-        
         qa {
             minSdkVersion rootProject.ext.minSdkVersion
             applicationId "com.rntstemplate.qa"
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            resValue "string", "build_config_package", "com.rntstemplate"
+        }
+        uat {
+            minSdkVersion rootProject.ext.minSdkVersion
+            applicationId "com.rntstemplate.uat"
             targetSdkVersion rootProject.ext.targetSdkVersion
             resValue "string", "build_config_package", "com.rntstemplate"
         }

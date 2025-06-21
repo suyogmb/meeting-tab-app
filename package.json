@@ -16,6 +16,8 @@
     "android:qa-release": "react-native run-android --mode=qarelease",
     "android:prod": "react-native run-android --mode=productiondebug",
     "android:prod-release": "react-native run-android --mode=productionrelease",
+    "android:uat": "react-native run-android --mode=uatdebug",
+    "android:uat-release": "react-native run-android --mode=uatrelease",
     "pretty": "prettier --write \"./**/*.{js,jsx,mjs,cjs,ts,tsx,json}\"",
     "prepare": "husky install",
     "version-major": "node auto-versioning.js major",
