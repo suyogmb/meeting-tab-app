@@ -129,3 +129,55 @@ yarn ios:development # Run on development
 yarn ios:staging     # Run on staging
 yarn ios:qa          # Run on QA
 ```
+
+## 🚀 Code Generation Scripts
+
+This boilerplate includes handy scripts to quickly scaffold new files for your React Native app. All scripts are located in the [`scripts`](scripts) folder.
+
+### 1. Generate a Custom React Native Component
+
+Create a new component (e.g., `Button`):
+
+```sh
+yarn run generateRNComponent Button
+```
+
+This will generate a `Button.tsx` file in your `src/components` directory.
+
+---
+
+### 2. Generate an MVC Screen
+
+Create a new MVC screen (e.g., `Account`):
+
+First Go to the destination folder 
+
+```sh
+cd src/screens
+```
+
+Next, run below command 
+```sh
+yarn run generateMVCScreen Account
+```
+
+This will generate an `Account` folder with `.tsx`, `.viewmodel.ts`, and `.styles.ts` files.
+
+---
+
+### 3. Generate a Redux Slice
+
+Create a new Redux slice (e.g., `profile`):
+
+```sh
+yarn run generateReduxSlice profile
+```
+
+This will generate a new Redux slice for `profile` in `src/redux/reducer/profile`.
+
+---
+
+> **Note:**  
+> - Run these commands from your project root.
+> - You can customize the templates or logic in the [`scripts`](scripts) folder.
+> - Make sure all dependencies are installed before running the scripts.

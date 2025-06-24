@@ -14,22 +14,6 @@
             </ActionContent>
          </ExecutionAction>
       </PreActions>
-      <BuildActionEntries>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "563FB3B62C23EE190082D377"
-               BuildableName = "templateDevelopment.app"
-               BlueprintName = "templateDevelopment"
-               ReferencedContainer = "container:template.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-      </BuildActionEntries>
    </BuildAction>
    <TestAction
       buildConfiguration = "Debug"
@@ -58,15 +42,6 @@
             ReferencedContainer = "container:template.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "563FB3B62C23EE190082D377"
-            BuildableName = "templateDevelopment.app"
-            BlueprintName = "templateDevelopment"
-            ReferencedContainer = "container:template.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
