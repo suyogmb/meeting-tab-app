@@ -56,7 +56,7 @@ const useViewModel = () => {
         setPasswordErrorMsg('Password must be at least 6 characters.');
         return;
       }
-      StorageService.storeItem('isLoggedIn', true);
+      StorageService.storeItem(StorageService.storageKeys.isLoggedIn, true);
       navigation.navigate(AUTH_STACK_NAVIGATOR.HOME);
     } catch (error) {
       console.log('ERR', error);

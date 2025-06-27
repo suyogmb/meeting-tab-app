@@ -18,7 +18,7 @@ const RootStackNavigator = () => {
   }, []);
 
   const getLoginStatus = async () => {
-    const isLoggedIn = await StorageService.getItem('isLoggedIn');
+    const isLoggedIn = await StorageService.getItem(StorageService.storageKeys.isLoggedIn);
     console.log(' logged in', isLoggedIn);
   };
 

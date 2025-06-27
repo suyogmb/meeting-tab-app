@@ -40,7 +40,7 @@ abstract_target 'App' do
     #Staging-specific pods
   end
   target 'templateUAT' do
-    #Staging-specific pods
+    #UAT-specific pods
   end
 
   post_install do |installer|

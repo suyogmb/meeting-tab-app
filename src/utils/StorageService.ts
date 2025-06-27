@@ -1,7 +1,18 @@
 import {MMKV} from 'react-native-mmkv';
 
+/**
+ *  @description: A class for managing storage operations.
+ *  @see: https://github.com/mrousavy/react-native-mmkv#readme
+ */
 class StorageManager {
   private storage: MMKV;
+
+  /**
+   * Storage keys for storage
+   */
+  public storageKeys = {
+    isLoggedIn: 'isLoggedIn',
+  };
 
   constructor() {
     this.storage = new MMKV();
