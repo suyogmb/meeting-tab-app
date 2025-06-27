@@ -12,6 +12,8 @@ class StorageManager {
    */
   public storageKeys = {
     isLoggedIn: 'isLoggedIn',
+    token: 'token',
+    refresh_token: 'refresh_token',
   };
 
   constructor() {

@@ -7,7 +7,7 @@ import axios, {
   Method,
 } from 'axios';
 import Toast from 'react-native-toast-message';
-import {getItem, storeItem} from '../utils/AsyncStorage';
+import StorageService from 'utils/StorageService';
 import {ERROR_CODES, TOAST_TYPE} from '../utils/Constants';
 const AUTHORIZATION = 'Authorization';
 
@@ -47,7 +47,8 @@ const processQueue = (error: AxiosError | Error | unknown, token: string | null 
 
 // Attach the access token to requests
 axiosInstance.interceptors.request.use(async (config: InternalAxiosRequestConfig) => {
-  const token = await getItem('token'); // Retrieve token from storage
+  const token = await StorageService.getItem(StorageService.storageKeys.token); // Retrieve token from storage
+
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
@@ -74,7 +75,7 @@ axiosInstance.interceptors.response.use(
             isRefreshing = true;
             try {
               const newToken = await refreshAccessToken(); // Refresh token
-              storeItem('token', newToken); // Store new token
+              StorageService.storeItem(StorageService.storageKeys.token, newToken); // Store new token
               axiosInstance.defaults.headers[AUTHORIZATION] = `Bearer ${newToken}`;
               processQueue(null, newToken);
               return axiosInstance(originalRequest);
@@ -112,7 +113,7 @@ axiosInstance.interceptors.response.use(
 
 async function refreshAccessToken(): Promise<string> {
   try {
-    const refreshToken = await getItem('refresh_token');
+    const refreshToken = await StorageService.getItem(StorageService.storageKeys.refresh_token);
     if (!refreshToken) {
       throw new Error('No refresh token found');
     }

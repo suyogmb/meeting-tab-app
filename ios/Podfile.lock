@@ -1925,30 +1925,6 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
-  - RNCAsyncStorage (2.2.0):
-    - DoubleConversion
-    - glog
-    - hermes-engine
-    - RCT-Folly (= 2024.11.18.00)
-    - RCTRequired
-    - RCTTypeSafety
-    - React-Core
-    - React-debug
-    - React-Fabric
-    - React-featureflags
-    - React-graphics
-    - React-hermes
-    - React-ImageManager
-    - React-jsi
-    - React-NativeModulesApple
-    - React-RCTFabric
-    - React-renderercss
-    - React-rendererdebug
-    - React-utils
-    - ReactCodegen
-    - ReactCommon/turbomodule/bridging
-    - ReactCommon/turbomodule/core
-    - Yoga
   - RNFBAnalytics (22.2.0):
     - Firebase/Analytics (= 11.12.0)
     - React-Core
@@ -2170,7 +2146,6 @@ DEPENDENCIES:
   - ReactCodegen (from `build/generated/ios`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - RNBootSplash (from `../node_modules/react-native-bootsplash`)
-  - "RNCAsyncStorage (from `../node_modules/@react-native-async-storage/async-storage`)"
   - "RNFBAnalytics (from `../node_modules/@react-native-firebase/analytics`)"
   - "RNFBApp (from `../node_modules/@react-native-firebase/app`)"
   - "RNFBCrashlytics (from `../node_modules/@react-native-firebase/crashlytics`)"
@@ -2350,8 +2325,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon"
   RNBootSplash:
     :path: "../node_modules/react-native-bootsplash"
-  RNCAsyncStorage:
-    :path: "../node_modules/@react-native-async-storage/async-storage"
   RNFBAnalytics:
     :path: "../node_modules/@react-native-firebase/analytics"
   RNFBApp:
@@ -2460,7 +2433,6 @@ SPEC CHECKSUMS:
   ReactCodegen: 338cfa0d67a821a9caec4888f6f83458dcc69771
   ReactCommon: 4dbe3f8218c0b6589e982081f503725057457d2b
   RNBootSplash: 1280eeb18d887de0a45bb4923d4fc56f25c8b99c
-  RNCAsyncStorage: c1dca434eda758348a549efb46822b4091d76804
   RNFBAnalytics: 81055fa5a9504da8a41f5a16eeb47a4a60c2e9a0
   RNFBApp: 6e738f1d86520e65e7dc4d5a6e7422ff0c908e6a
   RNFBCrashlytics: d3c68e821db9f077ff9b48a5044122c651551842
@@ -2471,6 +2443,6 @@ SPEC CHECKSUMS:
   SocketRocket: d4aabe649be1e368d1318fdf28a022d714d65748
   Yoga: b2eaabf17044cd4273a661b14eb83f9fd2c90491
 
-PODFILE CHECKSUM: 11c4e338d05a0ee8a73ca07b6e53da02e335dbdd
+PODFILE CHECKSUM: a0655e2c415f4f8d46c1b1a451a02e1243aa8fb0
 
 COCOAPODS: 1.16.2
