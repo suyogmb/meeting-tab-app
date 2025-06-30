@@ -4,6 +4,7 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {AUTH_STACK_NAVIGATOR} from 'navigators/routes';
 import newRelic from 'newrelic-react-native-agent';
 import {useTranslation} from 'react-i18next';
+import StorageService from 'utils/StorageService';
 import {useStyles} from './Login.styles';
 import {isEmptyOrNull, isValidEmail, isValidPassword} from '../../../utils/ValidationUtils';
 
@@ -55,6 +56,7 @@ const useViewModel = () => {
         setPasswordErrorMsg('Password must be at least 6 characters.');
         return;
       }
+      StorageService.storeItem(StorageService.storageKeys.isLoggedIn, true);
       navigation.navigate(AUTH_STACK_NAVIGATOR.HOME);
     } catch (error) {
       console.log('ERR', error);

@@ -8,11 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		0233BD4137A0A854C4E69DAF /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */; };
-		054308AF5DACBDC9646015F5 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
+		054308AF5DACBDC9646015F5 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
+		1D46F06815D04E35B0CED267 /* Pods_App_templateDevelopment.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76DB9A9F7010909EA2B29649 /* Pods_App_templateDevelopment.framework */; };
 		2F906ED0AE914F1A975A819E /* Poppins-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5813C3EADEB447E4B826018A /* Poppins-ExtraBold.ttf */; };
 		2FC2FCE01EDB4B358C9DEE65 /* Poppins-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2351FC3747F444778E81A48E /* Poppins-Thin.ttf */; };
-		365A0BE0C074557393A9F03A /* Pods_App_templateDevelopment.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8B502CCAC281F19C1E85F14 /* Pods_App_templateDevelopment.framework */; };
+		365A0BE0C074557393A9F03A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
 		3A9A28DC6BBB4168AB7D86BB /* Poppins-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1B4CC674040F4124B94A6E3D /* Poppins-BlackItalic.ttf */; };
 		3C0057693E78431696B776C7 /* Poppins-SemiBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E8C5080F478641379306FD67 /* Poppins-SemiBoldItalic.ttf */; };
 		4313159EEC19406EBD8AC1AD /* Poppins-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EF9D4917A345472EAD8722D9 /* Poppins-Black.ttf */; };
@@ -89,11 +90,40 @@
 		8004E35E73F2E9E6EDEAB8C1 /* Pods_App_templateStaging.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7252AAA4B60428B893EE1BCA /* Pods_App_templateStaging.framework */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		84E15E09657510BCA5B2103B /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */; };
+		8784ED15A230EE648ADA3B8F /* Pods_App_templateUAT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED6F5BCFBAB4F6ADC445864D /* Pods_App_templateUAT.framework */; };
 		9EA2D565E20B4B18AED17430 /* Poppins-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 984C42B0B6CE4A9B9D53910D /* Poppins-Medium.ttf */; };
 		AAC4E0648ADE4B52B54768DB /* Poppins-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D7FCBC11BC614132BA5FC94F /* Poppins-SemiBold.ttf */; };
 		B310625B2DE83ECE00657BE5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761780EC2CA45674006654EE /* AppDelegate.swift */; };
 		B310625C2DE83EF900657BE5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761780EC2CA45674006654EE /* AppDelegate.swift */; };
 		B3555B592DE75CC700C30294 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761780EC2CA45674006654EE /* AppDelegate.swift */; };
+		B36C615E2E0454760074ECE7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761780EC2CA45674006654EE /* AppDelegate.swift */; };
+		B36C61632E0454760074ECE7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		B36C61642E0454760074ECE7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
+		B36C61652E0454760074ECE7 /* BootSplash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 83CB7BB9E58C4E55B83FE244 /* BootSplash.storyboard */; };
+		B36C61662E0454760074ECE7 /* Poppins-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EF9D4917A345472EAD8722D9 /* Poppins-Black.ttf */; };
+		B36C61672E0454760074ECE7 /* Poppins-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1B4CC674040F4124B94A6E3D /* Poppins-BlackItalic.ttf */; };
+		B36C61682E0454760074ECE7 /* Poppins-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BDCDB780F8054011A2F228F0 /* Poppins-Bold.ttf */; };
+		B36C61692E0454760074ECE7 /* Poppins-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 46D57889C3894100AFA97A0C /* Poppins-BoldItalic.ttf */; };
+		B36C616A2E0454760074ECE7 /* Poppins-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5813C3EADEB447E4B826018A /* Poppins-ExtraBold.ttf */; };
+		B36C616B2E0454760074ECE7 /* Poppins-ExtraBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 58BCB3C8CB224F27986E772E /* Poppins-ExtraBoldItalic.ttf */; };
+		B36C616C2E0454760074ECE7 /* Poppins-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4D027E6A5190436BBBA25102 /* Poppins-ExtraLight.ttf */; };
+		B36C616D2E0454760074ECE7 /* Poppins-ExtraLightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 369DA0D99A254165AE6E7E0F /* Poppins-ExtraLightItalic.ttf */; };
+		B36C616E2E0454760074ECE7 /* Poppins-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6B79E3C288D847729CC50065 /* Poppins-Italic.ttf */; };
+		B36C616F2E0454760074ECE7 /* Poppins-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2E4E74DD572C4E6F842DEE1D /* Poppins-Light.ttf */; };
+		B36C61702E0454760074ECE7 /* Poppins-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 02E1E68AC05447C1BDAC2776 /* Poppins-LightItalic.ttf */; };
+		B36C61712E0454760074ECE7 /* Poppins-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 984C42B0B6CE4A9B9D53910D /* Poppins-Medium.ttf */; };
+		B36C61722E0454760074ECE7 /* Poppins-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7E60029B26114AE588BA6525 /* Poppins-MediumItalic.ttf */; };
+		B36C61732E0454760074ECE7 /* Poppins-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 71E284FF915F4EA782F47720 /* Poppins-Regular.ttf */; };
+		B36C61742E0454760074ECE7 /* Poppins-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D7FCBC11BC614132BA5FC94F /* Poppins-SemiBold.ttf */; };
+		B36C61752E0454760074ECE7 /* Poppins-SemiBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E8C5080F478641379306FD67 /* Poppins-SemiBoldItalic.ttf */; };
+		B36C61762E0454760074ECE7 /* Poppins-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2351FC3747F444778E81A48E /* Poppins-Thin.ttf */; };
+		B36C61772E0454760074ECE7 /* Poppins-ThinItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B90C1FF0FC744534A5AEBF59 /* Poppins-ThinItalic.ttf */; };
+		B36C61782E0454760074ECE7 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */; };
+		B36C61832E0454EC0074ECE7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B36C61812E0454EC0074ECE7 /* GoogleService-Info.plist */; };
+		B36C61842E0454EC0074ECE7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B36C61812E0454EC0074ECE7 /* GoogleService-Info.plist */; };
+		B36C61852E0454EC0074ECE7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B36C61812E0454EC0074ECE7 /* GoogleService-Info.plist */; };
+		B36C61862E0454EC0074ECE7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B36C61812E0454EC0074ECE7 /* GoogleService-Info.plist */; };
+		B36C61872E0454EC0074ECE7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B36C61812E0454EC0074ECE7 /* GoogleService-Info.plist */; };
 		B7648C5FE74A4FC0A7CA9308 /* Poppins-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BDCDB780F8054011A2F228F0 /* Poppins-Bold.ttf */; };
 		C5920F4A994C83C9B421AAFC /* Pods_App_template.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2E967CFED396E41F0D55442 /* Pods_App_template.framework */; };
 		C7CDBD67A45F48E492632C91 /* Poppins-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6B79E3C288D847729CC50065 /* Poppins-Italic.ttf */; };
@@ -121,6 +151,7 @@
 		3B4392A12AC88292D35C810B /* Pods-template.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-template.debug.xcconfig"; path = "Target Support Files/Pods-template/Pods-template.debug.xcconfig"; sourceTree = "<group>"; };
 		3F4154489E88AD3CBE87A3F2 /* Pods-App-template.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App-template.debug.xcconfig"; path = "Target Support Files/Pods-App-template/Pods-App-template.debug.xcconfig"; sourceTree = "<group>"; };
 		46D57889C3894100AFA97A0C /* Poppins-BoldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-BoldItalic.ttf"; path = "../src/assets/fonts/Poppins-BoldItalic.ttf"; sourceTree = "<group>"; };
+		4AB45F5256318633E1ACD0C4 /* Pods-App-templateUAT.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App-templateUAT.release.xcconfig"; path = "Target Support Files/Pods-App-templateUAT/Pods-App-templateUAT.release.xcconfig"; sourceTree = "<group>"; };
 		4D027E6A5190436BBBA25102 /* Poppins-ExtraLight.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-ExtraLight.ttf"; path = "../src/assets/fonts/Poppins-ExtraLight.ttf"; sourceTree = "<group>"; };
 		56175A152C1C4DD700800B79 /* templateQA.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = templateQA.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		56175A162C1C4DD700800B79 /* template copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "template copy-Info.plist"; path = "/Users/SanjitSoreng/Documents/MBBucket/reactnative-boilerplate-typescript/template/ios/template copy-Info.plist"; sourceTree = "<absolute>"; };
@@ -141,13 +172,18 @@
 		6B79E3C288D847729CC50065 /* Poppins-Italic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-Italic.ttf"; path = "../src/assets/fonts/Poppins-Italic.ttf"; sourceTree = "<group>"; };
 		71E284FF915F4EA782F47720 /* Poppins-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-Regular.ttf"; path = "../src/assets/fonts/Poppins-Regular.ttf"; sourceTree = "<group>"; };
 		7252AAA4B60428B893EE1BCA /* Pods_App_templateStaging.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_App_templateStaging.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		757EEB098E2ED0BA782770E2 /* Pods-App-templateUAT.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App-templateUAT.debug.xcconfig"; path = "Target Support Files/Pods-App-templateUAT/Pods-App-templateUAT.debug.xcconfig"; sourceTree = "<group>"; };
 		761780EC2CA45674006654EE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = template/AppDelegate.swift; sourceTree = "<group>"; };
+		76DB9A9F7010909EA2B29649 /* Pods_App_templateDevelopment.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_App_templateDevelopment.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7E60029B26114AE588BA6525 /* Poppins-MediumItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-MediumItalic.ttf"; path = "../src/assets/fonts/Poppins-MediumItalic.ttf"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = template/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		83CB7BB9E58C4E55B83FE244 /* BootSplash.storyboard */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = BootSplash.storyboard; path = template/BootSplash.storyboard; sourceTree = "<group>"; };
 		8B4F5C672E57253CA5397BCB /* Pods-App-templateDevelopment.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App-templateDevelopment.debug.xcconfig"; path = "Target Support Files/Pods-App-templateDevelopment/Pods-App-templateDevelopment.debug.xcconfig"; sourceTree = "<group>"; };
 		984C42B0B6CE4A9B9D53910D /* Poppins-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-Medium.ttf"; path = "../src/assets/fonts/Poppins-Medium.ttf"; sourceTree = "<group>"; };
 		A065969C6025E1AFDEB620ED /* Pods-App-templateQA.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App-templateQA.debug.xcconfig"; path = "Target Support Files/Pods-App-templateQA/Pods-App-templateQA.debug.xcconfig"; sourceTree = "<group>"; };
+		B36C617F2E0454760074ECE7 /* templateUAT.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = templateUAT.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B36C61802E0454760074ECE7 /* templateDevelopment copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "templateDevelopment copy-Info.plist"; path = "/Users/ronak.kotak/Documents/RonakKotakProjects/Projects/ReactNativeProjects/DemoProjects/BoilerPlate/NewGitRepoCode/reactnative-boilerplate-typescript/ios/templateDevelopment copy-Info.plist"; sourceTree = "<absolute>"; };
+		B36C61812E0454EC0074ECE7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B90C1FF0FC744534A5AEBF59 /* Poppins-ThinItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-ThinItalic.ttf"; path = "../src/assets/fonts/Poppins-ThinItalic.ttf"; sourceTree = "<group>"; };
 		BDCDB780F8054011A2F228F0 /* Poppins-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-Bold.ttf"; path = "../src/assets/fonts/Poppins-Bold.ttf"; sourceTree = "<group>"; };
 		C864593F13A0CCE852ACAD21 /* Pods-App-templateStaging.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App-templateStaging.release.xcconfig"; path = "Target Support Files/Pods-App-templateStaging/Pods-App-templateStaging.release.xcconfig"; sourceTree = "<group>"; };
@@ -155,9 +191,9 @@
 		DA1E0824ACD46A153B0C381F /* Pods-App-template-templateTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App-template-templateTests.release.xcconfig"; path = "Target Support Files/Pods-App-template-templateTests/Pods-App-template-templateTests.release.xcconfig"; sourceTree = "<group>"; };
 		E2E967CFED396E41F0D55442 /* Pods_App_template.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_App_template.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E6743098B2BEB1CDDE5F8E82 /* Pods-App-templateQA.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-App-templateQA.release.xcconfig"; path = "Target Support Files/Pods-App-templateQA/Pods-App-templateQA.release.xcconfig"; sourceTree = "<group>"; };
-		E8B502CCAC281F19C1E85F14 /* Pods_App_templateDevelopment.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_App_templateDevelopment.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E8C5080F478641379306FD67 /* Poppins-SemiBoldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-SemiBoldItalic.ttf"; path = "../src/assets/fonts/Poppins-SemiBoldItalic.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		ED6F5BCFBAB4F6ADC445864D /* Pods_App_templateUAT.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_App_templateUAT.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF9D4917A345472EAD8722D9 /* Poppins-Black.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-Black.ttf"; path = "../src/assets/fonts/Poppins-Black.ttf"; sourceTree = "<group>"; };
 		F37EDE247C5090450AC7694E /* Pods_App_templateQA.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_App_templateQA.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -167,7 +203,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				054308AF5DACBDC9646015F5 /* (null) in Frameworks */,
+				054308AF5DACBDC9646015F5 /* BuildFile in Frameworks */,
 				C5920F4A994C83C9B421AAFC /* Pods_App_template.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -184,7 +220,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				365A0BE0C074557393A9F03A /* Pods_App_templateDevelopment.framework in Frameworks */,
+				365A0BE0C074557393A9F03A /* BuildFile in Frameworks */,
+				1D46F06815D04E35B0CED267 /* Pods_App_templateDevelopment.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -193,6 +230,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				8004E35E73F2E9E6EDEAB8C1 /* Pods_App_templateStaging.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B36C615F2E0454760074ECE7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8784ED15A230EE648ADA3B8F /* Pods_App_templateUAT.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -218,9 +263,10 @@
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				0487D10E7E7755B89B3D4CE1 /* Pods_App_template_templateTests.framework */,
 				F37EDE247C5090450AC7694E /* Pods_App_templateQA.framework */,
-				E8B502CCAC281F19C1E85F14 /* Pods_App_templateDevelopment.framework */,
 				7252AAA4B60428B893EE1BCA /* Pods_App_templateStaging.framework */,
 				E2E967CFED396E41F0D55442 /* Pods_App_template.framework */,
+				ED6F5BCFBAB4F6ADC445864D /* Pods_App_templateUAT.framework */,
+				76DB9A9F7010909EA2B29649 /* Pods_App_templateDevelopment.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -249,6 +295,7 @@
 		568C2EAD2C2400D30037B0BC /* firebase */ = {
 			isa = PBXGroup;
 			children = (
+				B36C61822E0454EC0074ECE7 /* uat */,
 				568C2EAE2C2400D30037B0BC /* staging */,
 				568C2EB02C2400D30037B0BC /* developement */,
 				568C2EB22C2400D30037B0BC /* qa */,
@@ -299,6 +346,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				B36C615A2E0452C00074ECE7 /* templateUAT */,
 				568C2EAD2C2400D30037B0BC /* firebase */,
 				563FB3DB2C23F06A0082D377 /* templateStaging */,
 				563FB3B52C23EDD90082D377 /* templateDevelopment */,
@@ -312,6 +360,7 @@
 				56175A162C1C4DD700800B79 /* template copy-Info.plist */,
 				563FB3DA2C23EE190082D377 /* template copy-Info.plist */,
 				563FB4002C23F0770082D377 /* template copy-Info.plist */,
+				B36C61802E0454760074ECE7 /* templateDevelopment copy-Info.plist */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -325,6 +374,7 @@
 				56175A152C1C4DD700800B79 /* templateQA.app */,
 				563FB3D92C23EE190082D377 /* templateDevelopment.app */,
 				563FB3FF2C23F0770082D377 /* templateStaging.app */,
+				B36C617F2E0454760074ECE7 /* templateUAT.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -354,6 +404,21 @@
 			name = Resources;
 			sourceTree = "<group>";
 		};
+		B36C615A2E0452C00074ECE7 /* templateUAT */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = templateUAT;
+			sourceTree = "<group>";
+		};
+		B36C61822E0454EC0074ECE7 /* uat */ = {
+			isa = PBXGroup;
+			children = (
+				B36C61812E0454EC0074ECE7 /* GoogleService-Info.plist */,
+			);
+			path = uat;
+			sourceTree = "<group>";
+		};
 		BBD78D7AC51CEA395F1C20DB /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -369,6 +434,8 @@
 				6287F788CB6F05C62B5415B6 /* Pods-App-templateDevelopment.release.xcconfig */,
 				1D770A9AF56458DD38D30B40 /* Pods-App-templateStaging.debug.xcconfig */,
 				C864593F13A0CCE852ACAD21 /* Pods-App-templateStaging.release.xcconfig */,
+				757EEB098E2ED0BA782770E2 /* Pods-App-templateUAT.debug.xcconfig */,
+				4AB45F5256318633E1ACD0C4 /* Pods-App-templateUAT.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -464,6 +531,28 @@
 			productReference = 563FB3FF2C23F0770082D377 /* templateStaging.app */;
 			productType = "com.apple.product-type.application";
 		};
+		B36C615B2E0454760074ECE7 /* templateUAT */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B36C617C2E0454760074ECE7 /* Build configuration list for PBXNativeTarget "templateUAT" */;
+			buildPhases = (
+				B36C615C2E0454760074ECE7 /* [CP] Check Pods Manifest.lock */,
+				B36C615D2E0454760074ECE7 /* Sources */,
+				B36C615F2E0454760074ECE7 /* Frameworks */,
+				B36C61612E0454760074ECE7 /* Setup Firebase */,
+				B36C61622E0454760074ECE7 /* Resources */,
+				B36C61792E0454760074ECE7 /* Bundle React Native code and images */,
+				B36C617A2E0454760074ECE7 /* [CP] Embed Pods Frameworks */,
+				B36C617B2E0454760074ECE7 /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = templateUAT;
+			productName = template;
+			productReference = B36C617F2E0454760074ECE7 /* templateUAT.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -494,6 +583,7 @@
 				561759F22C1C4DD700800B79 /* templateQA */,
 				563FB3B62C23EE190082D377 /* templateDevelopment */,
 				563FB3DC2C23F0770082D377 /* templateStaging */,
+				B36C615B2E0454760074ECE7 /* templateUAT */,
 			);
 		};
 /* End PBXProject section */
@@ -522,6 +612,7 @@
 				78F4EF0F20A54B1292F64620 /* Poppins-Regular.ttf in Resources */,
 				AAC4E0648ADE4B52B54768DB /* Poppins-SemiBold.ttf in Resources */,
 				3C0057693E78431696B776C7 /* Poppins-SemiBoldItalic.ttf in Resources */,
+				B36C61852E0454EC0074ECE7 /* GoogleService-Info.plist in Resources */,
 				2FC2FCE01EDB4B358C9DEE65 /* Poppins-Thin.ttf in Resources */,
 				FA8F1CF3E7434B3FAF2C2BC7 /* Poppins-ThinItalic.ttf in Resources */,
 				0233BD4137A0A854C4E69DAF /* PrivacyInfo.xcprivacy in Resources */,
@@ -551,6 +642,7 @@
 				56175A0A2C1C4DD700800B79 /* Poppins-Regular.ttf in Resources */,
 				56175A0B2C1C4DD700800B79 /* Poppins-SemiBold.ttf in Resources */,
 				56175A0C2C1C4DD700800B79 /* Poppins-SemiBoldItalic.ttf in Resources */,
+				B36C61872E0454EC0074ECE7 /* GoogleService-Info.plist in Resources */,
 				56175A0D2C1C4DD700800B79 /* Poppins-Thin.ttf in Resources */,
 				56175A0E2C1C4DD700800B79 /* Poppins-ThinItalic.ttf in Resources */,
 				5C055A1149FF21E94100A910 /* PrivacyInfo.xcprivacy in Resources */,
@@ -580,6 +672,7 @@
 				563FB3CE2C23EE190082D377 /* Poppins-Regular.ttf in Resources */,
 				563FB3CF2C23EE190082D377 /* Poppins-SemiBold.ttf in Resources */,
 				563FB3D02C23EE190082D377 /* Poppins-SemiBoldItalic.ttf in Resources */,
+				B36C61842E0454EC0074ECE7 /* GoogleService-Info.plist in Resources */,
 				563FB3D12C23EE190082D377 /* Poppins-Thin.ttf in Resources */,
 				563FB3D22C23EE190082D377 /* Poppins-ThinItalic.ttf in Resources */,
 				84E15E09657510BCA5B2103B /* PrivacyInfo.xcprivacy in Resources */,
@@ -609,9 +702,40 @@
 				563FB3F42C23F0770082D377 /* Poppins-Regular.ttf in Resources */,
 				563FB3F52C23F0770082D377 /* Poppins-SemiBold.ttf in Resources */,
 				563FB3F62C23F0770082D377 /* Poppins-SemiBoldItalic.ttf in Resources */,
+				B36C61832E0454EC0074ECE7 /* GoogleService-Info.plist in Resources */,
 				563FB3F72C23F0770082D377 /* Poppins-Thin.ttf in Resources */,
 				563FB3F82C23F0770082D377 /* Poppins-ThinItalic.ttf in Resources */,
 				7652A7BF5DBA2E62FA61DA9B /* PrivacyInfo.xcprivacy in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B36C61622E0454760074ECE7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B36C61632E0454760074ECE7 /* LaunchScreen.storyboard in Resources */,
+				B36C61642E0454760074ECE7 /* Images.xcassets in Resources */,
+				B36C61652E0454760074ECE7 /* BootSplash.storyboard in Resources */,
+				B36C61662E0454760074ECE7 /* Poppins-Black.ttf in Resources */,
+				B36C61672E0454760074ECE7 /* Poppins-BlackItalic.ttf in Resources */,
+				B36C61682E0454760074ECE7 /* Poppins-Bold.ttf in Resources */,
+				B36C61692E0454760074ECE7 /* Poppins-BoldItalic.ttf in Resources */,
+				B36C616A2E0454760074ECE7 /* Poppins-ExtraBold.ttf in Resources */,
+				B36C616B2E0454760074ECE7 /* Poppins-ExtraBoldItalic.ttf in Resources */,
+				B36C616C2E0454760074ECE7 /* Poppins-ExtraLight.ttf in Resources */,
+				B36C616D2E0454760074ECE7 /* Poppins-ExtraLightItalic.ttf in Resources */,
+				B36C616E2E0454760074ECE7 /* Poppins-Italic.ttf in Resources */,
+				B36C616F2E0454760074ECE7 /* Poppins-Light.ttf in Resources */,
+				B36C61702E0454760074ECE7 /* Poppins-LightItalic.ttf in Resources */,
+				B36C61712E0454760074ECE7 /* Poppins-Medium.ttf in Resources */,
+				B36C61722E0454760074ECE7 /* Poppins-MediumItalic.ttf in Resources */,
+				B36C61732E0454760074ECE7 /* Poppins-Regular.ttf in Resources */,
+				B36C61742E0454760074ECE7 /* Poppins-SemiBold.ttf in Resources */,
+				B36C61752E0454760074ECE7 /* Poppins-SemiBoldItalic.ttf in Resources */,
+				B36C61862E0454EC0074ECE7 /* GoogleService-Info.plist in Resources */,
+				B36C61762E0454760074ECE7 /* Poppins-Thin.ttf in Resources */,
+				B36C61772E0454760074ECE7 /* Poppins-ThinItalic.ttf in Resources */,
+				B36C61782E0454760074ECE7 /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -941,6 +1065,97 @@
 			shellPath = /bin/sh;
 			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n# Type a script or drag a script file from your workspace to insert its path.\necho \"SETUP FIREBASE QA\"\nGOOGLESERVICE_INFO_PLIST=GoogleService-Info.plist\nGOOGLESERVICE_INFO_QA=\"${PROJECT_DIR}/firebase/qa/${GOOGLESERVICE_INFO_PLIST}\"\n\nPLIST_DESTINATION=${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app\n\n cp -r \"${GOOGLESERVICE_INFO_QA}\" \"${PLIST_DESTINATION}\" \n";
 		};
+		B36C615C2E0454760074ECE7 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-App-templateUAT-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B36C61612E0454760074ECE7 /* Setup Firebase */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Setup Firebase";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\necho \"SETUP FIREBASE UAT\"\nGOOGLESERVICE_INFO_PLIST=GoogleService-Info.plist\nGOOGLESERVICE_INFO_DEV=\"${PROJECT_DIR}/firebase/uat/${GOOGLESERVICE_INFO_PLIST}\"\n\nPLIST_DESTINATION=${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app\n\n cp -r \"${GOOGLESERVICE_INFO_DEV}\" \"${PLIST_DESTINATION}\" \n";
+		};
+		B36C61792E0454760074ECE7 /* Bundle React Native code and images */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/.xcode.env.local",
+				"$(SRCROOT)/.xcode.env",
+			);
+			name = "Bundle React Native code and images";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "set -e\n\nWITH_ENVIRONMENT=\"../node_modules/react-native/scripts/xcode/with-environment.sh\"\nREACT_NATIVE_XCODE=\"../node_modules/react-native/scripts/react-native-xcode.sh\"\n\n/bin/sh -c \"$WITH_ENVIRONMENT $REACT_NATIVE_XCODE\"\n";
+		};
+		B36C617A2E0454760074ECE7 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-App-templateUAT/Pods-App-templateUAT-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-App-templateUAT/Pods-App-templateUAT-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-App-templateUAT/Pods-App-templateUAT-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B36C617B2E0454760074ECE7 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-App-templateUAT/Pods-App-templateUAT-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-App-templateUAT/Pods-App-templateUAT-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-App-templateUAT/Pods-App-templateUAT-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		C38B50BA6285516D6DCD4F65 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1012,6 +1227,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				B310625B2DE83ECE00657BE5 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B36C615D2E0454760074ECE7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B36C615E2E0454760074ECE7 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1321,7 +1544,10 @@
 					"-DFOLLY_CFG_NO_COROUTINES=1",
 					"-DFOLLY_HAVE_CLOCK_GETTIME=1",
 				);
-				OTHER_LDFLAGS = "$(inherited)  ";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					" ",
+				);
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) DEBUG";
@@ -1402,11 +1628,68 @@
 					"-DFOLLY_CFG_NO_COROUTINES=1",
 					"-DFOLLY_HAVE_CLOCK_GETTIME=1",
 				);
-				OTHER_LDFLAGS = "$(inherited)  ";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					" ",
+				);
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				USE_HERMES = true;
 				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		B36C617D2E0454760074ECE7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 757EEB098E2ED0BA782770E2 /* Pods-App-templateUAT.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 55QQP72PTY;
+				ENABLE_BITCODE = NO;
+				INFOPLIST_FILE = templateUAT/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-lc++",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.mindbowser.rnts.uat;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Debug;
+		};
+		B36C617E2E0454760074ECE7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4AB45F5256318633E1ACD0C4 /* Pods-App-templateUAT.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 55QQP72PTY;
+				INFOPLIST_FILE = templateUAT/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-lc++",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.mindbowser.rnts.uat;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
 		};
@@ -1454,6 +1737,15 @@
 			buildConfigurations = (
 				83CBBA201A601CBA00E9B192 /* Debug */,
 				83CBBA211A601CBA00E9B192 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B36C617C2E0454760074ECE7 /* Build configuration list for PBXNativeTarget "templateUAT" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B36C617D2E0454760074ECE7 /* Debug */,
+				B36C617E2E0454760074ECE7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
