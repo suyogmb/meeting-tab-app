@@ -8,12 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		0233BD4137A0A854C4E69DAF /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */; };
-		054308AF5DACBDC9646015F5 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
+		054308AF5DACBDC9646015F5 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		1D46F06815D04E35B0CED267 /* Pods_App_templateDevelopment.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 76DB9A9F7010909EA2B29649 /* Pods_App_templateDevelopment.framework */; };
 		2F906ED0AE914F1A975A819E /* Poppins-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5813C3EADEB447E4B826018A /* Poppins-ExtraBold.ttf */; };
 		2FC2FCE01EDB4B358C9DEE65 /* Poppins-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2351FC3747F444778E81A48E /* Poppins-Thin.ttf */; };
-		365A0BE0C074557393A9F03A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
+		365A0BE0C074557393A9F03A /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		3A9A28DC6BBB4168AB7D86BB /* Poppins-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1B4CC674040F4124B94A6E3D /* Poppins-BlackItalic.ttf */; };
 		3C0057693E78431696B776C7 /* Poppins-SemiBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E8C5080F478641379306FD67 /* Poppins-SemiBoldItalic.ttf */; };
 		4313159EEC19406EBD8AC1AD /* Poppins-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EF9D4917A345472EAD8722D9 /* Poppins-Black.ttf */; };
@@ -203,7 +203,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				054308AF5DACBDC9646015F5 /* BuildFile in Frameworks */,
+				054308AF5DACBDC9646015F5 /* (null) in Frameworks */,
 				C5920F4A994C83C9B421AAFC /* Pods_App_template.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -220,7 +220,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				365A0BE0C074557393A9F03A /* BuildFile in Frameworks */,
+				365A0BE0C074557393A9F03A /* (null) in Frameworks */,
 				1D46F06815D04E35B0CED267 /* Pods_App_templateDevelopment.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1377,8 +1377,11 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.mindbowser.rnts.development;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -1404,7 +1407,10 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.mindbowser.rnts.development;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
@@ -1544,10 +1550,7 @@
 					"-DFOLLY_CFG_NO_COROUTINES=1",
 					"-DFOLLY_HAVE_CLOCK_GETTIME=1",
 				);
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					" ",
-				);
+				OTHER_LDFLAGS = "$(inherited)  ";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) DEBUG";
@@ -1628,10 +1631,7 @@
 					"-DFOLLY_CFG_NO_COROUTINES=1",
 					"-DFOLLY_HAVE_CLOCK_GETTIME=1",
 				);
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					" ",
-				);
+				OTHER_LDFLAGS = "$(inherited)  ";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				USE_HERMES = true;

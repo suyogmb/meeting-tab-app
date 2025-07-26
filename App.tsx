@@ -13,6 +13,7 @@ import {ThemeProvider} from './src/contexts/ThemeContext';
 import LanguageProvider from './src/hocs/LanguageProvider';
 import RootStackNavigator from './src/navigators/RootStackNavigator';
 import store from './src/redux/app/store';
+import 'react-native-get-random-values';
 
 function App(): React.JSX.Element {
   useEffect(() => {
