@@ -6,7 +6,7 @@ import newRelic from 'newrelic-react-native-agent';
 import {useTranslation} from 'react-i18next';
 import StorageService from 'utils/StorageService';
 import {useStyles} from './Login.styles';
-import {isEmptyOrNull, isValidEmail, isValidPassword} from '../../../utils/ValidationUtils';
+import {loginSchema, validateData, validateField} from '../../../utils/ValidationSchemas';
 
 type AuthStackParamList = {
   HOME: undefined;
@@ -34,28 +34,35 @@ const useViewModel = () => {
         username,
         timestamp: new Date().toISOString(),
       } as unknown as Map<string, string>);
-      if (isEmptyOrNull(username)) {
-        setIsUsernameSet(true);
-        setUsernameErrorMsg('Email is required.');
+
+      // Validate login data using Yup schema
+      const validationResult = await validateData(
+        {
+          email: username,
+          password: password,
+        },
+        loginSchema,
+      );
+
+      if (!validationResult.isValid) {
+        // Set error states based on validation results
+        if (validationResult.errors.email) {
+          setIsUsernameSet(true);
+          setUsernameErrorMsg(validationResult.errors.email);
+        }
+        if (validationResult.errors.password) {
+          setIsPasswordSet(true);
+          setPasswordErrorMsg(validationResult.errors.password);
+        }
         return;
       }
 
-      if (!isValidEmail(username)) {
-        setIsUsernameSet(true);
-        setUsernameErrorMsg('Please enter a valid email address.');
-        return;
-      }
-      if (isEmptyOrNull(password)) {
-        setIsPasswordSet(true);
-        setPasswordErrorMsg('password is required.');
-        return;
-      }
+      // Clear any existing error states
+      setIsUsernameSet(false);
+      setIsPasswordSet(false);
+      setUsernameErrorMsg('');
+      setPasswordErrorMsg('');
 
-      if (!isValidPassword(password, 6)) {
-        setIsPasswordSet(true);
-        setPasswordErrorMsg('Password must be at least 6 characters.');
-        return;
-      }
       StorageService.storeItem(StorageService.storageKeys.isLoggedIn, true);
       navigation.navigate(AUTH_STACK_NAVIGATOR.HOME);
     } catch (error) {
@@ -75,6 +82,22 @@ const useViewModel = () => {
     setUsername(text); // Update username state
   };
 
+  const onEmailBlur = async () => {
+    const emailValidation = await validateField('email', username, loginSchema);
+    if (!emailValidation.isValid) {
+      setIsUsernameSet(true);
+      setUsernameErrorMsg(emailValidation.error);
+    }
+  };
+
+  const onPasswordBlur = async () => {
+    const passwordValidation = await validateField('password', password, loginSchema);
+    if (!passwordValidation.isValid) {
+      setIsPasswordSet(true);
+      setPasswordErrorMsg(passwordValidation.error);
+    }
+  };
+
   return {
     username,
     password,
@@ -88,6 +111,8 @@ const useViewModel = () => {
     onSubmit,
     styles,
     t,
+    onEmailBlur,
+    onPasswordBlur,
   };
 };
 

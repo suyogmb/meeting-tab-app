@@ -1,12 +1,8 @@
 import React from 'react';
 import {Text as RNText, TextStyle} from 'react-native';
+import {TextProps} from 'types/types';
 import {useTheme} from '../contexts/ThemeContext';
 import {getTypographyStyle, TypographyStyleEnum} from '../utils/Typography';
-
-interface TextProps {
-  style?: TextStyle;
-  children: React.ReactNode;
-}
 
 const Text = ({children, style}: TextProps) => {
   const {themeColors} = useTheme();

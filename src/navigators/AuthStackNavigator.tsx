@@ -2,28 +2,10 @@ import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {Home, Login} from 'screens';
 import DetailsScreen from 'screens/DetailScreen/DetailScreen';
+import {AuthStackParamList} from 'types/types';
 import {AUTH_STACK_NAVIGATOR} from './routes';
 
-export type AuthStackParamList = {
-  HOME: undefined;
-  HOME_DETAILS: {data?: object};
-};
 const AuthStackNavigator = () => {
-  interface MovieDetails {
-    name?: string;
-    imageurl?: string;
-    team?: string;
-    firstappearance?: string;
-    publisher?: string;
-    bio?: string;
-  }
-  // Define the type for the navigator
-  type AuthStackParamList = {
-    LOGIN_SCREEN: undefined;
-    HOME: undefined;
-    HOME_DETAILS: {data?: MovieDetails}; // Ensure type consistency with DetailsScreenProps
-  };
-
   // Explicitly type the stack
   const Stack = createNativeStackNavigator<AuthStackParamList>();
 

@@ -1,20 +1,10 @@
 import React from 'react';
-import {KeyboardTypeOptions, StyleProp, StyleSheet, TextInput, TextStyle, View} from 'react-native';
+import {StyleSheet, TextInput, View} from 'react-native';
+import {TextInputProps} from 'types/types';
+import {V_10} from 'utils/SizeUtility';
 import Text from './Text';
 import {useTheme} from '../contexts/ThemeContext';
 import {getTypographyStyle, TypographyStyleEnum} from '../utils/Typography';
-
-interface TextInputProps {
-  value: string;
-  onChangeText(text: string): void;
-  placeholder: string;
-  keyboardType?: KeyboardTypeOptions;
-  autoCapitalize?: 'none';
-  secureTextEntry?: boolean;
-  style?: StyleProp<TextStyle> | undefined;
-  isError?: boolean;
-  errorMsg?: string;
-}
 
 const TextInputComponent = ({
   value = '',
@@ -26,6 +16,7 @@ const TextInputComponent = ({
   style,
   isError = false,
   errorMsg = '',
+  onBlur,
 }: TextInputProps) => {
   const {themeColors} = useTheme();
 
@@ -40,6 +31,7 @@ const TextInputComponent = ({
         autoCapitalize={autoCapitalize}
         secureTextEntry={secureTextEntry}
         placeholderTextColor={themeColors.inputPlaceholder}
+        onBlur={onBlur}
       />
       {isError && (
         <Text style={{...styles.text, color: themeColors.error, ...getTypographyStyle(TypographyStyleEnum.CAPTION)}}>
@@ -56,6 +48,6 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   text: {
-    marginBottom: 16,
+    marginBottom: V_10,
   },
 });

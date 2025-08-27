@@ -1,9 +1,6 @@
-import React, {FunctionComponent} from 'react';
-import {ImageProps, ImageSourcePropType, Image as RNImage} from 'react-native';
-
-interface CustomImageProps extends Omit<ImageProps, 'source'> {
-  source: FunctionComponent | ImageSourcePropType;
-}
+import React from 'react';
+import {Image as RNImage} from 'react-native';
+import {CustomImageProps} from 'types/types';
 
 const Image = ({source: Source, style, ...props}: CustomImageProps) => {
   if (typeof Source === 'number' || typeof Source === 'string') {

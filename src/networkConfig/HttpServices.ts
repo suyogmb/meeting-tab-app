@@ -7,21 +7,10 @@ import axios, {
   Method,
 } from 'axios';
 import Toast from 'react-native-toast-message';
+import {ApiResponse, CustomAxiosRequestConfig} from 'types/types';
 import StorageService from 'utils/StorageService';
 import {ERROR_CODES, TOAST_TYPE} from '../utils/Constants';
 const AUTHORIZATION = 'Authorization';
-
-interface StandardApiResponse {
-  success: boolean;
-  data: Record<string, unknown>;
-  error?: string;
-}
-
-interface ApiResponse<T = StandardApiResponse> {
-  data: T;
-  status: number;
-  message?: string;
-}
 
 const axiosInstance: AxiosInstance = axios.create({
   baseURL: '', // Set the base URL dynamically if needed
@@ -56,9 +45,6 @@ axiosInstance.interceptors.request.use(async (config: InternalAxiosRequestConfig
 });
 
 // Extend InternalAxiosRequestConfig to include _retry
-interface CustomAxiosRequestConfig extends InternalAxiosRequestConfig {
-  _retry?: boolean;
-}
 
 // Handle response errors
 axiosInstance.interceptors.response.use(

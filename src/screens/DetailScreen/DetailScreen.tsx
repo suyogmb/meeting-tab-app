@@ -2,24 +2,11 @@ import React from 'react';
 import {Image, SafeAreaView, ScrollView, StatusBar, Text, View} from 'react-native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {Header, ReusableButton} from 'components';
+import {HomeTabParamList} from 'types/types';
 import useViewModel from './Details.viewmodel';
 import {getTypographyStyle, TypographyStyleEnum} from '../../utils/Typography';
 
-interface MovieDetails {
-  name?: string;
-  imageurl?: string;
-  team?: string;
-  firstappearance?: string;
-  publisher?: string;
-  bio?: string;
-}
-
-type AuthStackParamList = {
-  HOME: undefined;
-  HOME_DETAILS: {data?: MovieDetails}; // expecting 'data' to be an object
-};
-
-type DetailsScreenProps = NativeStackScreenProps<AuthStackParamList, 'HOME_DETAILS'>;
+type DetailsScreenProps = NativeStackScreenProps<HomeTabParamList, 'HOME_DETAILS'>;
 
 const DetailsScreen = ({route}: DetailsScreenProps) => {
   const {styles, t, onBack} = useViewModel();

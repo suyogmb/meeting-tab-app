@@ -2,23 +2,10 @@ import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import DetailScreen from 'screens/DetailScreen/DetailScreen';
 import Home from 'screens/Home/Home';
+import {HomeTabParamList} from 'types/types';
 import {HOME_TAB_NAVIGATOR} from './routes';
 
 const HomeTabNavigator = () => {
-  interface MovieDetails {
-    name?: string;
-    imageurl?: string;
-    team?: string;
-    firstappearance?: string;
-    publisher?: string;
-    bio?: string;
-  }
-
-  type HomeTabParamList = {
-    HOME: undefined;
-    HOME_DETAILS: {data?: MovieDetails};
-  };
-
   const Tab = createBottomTabNavigator<HomeTabParamList>();
 
   //TODO: Add screens
