@@ -1,9 +1,9 @@
-import {Platform} from 'react-native';
+import { Platform } from 'react-native';
 import Keychain from 'react-native-keychain';
-import {MMKV} from 'react-native-mmkv';
-import {v4 as uuidv4} from 'uuid';
-import {isIos} from './Dimensions';
-import {logger} from './SecureLogger';
+import { createMMKV, MMKV } from 'react-native-mmkv';
+import { v4 as uuidv4 } from 'uuid';
+import { isIos } from './Dimensions';
+import { logger } from './SecureLogger';
 
 /**
  * StorageManager - A secure storage solution for React Native applications
@@ -60,7 +60,7 @@ class StorageManager {
   constructor() {
     // Initialize storage after a short delay to ensure React Native is fully loaded
     setTimeout(() => {
-      this.initializeStorage().catch((error) => logger.error('Storage initialization error:', {error}));
+      this.initializeStorage().catch((error) => logger.error('Storage initialization error:', { error }));
     }, 100);
   }
 
@@ -136,11 +136,11 @@ class StorageManager {
         await Keychain.setInternetCredentials('mmkv-secure-key', 'secure-key', key);
         return key;
       } catch (keychainError) {
-        logger.warn('Keychain operation failed for secure key:', {keychainError});
+        logger.warn('Keychain operation failed for secure key:', { keychainError });
         return this.generateFallbackSecureKey();
       }
     } catch (error) {
-      logger.error('Error generating secure key:', {error});
+      logger.error('Error generating secure key:', { error });
       return this.generateFallbackSecureKey();
     }
   }
@@ -177,20 +177,20 @@ class StorageManager {
         const secureKey = await this.generateSecureKey(); // Async, more complex key for sensitive data
 
         // Initialize regular storage for app data (settings, preferences, cache, etc.)
-        this.storage = new MMKV({
+        this.storage = createMMKV({
           id: 'app-storage',
           encryptionKey: baseKey,
         });
 
         // Initialize secure storage for sensitive data (tokens, passwords, personal info)
-        this.secureStorage = new MMKV({
+        this.secureStorage = createMMKV({
           id: 'secure-storage',
           encryptionKey: secureKey,
         });
 
         this.isStorageInitialized = true;
       } catch (error) {
-        logger.error('Storage initialization failed:', {error});
+        logger.error('Storage initialization failed:', { error });
         this.isStorageInitialized = false;
         throw error;
       } finally {
@@ -237,7 +237,7 @@ class StorageManager {
         store.set(key, String(value));
       }
     } catch (error) {
-      logger.error(`Error storing item ${key}:`, {error});
+      logger.error(`Error storing item ${key}:`, { error });
       throw error;
     }
   }
@@ -274,7 +274,7 @@ class StorageManager {
       }
       return null;
     } catch (error) {
-      logger.error(`Error getting item ${key}:`, {error});
+      logger.error(`Error getting item ${key}:`, { error });
       return null;
     }
   }
@@ -292,7 +292,7 @@ class StorageManager {
       this.storage?.clearAll();
       this.secureStorage?.clearAll();
     } catch (error) {
-      logger.error('Error clearing local storage:', {error});
+      logger.error('Error clearing local storage:', { error });
     }
   }
 
@@ -313,9 +313,9 @@ class StorageManager {
     try {
       let store = isSecure ? this.secureStorage : this.storage;
       if (!store) throw new Error('Storage not initialized');
-      store.delete(key);
+      store.remove(key);
     } catch (error) {
-      logger.error(`Error removing item ${key}:`, {error});
+      logger.error(`Error removing item ${key}:`, { error });
     }
   }
 
@@ -338,7 +338,7 @@ class StorageManager {
       if (!store) throw new Error('Storage not initialized');
       return store.getAllKeys();
     } catch (error) {
-      logger.error('Error getting all keys:', {error});
+      logger.error('Error getting all keys:', { error });
       return [];
     }
   }
@@ -363,7 +363,7 @@ class StorageManager {
       if (!store) throw new Error('Storage not initialized');
       return store.contains(key);
     } catch (error) {
-      logger.error(`Error checking item ${key}:`, {error});
+      logger.error(`Error checking item ${key}:`, { error });
       return false;
     }
   }
