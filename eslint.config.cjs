@@ -1,8 +1,8 @@
-import eslint from '@eslint/js';
-import tseslint from '@typescript-eslint/eslint-plugin';
-import tsParser from '@typescript-eslint/parser';
-import pluginImport from 'eslint-plugin-import';
-import globals from 'globals';
+const eslint = require('@eslint/js');
+const tseslint = require('@typescript-eslint/eslint-plugin');
+const tsParser = require('@typescript-eslint/parser');
+const pluginImport = require('eslint-plugin-import');
+const globals = require('globals');
 
 /**
  * Clean global keys to remove leading/trailing whitespaces
@@ -15,10 +15,10 @@ const cleanGlobalKeys = (globalsObj) =>
   }, {});
 
 /** @type {import('eslint').Linter.FlatConfig[]} */
-export default [
+module.exports = [
   // Base configuration
   {
-    ignores: ['**/node_modules/**', '**/build/**', '**/dist/**', '**/*.d.ts'],
+    ignores: ['**/node_modules/**', '**/build/**', '**/dist/**', '**/*.d.ts', 'eslint.config.cjs'],
   },
   {
     files: ['**/*.{js,mjs,cjs,ts,jsx,tsx}'],
@@ -27,7 +27,7 @@ export default [
       sourceType: 'module',
       parser: tsParser, // ✅ Add TypeScript parser
       parserOptions: {
-        ecmaFeatures: {jsx: true}, // ✅ Enables JSX support
+        ecmaFeatures: { jsx: true }, // ✅ Enables JSX support
         project: './tsconfig.json', // ✅ Ensures TypeScript rules are applied
       },
       globals: {
@@ -54,7 +54,7 @@ export default [
       'no-undef': 'off', // ✅ Avoids unnecessary no-undef errors
       'jest/no-disabled-tests': 0,
       'global-require': 0,
-      'sort-imports': ['error', {ignoreCase: true, ignoreDeclarationSort: true}],
+      'sort-imports': ['error', { ignoreCase: true, ignoreDeclarationSort: true }],
       'import/order': [
         'error',
         {

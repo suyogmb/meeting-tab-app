@@ -40,7 +40,8 @@
     "ios:archive:templateUAT:release": "xcodebuild -workspace ios/template.xcworkspace -scheme templateUAT -configuration Release -sdk iphoneos archive -archivePath ios/build/templateUAT.xcarchive",
     "ios:run:templateDevelopment:debug": "npx react-native run-ios --scheme templateDevelopment --mode Debug",
     "ios:run:templateDevelopment:release": "npx react-native run-ios --scheme templateDevelopment --mode Release",
-    "ios:archive:templateDevelopment:release": "xcodebuild -workspace ios/template.xcworkspace -scheme templateDevelopment -configuration Release -sdk iphoneos archive -archivePath ios/build/templateDevelopment.xcarchive"
+    "ios:archive:templateDevelopment:release": "xcodebuild -workspace ios/template.xcworkspace -scheme templateDevelopment -configuration Release -sdk iphoneos archive -archivePath ios/build/templateDevelopment.xcarchive",
+    "test:coverage": "jest --coverage --watchAll=false"
   },
   "dependencies": {
     "@notifee/react-native": "^9.1.8",
