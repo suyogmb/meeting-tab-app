@@ -1,5 +1,6 @@
 import React from 'react';
 import {StyleSheet, Text, TouchableOpacity} from 'react-native';
+import {M_16, M_20, M_8, V_10} from 'utils/SizeUtility';
 
 const ReusableButton = ({title = 'Button', onPress = () => {}, style = {}, textStyle = {}, disabled = false}) => {
   return (
@@ -21,15 +22,15 @@ const ReusableButton = ({title = 'Button', onPress = () => {}, style = {}, textS
 const styles = StyleSheet.create({
   button: {
     backgroundColor: '#007BFF',
-    paddingVertical: 12,
-    paddingHorizontal: 20,
-    borderRadius: 8,
+    paddingVertical: V_10,
+    paddingHorizontal: M_20,
+    borderRadius: M_8,
     alignItems: 'center',
     justifyContent: 'center',
   },
   buttonText: {
     color: '#FFFFFF',
-    fontSize: 16,
+    fontSize: M_16,
     fontWeight: 'bold',
   },
   disabledButton: {

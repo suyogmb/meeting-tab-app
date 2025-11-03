@@ -19,13 +19,19 @@ const Login = () => {
     onSubmit,
     styles,
     t,
+    onEmailBlur,
+    onPasswordBlur,
   } = useViewModel();
 
   return (
     <View style={styles.container}>
       <SafeAreaView style={styles.safeArea}>
         <View style={styles.logo}>
-          <Image source={ImageConstants.LogoPng} />
+          <Image
+            source={ImageConstants.LogoPng}
+            style={styles.imageStyle}
+            resizeMode="contain"
+          />
         </View>
         <View style={styles.subContainer}>
           <TextInputComponent
@@ -37,6 +43,7 @@ const Login = () => {
             autoCapitalize="none"
             isError={isUsernameSet}
             errorMsg={usernameErrorMsg}
+            onBlur={onEmailBlur}
           />
           <TextInputComponent
             style={styles.input}
@@ -46,6 +53,7 @@ const Login = () => {
             secureTextEntry
             isError={isPasswordSet}
             errorMsg={passwordErrorMsg}
+            onBlur={onPasswordBlur}
           />
           <ReusableButton
             title={t('login.button.title')}

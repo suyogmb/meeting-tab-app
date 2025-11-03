@@ -1,10 +1,5 @@
 import Config from 'react-native-config';
-
-// Define an interface for expected config values
-interface ConfigType {
-  API_KEY?: string;
-  BASE_URL?: string;
-}
+import {ConfigType} from 'types/types';
 
 const config: ConfigType = Config as ConfigType;
 

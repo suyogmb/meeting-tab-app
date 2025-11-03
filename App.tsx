@@ -5,14 +5,16 @@
  * @format
  */
 
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import analytics from '@react-native-firebase/analytics';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import Toast from 'react-native-toast-message';
-import {Provider} from 'react-redux';
-import {ThemeProvider} from './src/contexts/ThemeContext';
+import { Provider } from 'react-redux';
+import { ThemeProvider } from './src/contexts/ThemeContext';
 import LanguageProvider from './src/hocs/LanguageProvider';
 import RootStackNavigator from './src/navigators/RootStackNavigator';
 import store from './src/redux/app/store';
+import 'react-native-get-random-values';
 
 function App(): React.JSX.Element {
   useEffect(() => {
@@ -28,14 +30,16 @@ function App(): React.JSX.Element {
   }, []);
   return (
     <>
-      <Provider store={store}>
-        <LanguageProvider>
-          <ThemeProvider>
-            <RootStackNavigator />
-            <Toast />
-          </ThemeProvider>
-        </LanguageProvider>
-      </Provider>
+      <SafeAreaProvider>
+        <Provider store={store}>
+          <LanguageProvider>
+            <ThemeProvider>
+              <RootStackNavigator />
+              <Toast />
+            </ThemeProvider>
+          </LanguageProvider>
+        </Provider>
+      </SafeAreaProvider>
     </>
   );
 }

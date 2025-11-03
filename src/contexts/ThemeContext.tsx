@@ -1,12 +1,6 @@
 import React, {createContext, useContext, useState} from 'react';
 import {colors} from '../theme/colors';
-import {ThemeOptions} from '../types/types';
-
-interface ThemeContextType {
-  theme: ThemeOptions;
-  setTheme: (key: ThemeOptions) => void;
-  themeColors: (typeof colors)[ThemeOptions.dark];
-}
+import {ThemeContextType, ThemeOptions} from '../types/types';
 
 const initialContext: ThemeContextType = {
   theme: ThemeOptions.dark,

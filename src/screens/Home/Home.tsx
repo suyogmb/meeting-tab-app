@@ -1,25 +1,16 @@
 import React, {useEffect} from 'react';
-import {
-  FlatList,
-  Image,
-  ListRenderItem,
-  SafeAreaView,
-  StatusBar,
-  Switch,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import {FlatList, Image, ListRenderItem, SafeAreaView, StatusBar, Switch, TouchableOpacity, View} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {Header} from 'components';
+import {Header, Text} from 'components';
 import useTypedSelector from 'hooks/useTypedSelector';
 import {AUTH_STACK_NAVIGATOR} from 'navigators/routes';
 import {useDispatch} from 'react-redux';
+import {MovieDetails} from 'types/types';
 import useViewModel from './Home.viewmodel';
 import {useTheme} from '../../contexts/ThemeContext';
 import {AppDispatch} from '../../redux/app/store';
-import {getMoviesData, Movie} from '../../redux/reducer/DashboardSlice';
+import {getMoviesData} from '../../redux/reducer/DashboardSlice';
 import {getTypographyStyle, TypographyStyleEnum} from '../../utils/Typography';
 type AuthStackParamList = {
   HOME: undefined;
@@ -41,7 +32,7 @@ const Home = () => {
     navigation.navigate(AUTH_STACK_NAVIGATOR.HOME_DETAILS, {data: item});
   };
 
-  const renderItem: ListRenderItem<Movie> = ({item}) => {
+  const renderItem: ListRenderItem<MovieDetails> = ({item}) => {
     return (
       <TouchableOpacity
         style={styles.listView}
@@ -53,9 +44,9 @@ const Home = () => {
           resizeMode="cover"
         />
         <View>
-          <Text style={{...styles.subText, ...getTypographyStyle(TypographyStyleEnum.LABEL)}}>{item.name}</Text>
-          <Text style={{...styles.subText, ...getTypographyStyle(TypographyStyleEnum.LABEL)}}>{item.publisher}</Text>
-          <Text style={{...styles.subText, ...getTypographyStyle(TypographyStyleEnum.LABEL)}}>
+          <Text style={{...styles.subText, ...getTypographyStyle(TypographyStyleEnum.TITLE)}}>{item.name}</Text>
+          <Text style={{...styles.subText, ...getTypographyStyle(TypographyStyleEnum.SUBTITLE)}}>{item.publisher}</Text>
+          <Text style={{...styles.subText, ...getTypographyStyle(TypographyStyleEnum.BODY)}}>
             {item.firstappearance}
           </Text>
         </View>

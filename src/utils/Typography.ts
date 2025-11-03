@@ -1,4 +1,6 @@
 import {TextStyle} from 'react-native';
+import {fontFamily} from './FontUtils';
+import {M_10, M_12, M_14, M_16, M_18, M_20, M_22, M_24, M_26, M_28, M_32} from './SizeUtility';
 
 export enum TypographyStyleEnum {
   HEADING = 'heading',
@@ -15,56 +17,56 @@ export enum TypographyStyleEnum {
 export function getTypographyStyle(style: TypographyStyleEnum): TextStyle {
   const styles: {[key in TypographyStyleEnum]: TextStyle} = {
     [TypographyStyleEnum.HEADING]: {
-      fontFamily: 'Poppins-Regular',
-      fontSize: 24,
+      fontFamily: fontFamily.regular,
+      fontSize: M_24,
       fontWeight: 'bold',
-      lineHeight: 32,
+      lineHeight: M_32,
     },
     [TypographyStyleEnum.BODY]: {
-      fontFamily: 'Poppins-Regular',
-      fontSize: 16,
-      lineHeight: 24,
+      fontFamily: fontFamily.regular,
+      fontSize: M_16,
+      lineHeight: M_24,
     },
     [TypographyStyleEnum.CAPTION]: {
-      fontFamily: 'Poppins-Regular',
-      fontSize: 12,
-      lineHeight: 16,
+      fontFamily: fontFamily.regular,
+      fontSize: M_12,
+      lineHeight: M_16,
     },
     [TypographyStyleEnum.TITLE]: {
-      fontFamily: 'Poppins-Regular',
-      fontSize: 20,
+      fontFamily: fontFamily.regular,
+      fontSize: M_20,
       fontWeight: 'bold',
-      lineHeight: 28,
+      lineHeight: M_28,
     },
     [TypographyStyleEnum.SUBTITLE]: {
-      fontFamily: 'Poppins-Regular',
-      fontSize: 18,
+      fontFamily: fontFamily.regular,
+      fontSize: M_18,
       fontWeight: '600',
-      lineHeight: 26,
+      lineHeight: M_26,
     },
     [TypographyStyleEnum.BUTTON]: {
-      fontFamily: 'Poppins-Regular',
-      fontSize: 14,
+      fontFamily: fontFamily.regular,
+      fontSize: M_14,
       fontWeight: 'bold',
-      lineHeight: 20,
+      lineHeight: M_20,
     },
     [TypographyStyleEnum.OVERLINE]: {
-      fontFamily: 'Poppins-Regular',
-      fontSize: 10,
+      fontFamily: fontFamily.regular,
+      fontSize: M_10,
       fontWeight: 'normal',
-      lineHeight: 12,
+      lineHeight: M_12,
     },
     [TypographyStyleEnum.LABEL]: {
-      fontFamily: 'Poppins-Regular',
-      fontSize: 14,
+      fontFamily: fontFamily.regular,
+      fontSize: M_14,
       fontWeight: 'normal',
-      lineHeight: 18,
+      lineHeight: M_18,
     },
     [TypographyStyleEnum.INPUT]: {
-      fontFamily: 'Poppins-Regular',
-      fontSize: 16,
+      fontFamily: fontFamily.regular,
+      fontSize: M_16,
       fontWeight: 'normal',
-      lineHeight: 22,
+      lineHeight: M_22,
     },
   };
 

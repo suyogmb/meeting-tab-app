@@ -1,16 +1,11 @@
 import React from 'react';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
+import {HeaderProps} from 'types/types';
 import ImageConstants from 'utils/ImageConstants';
+import {M_18} from 'utils/SizeUtility';
 import {useTheme} from '../contexts/ThemeContext';
 import {getTypographyStyle, TypographyStyleEnum} from '../utils/Typography';
-
-interface HeaderProps {
-  title: string;
-  showBackButton?: boolean;
-  onBackPress?: () => void;
-  rightComponent?: React.ReactNode;
-}
 
 const Header = ({title = 'Header', showBackButton = true, onBackPress, rightComponent}: HeaderProps) => {
   const navigation = useNavigation();
@@ -71,7 +66,7 @@ const styles = StyleSheet.create({
   title: {
     textAlign: 'center',
     flex: 1,
-    fontSize: 18,
+    fontSize: M_18,
     fontWeight: '600',
   },
   placeholder: {
