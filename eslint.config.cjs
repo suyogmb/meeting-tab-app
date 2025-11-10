@@ -16,20 +16,12 @@ const cleanGlobalKeys = (globalsObj) =>
 
 /** @type {import('eslint').Linter.FlatConfig[]} */
 module.exports = [
-  // Base configuration
+  // Base configuration for all files
   {
     ignores: ['**/node_modules/**', '**/build/**', '**/dist/**', '**/*.d.ts', 'eslint.config.cjs'],
-  },
-  {
-    files: ['**/*.{js,mjs,cjs,ts,jsx,tsx}'],
     languageOptions: {
       ecmaVersion: 'latest',
       sourceType: 'module',
-      parser: tsParser, // ✅ Add TypeScript parser
-      parserOptions: {
-        ecmaFeatures: { jsx: true }, // ✅ Enables JSX support
-        project: './tsconfig.json', // ✅ Ensures TypeScript rules are applied
-      },
       globals: {
         ...cleanGlobalKeys(globals.browser),
         ...cleanGlobalKeys(globals.node),
@@ -37,23 +29,9 @@ module.exports = [
       },
     },
     plugins: {
-      '@typescript-eslint': tseslint,
       import: pluginImport,
     },
     rules: {
-      ...eslint.configs.recommended.rules,
-      ...tseslint.configs.recommended.rules, // ✅ Apply recommended TypeScript rules
-      'no-unused-vars': 'off', // ⛔ turn off base rule to avoid conflict
-      '@typescript-eslint/no-unused-vars': [
-        'error',
-        {
-          argsIgnorePattern: '^_',
-          varsIgnorePattern: '^_',
-        },
-      ],
-      'no-undef': 'off', // ✅ Avoids unnecessary no-undef errors
-      'jest/no-disabled-tests': 0,
-      'global-require': 0,
       'sort-imports': ['error', { ignoreCase: true, ignoreDeclarationSort: true }],
       'import/order': [
         'error',
@@ -79,6 +57,41 @@ module.exports = [
         },
       ],
       'no-control-regex': 0,
+    },
+  },
+
+  // Configuration for JavaScript files
+  {
+    files: ['**/*.{js,mjs,cjs}'],
+    rules: {
+      ...eslint.configs.recommended.rules,
+    },
+  },
+
+  // Configuration for TypeScript files
+  {
+    files: ['**/*.{ts,tsx}'],
+    languageOptions: {
+      parser: tsParser,
+      parserOptions: {
+        ecmaFeatures: { jsx: true },
+        project: './tsconfig.json',
+      },
+    },
+    plugins: {
+      '@typescript-eslint': tseslint,
+    },
+    rules: {
+      ...tseslint.configs.recommended.rules,
+      'no-unused-vars': 'off', // turn off base rule to avoid conflict
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        {
+          argsIgnorePattern: '^_',
+          varsIgnorePattern: '^_',
+        },
+      ],
+      'no-undef': 'off',
     },
   },
 ];

@@ -1,8 +1,32 @@
 import React from 'react';
-import {StyleSheet, Text, TouchableOpacity} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  StyleProp,
+  TextStyle,
+  ViewStyle,
+} from 'react-native';
 import {M_16, M_20, M_8, V_10} from 'utils/SizeUtility';
+import {useTranslation} from 'react-i18next';
 
-const ReusableButton = ({title = 'Button', onPress = () => {}, style = {}, textStyle = {}, disabled = false}) => {
+type ReusableButtonProps = {
+  title?: string;
+  onPress?: () => void;
+  style?: StyleProp<ViewStyle>;
+  textStyle?: StyleProp<TextStyle>;
+  disabled?: boolean;
+};
+
+const ReusableButton = ({
+  title,
+  onPress = () => {},
+  style,
+  textStyle,
+  disabled = false,
+}: ReusableButtonProps) => {
+  const {t} = useTranslation();
+  const resolvedTitle = title ?? t('common.defaultButtonTitle');
   return (
     <TouchableOpacity
       style={[
@@ -14,7 +38,7 @@ const ReusableButton = ({title = 'Button', onPress = () => {}, style = {}, textS
       activeOpacity={0.8}
       disabled={disabled} // Disable the button if `disabled` is true
     >
-      <Text style={[styles.buttonText, textStyle]}>{title}</Text>
+      <Text style={[styles.buttonText, textStyle]}>{resolvedTitle}</Text>
     </TouchableOpacity>
   );
 };

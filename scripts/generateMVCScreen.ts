@@ -47,21 +47,24 @@ const viewModelTemplate = `
 import {useTranslation} from 'react-i18next';
 import {useIsFocused, useNavigation} from '@react-navigation/native';
 import {useStyles} from './${fileBaseName}.styles';
-import {useDispatch} from 'react-redux';
-import {AppDispatch} from 'redux/app/store';
+// Uncomment if using Redux Toolkit:
+// import {useDispatch} from 'react-redux';
+// import {AppDispatch} from 'redux/app/store';
 
 const useViewModel = () => {
   const styles = useStyles();
   const {t} = useTranslation();
   const navigation = useNavigation();
-  const dispatch = useDispatch<AppDispatch>();
+  // Uncomment if using Redux Toolkit:
+  // const dispatch = useDispatch<AppDispatch>();
   const isFocused = useIsFocused();
 
   return {
     styles,
     t,
     navigation,
-    dispatch,
+    // Uncomment if using Redux Toolkit:
+    // dispatch,
     isFocused,
   };
 };
@@ -75,7 +78,10 @@ import React from 'react';
 import useViewModel from './${fileBaseName}.viewmodel';
 
 const ${fileBaseName} = () => {
-  const {styles, t, navigation, dispatch, isFocused} = useViewModel();
+  const {styles, t, navigation, isFocused} = useViewModel();
+  // Uncomment if using Redux Toolkit:
+  // const {dispatch} = useViewModel();
+  
   return (
     <View style={styles.container}>
       <Text>${fileBaseName}</Text>

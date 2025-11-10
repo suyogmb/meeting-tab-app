@@ -1,6 +1,8 @@
-package com.rntstemplate
+package com.mindbowser.meetingroomkiosk
 
 import android.os.Bundle
+import android.app.ActivityManager
+import android.content.Context
 import com.facebook.react.ReactActivity
 import com.facebook.react.ReactActivityDelegate
 import com.facebook.react.defaults.DefaultNewArchitectureEntryPoint.fabricEnabled
@@ -24,6 +26,24 @@ class MainActivity : ReactActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     RNBootSplash.init(this, R.style.BootTheme)
-    super.onCreate(null)
+    super.onCreate(savedInstanceState)
+    tryStartLockTask()
   }
+
+  private fun tryStartLockTask() {
+    // If already locked, skip
+    val am = getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
+    val locked = am.lockTaskModeState == ActivityManager.LOCK_TASK_MODE_LOCKED ||
+      am.lockTaskModeState == ActivityManager.LOCK_TASK_MODE_PINNED
+    if (!locked) {
+      try {
+        startLockTask()
+      } catch (_: Throwable) {
+        // startLockTask may throw if not permitted; ignore gracefully
+      }
+    }
+  }
+
+  // Back button handling is now done in React Native using BackHandler
+  // This allows React Native to show the AdminSettings modal with proper password verification
 }

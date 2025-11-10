@@ -1,26 +1,52 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import analytics from '@react-native-firebase/analytics';
-import {createNavigationContainerRef, NavigationContainer} from '@react-navigation/native';
+import {
+  createNavigationContainerRef,
+  NavigationContainer,
+} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {ErrorHandler} from 'components';
-import useTypedSelector from 'hooks/useTypedSelector';
 import BootSplash from 'react-native-bootsplash';
-import StorageService from 'utils/StorageService';
-import AuthStackNavigator from './AuthStackNavigator';
-import MainStackNavigator from './MainStackNavigator';
+import {RootStackParamList, Routes} from '../types/navigation';
+import {FirstRunSetup, Dashboard, ErrorScreen} from '../screens';
+import StorageService from '../utils/StorageService';
 
-const navigationRef = createNavigationContainerRef();
+const Stack = createNativeStackNavigator<RootStackParamList>();
+const navigationRef = createNavigationContainerRef<RootStackParamList>();
 
 const RootStackNavigator = () => {
-  const {accessToken} = useTypedSelector((state) => state.app);
+  const [initialRoute, setInitialRoute] = useState<Routes | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    getLoginStatus();
+    // Check if first run is complete
+    const checkFirstRun = async () => {
+      try {
+        const isFirstRunComplete = await StorageService.getItem<boolean>(
+          StorageService.storageKeys.isFirstRunComplete,
+          false,
+        );
+
+        if (isFirstRunComplete) {
+          setInitialRoute(Routes.DASHBOARD);
+        } else {
+          setInitialRoute(Routes.FIRST_RUN_SETUP);
+        }
+      } catch (error) {
+        console.error('Failed to check first run status', error);
+        setInitialRoute(Routes.FIRST_RUN_SETUP);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    checkFirstRun();
   }, []);
 
-  const getLoginStatus = async () => {
-    const isLoggedIn = await StorageService.getItem(StorageService.storageKeys.isLoggedIn);
-    console.log(' logged in', isLoggedIn);
-  };
+  if (isLoading || !initialRoute) {
+    // Show splash screen while determining initial route
+    return null;
+  }
 
   return (
     <ErrorHandler>
@@ -31,11 +57,23 @@ const RootStackNavigator = () => {
           await analytics().logScreenView({
             screen_name: navigationRef.current?.getCurrentRoute()?.name,
           });
-        }}
-      >
-        {accessToken ? <MainStackNavigator /> : <AuthStackNavigator />}
+        }}>
+        <Stack.Navigator
+          initialRouteName={initialRoute}
+          screenOptions={{
+            headerShown: false,
+            animation: 'none', // Disable animations for kiosk app
+          }}>
+          <Stack.Screen
+            name={Routes.FIRST_RUN_SETUP}
+            component={FirstRunSetup}
+          />
+          <Stack.Screen name={Routes.DASHBOARD} component={Dashboard} />
+          <Stack.Screen name={Routes.ERROR_SCREEN} component={ErrorScreen} />
+        </Stack.Navigator>
       </NavigationContainer>
     </ErrorHandler>
   );
 };
+
 export default RootStackNavigator;

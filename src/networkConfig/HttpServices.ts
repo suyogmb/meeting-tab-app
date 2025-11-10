@@ -7,11 +7,14 @@ import axios, {
   Method,
 } from 'axios';
 import Toast from 'react-native-toast-message';
-import {ApiResponse, CustomAxiosRequestConfig} from 'types/types';
-import StorageService from 'utils/StorageService';
+import {ApiResponse} from 'types/types';
 import {ERROR_CODES, TOAST_TYPE} from '../utils/Constants';
-const AUTHORIZATION = 'Authorization';
+import i18n from '../language/i18n';
 
+/**
+ * HTTP Service for Kiosk App API communication
+ * Handles API requests with error handling and response interceptors
+ */
 const axiosInstance: AxiosInstance = axios.create({
   baseURL: '', // Set the base URL dynamically if needed
   headers: {
@@ -20,75 +23,43 @@ const axiosInstance: AxiosInstance = axios.create({
   timeout: 20000,
 });
 
-let isRefreshing = false;
-let failedQueue: {resolve: (value?: unknown) => void; reject: (reason?: AxiosError | Error) => void}[] = [];
+// Request interceptor - can be extended to add API keys, device tokens, etc.
+axiosInstance.interceptors.request.use(
+  async (config: InternalAxiosRequestConfig) => {
+    // Add any request headers here (e.g., API key, device ID, etc.)
+    // Example:
+    // const deviceId = await StorageService.getItem('deviceId');
+    // if (deviceId) {
+    //   config.headers['X-Device-ID'] = deviceId;
+    // }
+    return config;
+  },
+  (error) => Promise.reject(error),
+);
 
-const processQueue = (error: AxiosError | Error | unknown, token: string | null = null) => {
-  failedQueue.forEach((prom) => {
-    if (token) {
-      prom.resolve(token);
-    } else {
-      prom.reject(error as AxiosError);
-    }
-  });
-  failedQueue = [];
-};
-
-// Attach the access token to requests
-axiosInstance.interceptors.request.use(async (config: InternalAxiosRequestConfig) => {
-  const token = await StorageService.getItem(StorageService.storageKeys.token); // Retrieve token from storage
-
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
-  }
-  return config;
-});
-
-// Extend InternalAxiosRequestConfig to include _retry
-
-// Handle response errors
+// Response interceptor - handles errors globally
 axiosInstance.interceptors.response.use(
   (response: AxiosResponse<ApiResponse>) => response,
   async (error: AxiosError) => {
-    const originalRequest = error.config as CustomAxiosRequestConfig;
-
     if (error.response) {
       const {status} = error.response;
 
       if (status === ERROR_CODES.UNAUTHORIZED) {
-        if (!originalRequest._retry) {
-          if (!isRefreshing) {
-            isRefreshing = true;
-            try {
-              const newToken = await refreshAccessToken(); // Refresh token
-              StorageService.storeItem(StorageService.storageKeys.token, newToken); // Store new token
-              axiosInstance.defaults.headers[AUTHORIZATION] = `Bearer ${newToken}`;
-              processQueue(null, newToken);
-              return axiosInstance(originalRequest);
-            } catch (err: unknown) {
-              processQueue(err, null);
-              logoutUser();
-              return Promise.reject(err);
-            } finally {
-              isRefreshing = false;
-            }
-          }
-
-          return new Promise((resolve, reject) => {
-            failedQueue.push({resolve, reject});
-          })
-            .then((token) => {
-              originalRequest.headers![AUTHORIZATION] = `Bearer ${token}`;
-              return axiosInstance(originalRequest);
-            })
-            .catch((err) => Promise.reject(err));
-        }
+        // Handle unauthorized access
+        Toast.show({
+          type: TOAST_TYPE.ERROR,
+          text1: i18n.t('http.error.unauthorized'),
+        });
       } else if (status === ERROR_CODES.FORBIDDEN) {
-        logoutUser();
+        // Handle forbidden access
+        Toast.show({
+          type: TOAST_TYPE.ERROR,
+          text1: i18n.t('http.error.forbidden'),
+        });
       } else if (status === ERROR_CODES.INTERNAL_SERVER_ERROR) {
         Toast.show({
           type: TOAST_TYPE.ERROR,
-          text1: 'Server error. Please try again later.',
+          text1: i18n.t('http.error.server'),
         });
       }
     }
@@ -96,29 +67,6 @@ axiosInstance.interceptors.response.use(
     return Promise.reject(error);
   },
 );
-
-async function refreshAccessToken(): Promise<string> {
-  try {
-    const refreshToken = await StorageService.getItem(StorageService.storageKeys.refresh_token);
-    if (!refreshToken) {
-      throw new Error('No refresh token found');
-    }
-
-    //replace with your api endpoint here
-    //e.x const url = 'https://mindbowser.com/auth/refresh';
-    const response = await axios.post<ApiResponse<{token: string}>>('/auth/refresh', {refreshToken});
-    return response.data.data.token;
-  } catch (error: unknown) {
-    console.log('err', error);
-
-    throw new Error('Token refresh failed');
-  }
-}
-
-function logoutUser() {
-  // Implement logout functionality here
-  // Clear local storage and navigate to login page
-}
 
 export default class HTTPService {
   private static async request<T>(
@@ -146,11 +94,12 @@ export default class HTTPService {
   // Unified error handler
   private static handleError(error: unknown): Error {
     if (axios.isAxiosError(error)) {
-      const message = error.response?.data?.message || error.message;
+      const message =
+        error.response?.data?.message || error.message || i18n.t('http.error.generic');
       console.error('API Error:', message);
       return new Error(message);
     }
-    return new Error('Something went wrong');
+    return new Error(i18n.t('http.error.generic'));
   }
 
   static async get<T>(url: string, params?: Record<string, unknown>): Promise<ApiResponse<T>> {

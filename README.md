@@ -1,54 +1,53 @@
-# React Native TypeScript Boilerplate
+# Android Tablet Meeting Room Kiosk App
 
-A comprehensive, production-ready React Native boilerplate built with TypeScript, featuring modern architecture patterns, robust state management, and enterprise-grade tooling.
+A React Native application for displaying meeting room information on Android tablets in kiosk mode. Built with TypeScript, featuring offline-first architecture, secure admin access, and Firebase Cloud Messaging integration.
 
 ## 📋 Overview
 
-This boilerplate provides a solid foundation for building scalable React Native applications with TypeScript. It includes pre-configured navigation, state management, API services, validation, theming, and internationalization out of the box.
+This kiosk app is designed to run on Android tablets in landscape orientation, displaying current and upcoming meetings for a specific room. The app operates in kiosk mode (Device Owner + Lock Task Mode) to prevent users from exiting the application.
 
 ### Key Features
-- **TypeScript** - Full type safety and better developer experience
-- **Redux Toolkit** - Modern state management with RTK
-- **React Navigation** - Type-safe navigation with stack and tab navigators
-- **Firebase Integration** - Analytics and crashlytics
-- **Internationalization** - Multi-language support with i18next
-- **Theme System** - Dark/Light mode support
-- **Form Validation** - Comprehensive validation with Yup
-- **HTTP Services** - Axios-based API client with interceptors
-- **Code Generation** - CLI tools for rapid development
-- **Testing Setup** - Jest and React Native Testing Library
-- **Code Quality** - ESLint, Prettier, and Husky
+- **Kiosk Mode** - Device Owner + Lock Task Mode for secure kiosk operation
+- **Offline-First** - Local SQLite database with MMKV caching for offline operation
+- **Admin Settings** - Password-protected admin access modal for configuration
+- **Firebase Integration** - FCM push notifications for real-time meeting updates
+- **Background Sync** - WorkManager integration for periodic data synchronization
+- **Landscape UI** - Optimized dashboard for 2-3m viewing distance (large typography, high contrast)
+- **TypeScript** - Full type safety throughout the application
+- **Security** - Android Keystore integration, Argon2id/Bcrypt password hashing
 
 ## 🚀 Basic Requirements
 
 - **Node.js** >= 18.0.0
-- **React Native CLI** or **Expo CLI**
-- **Xcode** (for iOS development)
+- **React Native CLI** (bare CLI, not Expo)
 - **Android Studio** (for Android development)
-- **CocoaPods** (for iOS dependencies)
+- **Android SDK** (API level 21+)
+- **Java JDK** 11 or higher
 
 ### Development Environment
-- **macOS** (recommended for iOS development)
-- **Windows/Linux** (Android development)
+- **macOS/Windows/Linux** (Android development)
+- **Note:** This app is Android-only (tablet kiosk mode)
 
 ## ⭐ Highlights
 
 ### Core Technologies
-- **React Native 0.79.3** - Latest stable version
-- **TypeScript 5.0.4** - Full type safety
-- **React 19.0.0** - Latest React version
-- **Redux Toolkit 2.8.2** - Modern Redux with RTK
+- **React Native 0.81.0** - Latest stable version
+- **TypeScript 5.8.3** - Full type safety
+- **React 19.1.0** - Latest React version
 - **React Navigation 7.x** - Type-safe navigation
+- **State Management** - Zustand or Redux Toolkit (configurable)
 
 ### Utilities & Services
-- **Axios** - HTTP client with interceptors and token refresh
-- **Yup** - Schema validation for forms
-- **i18next** - Internationalization
-- **MMKV** - Fast key-value storage
-- **React Native Keychain** - Secure storage
+- **Axios** - HTTP client with interceptors for API communication
+- **Yup** - Schema validation for forms (admin settings)
+- **i18next** - Internationalization support
+- **MMKV** - Fast key-value storage for app preferences
+- **SQLite** - Local database for meeting data
+- **React Native Keychain** - Secure storage for admin passwords
+- **Firebase Cloud Messaging** - Push notifications for meeting updates
+- **WorkManager** - Background sync jobs
 - **Toast Messages** - User feedback
 - **Error Boundaries** - Error handling
-- **New Relic** - Performance monitoring
 
 ### Developer Tools
 - **ESLint** - Code linting
@@ -89,6 +88,7 @@ npm run generateRNComponent ComponentName
 ```
 src/
 ├── assets/                 # Images, fonts, and static assets
+│   └── reference_image.png # UI reference image
 ├── components/             # Reusable UI components
 │   ├── ErrorHandler.tsx   # Error boundary component
 │   ├── Flatlist.tsx       # Custom flatlist component
@@ -100,37 +100,22 @@ src/
 ├── contexts/              # React contexts
 │   └── ThemeContext.tsx   # Theme provider
 ├── hocs/                  # Higher-order components
-│   ├── LanguageProvider.ts # i18n provider
-│   └── Loader.tsx         # Loading component
+│   └── LanguageProvider.ts # i18n provider
 ├── hooks/                 # Custom React hooks
-│   └── useTypedSelector.ts # Typed Redux selector
 ├── language/              # Internationalization
 │   └── en.json           # English translations
 ├── navigators/            # Navigation configuration
-│   ├── AuthStackNavigator.tsx
-│   ├── HomeTabNavigator.tsx
-│   ├── MainStackNavigator.tsx
 │   ├── RootStackNavigator.tsx
 │   └── routes.ts         # Route definitions
 ├── networkConfig/         # API configuration
 │   ├── Endpoints.ts      # API endpoints
 │   └── HttpServices.ts   # HTTP client
-├── redux/                # State management
-│   ├── app/
-│   │   └── store.ts      # Redux store
-│   ├── constants/
-│   │   └── index.ts      # Redux constants
-│   └── reducer/          # Redux slices
-│       ├── AppSlice/
-│       ├── CounterSlice/
-│       ├── DashboardSlice/
-│       └── UserSlice/
 ├── screens/              # Application screens
-│   ├── AuthScreens/      # Authentication screens
-│   │   └── Login/
-│   ├── DetailScreen/     # Detail screens
-│   ├── ErrorScreen/      # Error handling screens
-│   └── Home/             # Home screens
+│   └── ErrorScreen/      # Error handling screens
+├── services/             # Business logic services
+│   ├── database/         # SQLite database service
+│   ├── sync/             # Background sync service
+│   └── kiosk/            # Kiosk mode management
 ├── theme/                # Theming
 │   └── colors.ts         # Color definitions
 ├── types/                # TypeScript type definitions
@@ -142,7 +127,7 @@ src/
     ├── NewRelic.ts       # Performance monitoring
     ├── SecureLogger.ts   # Secure logging
     ├── SizeUtility.ts    # Size utilities
-    ├── StorageService.ts # Storage utilities
+    ├── StorageService.ts # Storage utilities (MMKV)
     ├── Typography.ts     # Typography styles
     ├── ValidationSchemas.ts # Form validation schemas
     └── ValidationUtils.ts # Validation utilities
@@ -292,49 +277,46 @@ npm run ios:run:template:release
 - **Firebase**: Environment-specific Google Services files
 - **Configuration**: Environment variables and settings
 
-## 📱 Features Overview
+## 📱 Kiosk App Features
 
-### Authentication
-- Login/logout functionality
-- Token-based authentication
-- Secure storage with Keychain
-- Automatic token refresh
+### Kiosk Mode
+- Device Owner setup for kiosk operation
+- Lock Task Mode to prevent app exit
+- Auto-launch on device boot
+- Admin password protection for settings
 
-### Navigation
-- Stack navigation for authentication
-- Tab navigation for main app
-- Type-safe navigation with TypeScript
-- Deep linking support
+### Dashboard UI
+- Split-screen landscape layout
+- Left pane: Time/date + room information
+- Right pane: Wallet-style current/next meeting cards
+- Bottom: Day's meetings list
+- Large typography for 2-3m viewing distance
+- High contrast colors for visibility
 
-### State Management
-- Redux Toolkit for global state
-- RTK Query for API state management
-- Type-safe selectors and actions
-- DevTools integration
+### Offline-First Architecture
+- SQLite local database for meeting data
+- MMKV for fast key-value storage
+- Manual sync button for data refresh
+- Automatic background sync via WorkManager
 
-### API Integration
-- Axios-based HTTP client
-- Request/response interceptors
-- Automatic error handling
-- Token refresh mechanism
+### Admin Settings
+- Password-protected settings modal
+- Room configuration
+- Sync interval settings
+- Network configuration
+- Device information display
 
-### Form Handling
-- Yup validation schemas
-- Real-time validation
-- Error message handling
-- Type-safe form state
+### Firebase Integration
+- FCM push notifications
+- Individual meeting fetch on notification
+- Analytics tracking
+- Crashlytics error reporting
 
-### Theming
-- Dark/Light mode support
-- Dynamic theme switching
-- Consistent color system
-- Typography system
-
-### Internationalization
-- Multi-language support
-- Dynamic language switching
-- Type-safe translations
-- Pluralization support
+### Security
+- Android Keystore for secure credential storage
+- Argon2id/Bcrypt for admin password hashing
+- Secure storage for sensitive data
+- Device policy enforcement
 
 ## 🧪 Testing
 

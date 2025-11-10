@@ -1,14 +1,140 @@
 {
-  "login.button.title": "Login",
-  "loading.title": "Loading...",
-  "login.input.email.placeholder": "Email",
-  "login.input.password.placeholder": "Password",
-  "dashboard.list.title": "Movie List",
-  "dashboard.detail.title": "Movie Details",
-  "dashboard.button.title": "Back",
-  "dashboard.detail.name": "Name",
-  "dashboard.detail.team": "Team",
-  "dashboard.detail.firstAppearance": "First Appearance",
-  "dashboard.detail.publisher": "Publisher",
-  "dashboard.detail.bio": "Bio"
+  "loading": {
+    "title": "Loading...",
+    "dashboard": "Loading dashboard..."
+  },
+  "common": {
+    "error": "An error occurred",
+    "retry": "Retry",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "save": "Save",
+    "reset": "Reset",
+    "authenticate": "Authenticate",
+    "verifying": "Verifying...",
+    "notification": "Notification",
+    "unknownError": "Unknown error",
+    "password": "Password",
+    "defaultHeaderTitle": "Header",
+    "defaultButtonTitle": "Button",
+    "next": "Next",
+    "back": "Back"
+  },
+  "adminAccess": {
+    "title": "Admin Access",
+    "subtitle": "Enter your administrator password to access system settings",
+    "passwordPlaceholder": "Enter administrator password",
+    "toast": {
+      "missingPassword": "Please enter admin password",
+      "successTitle": "Access Granted",
+      "successMessage": "Welcome to Admin Settings",
+      "failureTitle": "Access Denied",
+      "failureMessage": "Incorrect admin password",
+      "verificationFailed": "Failed to verify password"
+    }
+  },
+  "adminSettings": {
+    "title": "Admin Settings",
+    "reset": {
+      "title": "Reset Room Configuration",
+      "description": "This will reset the room ID and room name. You will need to set them up again.",
+      "menuSubtitle": "Reset room ID and name settings",
+      "toastSuccessTitle": "Room Reset",
+      "toastSuccessMessage": "Room configuration has been reset",
+      "toastErrorMessage": "Failed to reset room configuration"
+    }
+  },
+  "dashboard": {
+    "errorRoomConfiguration": "Please check your room configuration",
+    "noUpcomingMeetings": "No upcoming meetings"
+  },
+  "roomInfo": {
+    "defaultName": "Conference Room",
+    "unknownRoom": "Unknown Room"
+  },
+  "status": {
+    "available": "Available",
+    "allDay": "All Day"
+  },
+  "meetingCard": {
+    "currentLabel": "CURRENT",
+    "nextLabel": "NEXT",
+    "attendees_one": "{{count}} attendee",
+    "attendees_other": "{{count}} attendees"
+  },
+  "meetingDetails": {
+    "descriptionLabel": "Description:",
+    "organizerLabel": "Organizer:",
+    "attendeesLabel": "Attendees:",
+    "attendeeCount_one": "{{count}} person",
+    "attendeeCount_other": "{{count}} people"
+  },
+  "firstRun": {
+    "welcomeTitle": "Welcome",
+    "welcomeSubtitle": "Let's set up your kiosk device",
+    "stepIndicator": "Step {{current}} of {{total}}",
+    "section": {
+      "roomInformation": "Room Information",
+      "adminPassword": "Admin Password"
+    },
+    "description": {
+      "adminPassword": "Set a password to access admin settings. Minimum 8 characters."
+    },
+    "summary": {
+      "roomName": "Room Name",
+      "roomId": "Room ID"
+    },
+    "placeholder": {
+      "roomId": "Room ID",
+      "roomName": "Room Name",
+      "adminPassword": "Admin Password",
+      "confirmPassword": "Confirm Password"
+    },
+    "button": {
+      "completeSetup": "Complete Setup"
+    },
+    "toast": {
+      "successTitle": "Setup Complete",
+      "successMessage": "Device configured successfully",
+      "errorTitle": "Setup Failed"
+    },
+    "validation": {
+      "roomIdRequired": "Room ID is required",
+      "roomNameRequired": "Room name is required",
+      "passwordRequired": "Admin password is required",
+      "passwordLength": "Password must be at least 8 characters",
+      "confirmPasswordRequired": "Please confirm your password",
+      "passwordsDoNotMatch": "Passwords do not match",
+      "saveRoomConfigurationFailed": "Failed to save room configuration"
+    }
+  },
+  "meetings": {
+    "error": {
+      "roomNotConfigured": "Room not configured. Please complete setup first.",
+      "loadFailed": "Failed to load meetings"
+    }
+  },
+  "auth": {
+    "error": {
+      "passwordLength": "Password must be at least 8 characters long",
+      "currentPasswordIncorrect": "Current password is incorrect"
+    }
+  },
+  "fcm": {
+    "error": {
+      "tokenLoad": "Failed to get FCM token",
+      "tokenRefresh": "Failed to refresh FCM token"
+    }
+  },
+  "http": {
+    "error": {
+      "unauthorized": "Unauthorized access. Please check your credentials.",
+      "forbidden": "Access forbidden.",
+      "server": "Server error. Please try again later.",
+      "generic": "Something went wrong"
+    }
+  },
+  "validation": {
+    "failed": "Validation failed"
+  }
 }

@@ -6,10 +6,13 @@ import ImageConstants from 'utils/ImageConstants';
 import {M_18} from 'utils/SizeUtility';
 import {useTheme} from '../contexts/ThemeContext';
 import {getTypographyStyle, TypographyStyleEnum} from '../utils/Typography';
+import {useTranslation} from 'react-i18next';
 
-const Header = ({title = 'Header', showBackButton = true, onBackPress, rightComponent}: HeaderProps) => {
+const Header = ({title, showBackButton = true, onBackPress, rightComponent}: HeaderProps) => {
   const navigation = useNavigation();
   const {themeColors} = useTheme();
+  const {t} = useTranslation();
+  const resolvedTitle = title || t('common.defaultHeaderTitle');
 
   return (
     <View
@@ -37,7 +40,7 @@ const Header = ({title = 'Header', showBackButton = true, onBackPress, rightComp
 
       {/* Center - Title */}
       <Text style={{...styles.title, ...getTypographyStyle(TypographyStyleEnum.SUBTITLE), color: themeColors.text}}>
-        {title}
+        {resolvedTitle}
       </Text>
 
       {/* Right - Custom Component */}

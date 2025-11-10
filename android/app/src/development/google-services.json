@@ -1,21 +1,21 @@
 {
   "project_info": {
-    "project_number": "70522473121",
-    "project_id": "react-native-boilerplate-ts",
-    "storage_bucket": "react-native-boilerplate-ts.appspot.com"
+    "project_number": "350541432717",
+    "project_id": "displayapp-18cdb",
+    "storage_bucket": "displayapp-18cdb.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:70522473121:android:c3c31e9a8b97ebb589fee0",
+        "mobilesdk_app_id": "1:350541432717:android:52e8948251d0f72a385fc4",
         "android_client_info": {
-          "package_name": "com.rntstemplate.development"
+          "package_name": "com.mindbowser.meetingroomkiosk.development"
         }
       },
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyAcJkKbAjW8RFNeMB7TFqwugHCKTBupJW8"
+          "current_key": "AIzaSyB7HpBRLTzKawuiwAREEWEvDo6PFxA2W-w"
         }
       ],
       "services": {

@@ -21,8 +21,9 @@ export interface CustomImageProps extends Omit<ImageProps, 'source'> {
 }
 
 export interface TextProps {
-  style?: TextStyle;
+  style?: StyleProp<TextStyle>;
   children: React.ReactNode;
+  includeFontPadding?: boolean; // Android-specific prop to prevent text clipping
 }
 
 export interface TextInputProps {
@@ -44,25 +45,15 @@ export interface ThemeContextType {
   themeColors: (typeof colors)[ThemeOptions.dark];
 }
 
-export interface MovieDetails {
-  name?: string;
-  imageurl?: string;
-  team?: string;
-  firstappearance?: string;
-  publisher?: string;
-  bio?: string;
-}
-
-export type AuthStackParamList = {
-  LOGIN_SCREEN: undefined;
-  HOME: undefined;
-  HOME_DETAILS: {data?: MovieDetails}; // Ensure type consistency with DetailsScreenProps
-};
-
-export type HomeTabParamList = {
-  HOME: undefined;
-  HOME_DETAILS: {data?: MovieDetails};
-};
+/**
+ * Common types used across the kiosk app
+ * For specific types, see:
+ * - meeting.ts - Meeting-related types
+ * - room.ts - Room-related types
+ * - kiosk.ts - Kiosk mode types
+ * - sync.ts - Sync-related types
+ * - navigation.ts - Navigation types
+ */
 
 export interface ConfigType {
   API_KEY?: string;
@@ -81,9 +72,6 @@ export interface ApiResponse<T = StandardApiResponse> {
   message?: string;
 }
 
-export interface CustomAxiosRequestConfig extends InternalAxiosRequestConfig {
-  _retry?: boolean;
-}
 
 export interface ErrorResponse {
   message?: string;

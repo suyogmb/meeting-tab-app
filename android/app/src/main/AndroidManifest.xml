@@ -2,6 +2,14 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
 <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
+    <!-- Needed only if you will promote the app to device owner to fully lock task -->
+    <uses-permission android:name="android.permission.REQUEST_DELETE_PACKAGES" />
 
 
     <application
@@ -18,11 +26,41 @@
         android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|screenSize|smallestScreenSize|uiMode"
         android:launchMode="singleTask"
         android:windowSoftInputMode="adjustResize"
+        android:screenOrientation="sensorLandscape"
         android:exported="true">
         <intent-filter>
             <action android:name="android.intent.action.MAIN" />
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter>
+        <!-- Make app a HOME launcher -->
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.HOME" />
+            <category android:name="android.intent.category.DEFAULT" />
+        </intent-filter>
       </activity>
+
+      <!-- Device Admin receiver (optional, for device owner provisioning) -->
+      <receiver
+        android:name=".KioskDeviceAdminReceiver"
+        android:exported="true"
+        android:permission="android.permission.BIND_DEVICE_ADMIN">
+        <meta-data
+          android:name="android.app.device_admin"
+          android:resource="@xml/device_admin_receiver" />
+        <intent-filter>
+          <action android:name="android.app.action.DEVICE_ADMIN_ENABLED" />
+        </intent-filter>
+      </receiver>
+
+      <!-- Auto start after reboot to restore kiosk -->
+      <receiver
+        android:name=".BootCompletedReceiver"
+        android:enabled="true"
+        android:exported="true">
+        <intent-filter>
+          <action android:name="android.intent.action.BOOT_COMPLETED" />
+        </intent-filter>
+      </receiver>
     </application>
 </manifest>

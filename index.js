@@ -1,6 +1,10 @@
 /**
  * @format
  */
+import 'react-native-gesture-handler';
+
+// Import background message handler (must be imported before App)
+import './src/services/fcm/backgroundMessageHandler';
 
 import {AppRegistry} from 'react-native';
 import {Platform} from 'react-native';

@@ -49,12 +49,22 @@ class StorageManager {
    * These keys are used throughout the app for consistent data access
    */
   public storageKeys = {
-    /** Flag indicating if user is logged in */
-    isLoggedIn: 'isLoggedIn',
-    /** User authentication token */
-    token: 'token',
-    /** Refresh token for token renewal */
-    refresh_token: 'refresh_token',
+    /** Device ID for kiosk identification */
+    deviceId: 'deviceId',
+    /** Room information (name, ID, etc.) */
+    roomInfo: 'roomInfo',
+    /** Admin password hash (stored securely) */
+    adminPasswordHash: 'adminPasswordHash',
+    /** First run setup completed flag */
+    isFirstRunComplete: 'isFirstRunComplete',
+    /** Last sync timestamp */
+    lastSyncTimestamp: 'lastSyncTimestamp',
+    /** API endpoint configuration */
+    apiBaseUrl: 'apiBaseUrl',
+    /** FCM token (stored securely) */
+    fcmToken: 'fcmToken',
+    /** FCM token updated timestamp */
+    fcmTokenUpdatedAt: 'fcmTokenUpdatedAt',
   };
 
   constructor() {
@@ -377,79 +387,87 @@ export default StorageService;
 // export default StorageManager;
 
 /**
- * USAGE EXAMPLES
- * ==============
+ * USAGE EXAMPLES - KIOSK APP
+ * ===========================
  *
- * 1. AUTHENTICATION MANAGEMENT
- * ---------------------------
+ * 1. DEVICE & ROOM CONFIGURATION
+ * ------------------------------
  *
- * // Store user authentication data
- * await StorageService.storeItem(StorageService.storageKeys.token, 'jwt-token-here', true);
- * await StorageService.storeItem(StorageService.storageKeys.refresh_token, 'refresh-token-here', true);
- * await StorageService.storeItem(StorageService.storageKeys.isLoggedIn, true, true);
+ * // Store device ID
+ * await StorageService.storeItem(StorageService.storageKeys.deviceId, 'device-123', true);
  *
- * // Retrieve authentication data
- * const token = await StorageService.getItem<string>(StorageService.storageKeys.token, true);
- * const isLoggedIn = await StorageService.getItem<boolean>(StorageService.storageKeys.isLoggedIn, true);
- *
- * // Clear authentication on logout
- * StorageService.removeItem(StorageService.storageKeys.token, true);
- * StorageService.removeItem(StorageService.storageKeys.refresh_token, true);
- * StorageService.removeItem(StorageService.storageKeys.isLoggedIn, true);
- *
- * 2. USER PREFERENCES
- * -------------------
- *
- * // Store user preferences
- * const userPrefs = {
- *   theme: 'dark',
- *   language: 'en',
- *   notifications: true,
- *   fontSize: 16
+ * // Store room information
+ * const roomInfo = {
+ *   roomId: 'room-001',
+ *   roomName: 'Conference Room A',
+ *   building: 'Main Building',
+ *   floor: 3
  * };
- * await StorageService.storeItem('userPreferences', userPrefs, false);
+ * await StorageService.storeItem(StorageService.storageKeys.roomInfo, roomInfo, false);
  *
- * // Retrieve user preferences
- * const prefs = await StorageService.getItem<typeof userPrefs>('userPreferences', false);
+ * // Store admin password hash (use secure storage)
+ * const passwordHash = await hashPassword(adminPassword);
+ * await StorageService.storeItem(StorageService.storageKeys.adminPasswordHash, passwordHash, true);
  *
- * 3. CACHE MANAGEMENT
- * ------------------
+ * // Mark first run as complete
+ * await StorageService.storeItem(StorageService.storageKeys.isFirstRunComplete, true, false);
  *
- * // Store API response cache
- * const apiCache = {
- *   data: [...],
- *   timestamp: Date.now(),
+ * // Retrieve stored data
+ * const deviceId = await StorageService.getItem<string>(StorageService.storageKeys.deviceId, true);
+ * const room = await StorageService.getItem<typeof roomInfo>(StorageService.storageKeys.roomInfo, false);
+ *
+ * 2. APP SETTINGS & CONFIGURATION
+ * --------------------------------
+ *
+ * // Store app settings
+ * const settings = {
+ *   syncInterval: 300000, // 5 minutes
+ *   autoSync: true,
+ *   theme: 'dark',
+ *   fontSize: 'large'
+ * };
+ * await StorageService.storeItem('appSettings', settings, false);
+ *
+ * // Retrieve settings
+ * const appSettings = await StorageService.getItem<typeof settings>('appSettings', false);
+ *
+ * 3. MEETING DATA CACHE
+ * ---------------------
+ *
+ * // Store meeting data cache
+ * const meetingsCache = {
+ *   meetings: [...],
+ *   lastUpdated: Date.now(),
  *   expiresAt: Date.now() + 3600000 // 1 hour
  * };
- * await StorageService.storeItem('api-cache-users', apiCache, false);
+ * await StorageService.storeItem('meetingsCache', meetingsCache, false);
  *
  * // Retrieve and check cache validity
- * const cache = await StorageService.getItem<typeof apiCache>('api-cache-users', false);
+ * const cache = await StorageService.getItem<typeof meetingsCache>('meetingsCache', false);
  * if (cache && cache.expiresAt > Date.now()) {
  *   // Use cached data
- *   return cache.data;
+ *   return cache.meetings;
  * }
  *
- * 4. APP STATE PERSISTENCE
+ * 4. SYNC STATE MANAGEMENT
  * ------------------------
  *
- * // Store app state
- * const appState = {
- *   lastScreen: 'Home',
- *   navigationStack: ['Home', 'Profile'],
- *   formData: {...}
- * };
- * await StorageService.storeItem('appState', appState, false);
+ * // Store last sync timestamp
+ * await StorageService.storeItem(StorageService.storageKeys.lastSyncTimestamp, Date.now(), false);
  *
- * // Restore app state
- * const savedState = await StorageService.getItem<typeof appState>('appState', false);
+ * // Check if sync is needed
+ * const lastSync = await StorageService.getItem<number>(StorageService.storageKeys.lastSyncTimestamp, false);
+ * const syncInterval = 300000; // 5 minutes
+ * if (!lastSync || Date.now() - lastSync > syncInterval) {
+ *   // Perform sync
+ * }
  *
  * 5. UTILITY OPERATIONS
  * ---------------------
  *
  * // Check if data exists before storing
- * if (!StorageService.hasItem('userProfile', true)) {
- *   await StorageService.storeItem('userProfile', userData, true);
+ * if (!StorageService.hasItem(StorageService.storageKeys.deviceId, true)) {
+ *   await StorageService.storeItem(StorageService.storageKeys.deviceId, generateDeviceId(), true);
  * }
  *
  * // Get all keys for debugging
@@ -473,32 +491,33 @@ export default StorageService;
  * --------------
  *
  * // Define interfaces for type safety
- * interface UserProfile {
- *   id: string;
- *   name: string;
- *   email: string;
- *   avatar?: string;
+ * interface RoomInfo {
+ *   roomId: string;
+ *   roomName: string;
+ *   building?: string;
+ *   floor?: number;
  * }
  *
  * // Store with type safety
- * const profile: UserProfile = {
- *   id: '123',
- *   name: 'John Doe',
- *   email: 'john@example.com'
+ * const room: RoomInfo = {
+ *   roomId: 'room-001',
+ *   roomName: 'Conference Room A',
+ *   building: 'Main Building',
+ *   floor: 3
  * };
- * await StorageService.storeItem<UserProfile>('userProfile', profile, true);
+ * await StorageService.storeItem<RoomInfo>(StorageService.storageKeys.roomInfo, room, false);
  *
  * // Retrieve with type safety
- * const savedProfile = await StorageService.getItem<UserProfile>('userProfile', true);
- * if (savedProfile) {
- *   console.log(savedProfile.name); // TypeScript knows this is a string
+ * const savedRoom = await StorageService.getItem<RoomInfo>(StorageService.storageKeys.roomInfo, false);
+ * if (savedRoom) {
+ *   console.log(savedRoom.roomName); // TypeScript knows this is a string
  * }
  *
  * 8. BEST PRACTICES
  * ----------------
  *
- * - Always use secure storage (isSecure: true) for sensitive data like tokens, passwords, personal info
- * - Use regular storage (isSecure: false) for app preferences, cache, non-sensitive settings
+ * - Always use secure storage (isSecure: true) for sensitive data like admin passwords, device IDs
+ * - Use regular storage (isSecure: false) for app preferences, cache, room info, meeting data
  * - Handle storage errors gracefully with try-catch blocks
  * - Use TypeScript generics for type safety when retrieving data
  * - Clear sensitive data on logout or app uninstall

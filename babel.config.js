@@ -20,6 +20,7 @@ module.exports = (() => {
           },
         },
       ],
+      'react-native-worklets/plugin',       
     ],
   };
 })();

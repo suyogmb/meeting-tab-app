@@ -10,13 +10,7 @@ project.ext.envConfigFiles = [
    productiondebug: ".env.production",
    productionrelease: ".env.production",
    developmentrelease: ".env.development",
-   developmentdebug: ".env.development",
-   stagingrelease: ".env.staging",
-   stagingdebug: ".env.staging",
-   qarelease: ".env.qa",
-   qadebug: ".env.qa",
-   uatrelease: ".env.uat",
-   uatdebug: ".env.uat"
+   developmentdebug: ".env.development"
 ]
 
 apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
@@ -97,19 +91,16 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdk rootProject.ext.compileSdkVersion
 
-    namespace "com.rntstemplate"
+    namespace "com.mindbowser.meetingroomkiosk"
     defaultConfig {
-        applicationId "com.rntstemplate"
+        applicationId "com.mindbowser.meetingroomkiosk"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         multiDexEnabled true
     }
     signingConfigs {
         debug {
-            def flavor = gradle.startParameter.taskNames.find { it.contains("Production") } ? "PROD" :
-             gradle.startParameter.taskNames.find { it.contains("Staging") } ? "STAGE" :
-             gradle.startParameter.taskNames.find { it.contains("Qa") } ? "QA" :
-             gradle.startParameter.taskNames.find { it.contains("Uat") } ? "UAT" : "DEV"
+            def flavor = gradle.startParameter.taskNames.find { it.contains("Production") } ? "PROD" : "DEV"
 
             storeFile file("${project.properties["${flavor}_UPLOAD_STORE_FILE"]}")
             storePassword project.properties["${flavor}_UPLOAD_STORE_PASSWORD"]
@@ -123,43 +114,19 @@ android {
     productFlavors {
         production {
             minSdkVersion rootProject.ext.minSdkVersion
-            applicationId "com.rntstemplate"
+            applicationId "com.mindbowser.meetingroomkiosk"
             targetSdkVersion rootProject.ext.targetSdkVersion
-            resValue "string", "build_config_package", "com.rntstemplate"
+            resValue "string", "build_config_package", "com.mindbowser.meetingroomkiosk"
             versionCode 1
             versionName "1.0.0-prod"
         }
-        staging {
-            minSdkVersion rootProject.ext.minSdkVersion
-            applicationId "com.rntstemplate.staging"
-            targetSdkVersion rootProject.ext.targetSdkVersion
-            resValue "string", "build_config_package", "com.rntstemplate"
-            versionCode 1
-            versionName "1.0.0-stage"
-        }
         development {
             minSdkVersion rootProject.ext.minSdkVersion
-            applicationId "com.rntstemplate.development"
+            applicationId "com.mindbowser.meetingroomkiosk.development"
             targetSdkVersion rootProject.ext.targetSdkVersion
-            resValue "string", "build_config_package", "com.rntstemplate"
+            resValue "string", "build_config_package", "com.mindbowser.meetingroomkiosk"
             versionCode 1
             versionName "1.0.0-dev"
-        }
-        qa {
-            minSdkVersion rootProject.ext.minSdkVersion
-            applicationId "com.rntstemplate.qa"
-            targetSdkVersion rootProject.ext.targetSdkVersion
-            resValue "string", "build_config_package", "com.rntstemplate"
-            versionCode 1
-            versionName "1.0.0-qa"
-        }
-        uat {
-            minSdkVersion rootProject.ext.minSdkVersion
-            applicationId "com.rntstemplate.uat"
-            targetSdkVersion rootProject.ext.targetSdkVersion
-            resValue "string", "build_config_package", "com.rntstemplate"
-            versionCode 1
-            versionName "1.0.0-uat"
         }
     }
     buildTypes {

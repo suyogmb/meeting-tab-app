@@ -38,6 +38,14 @@
 import {moderateScale, normalize, verticalScale} from './Dimensions';
 
 /**
+ * Utility function for responsive scaling
+ * Uses moderateScale for balanced scaling
+ */
+export const scaleSize = (size: number): number => {
+  return moderateScale(size);
+};
+
+/**
  * NORMALIZE CONSTANTS (N_*)
  *
  * These constants use the normalize() function which provides responsive scaling

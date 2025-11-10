@@ -1,5 +1,3 @@
-import Login from './AuthScreens/Login/Login';
-import DetailsScreen from './DetailScreen/DetailScreen';
-import Home from './Home/Home';
-
-export {Login, Home, DetailsScreen};
+export {default as FirstRunSetup} from './FirstRunSetup/FirstRunSetup';
+export {default as Dashboard} from './Dashboard/Dashboard';
+export {default as ErrorScreen} from './ErrorScreen/ErrorScreen';
