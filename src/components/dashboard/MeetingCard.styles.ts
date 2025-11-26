@@ -5,6 +5,7 @@
 import {useTheme} from '../../contexts/ThemeContext';
 import {StyleSheet} from 'react-native';
 import {scaleSize} from '../../utils/SizeUtility';
+import {fontFamily} from '../../utils/FontUtils';
 
 export const useStyles = () => {
   const {themeColors} = useTheme();
@@ -14,28 +15,21 @@ export const useStyles = () => {
       backgroundColor: themeColors.surface,
       borderRadius: scaleSize(16),
       padding: scaleSize(24),
-      marginBottom: scaleSize(12),
-      shadowColor: '#000',
-      shadowOffset: {
-        width: 0,
-        height: 2,
-      },
-      shadowOpacity: 0.1,
-      shadowRadius: 4,
-      elevation: 3,
+      minHeight: scaleSize(300),
       justifyContent: 'space-between',
     },
     cardCurrent: {
-      backgroundColor:
-        typeof themeColors.primary === 'string'
-          ? themeColors.primary
-          : themeColors.primary?.[50] || '#007AFF',
-      padding: scaleSize(32),
-      minHeight: scaleSize(220),
-      marginBottom: scaleSize(24),
+      backgroundColor: '#7133AE', // Vibrant purple color
+      padding: 0,
+      paddingLeft: scaleSize(30), // Generous left padding (20-30px)
+      paddingRight: scaleSize(20), // Right padding for spacing
+      paddingTop: scaleSize(20),
+      paddingBottom: scaleSize(20),
+      minHeight: scaleSize(300),
+      borderRadius: scaleSize(16), // Subtly rounded corners
     },
     cardNext: {
-      backgroundColor: themeColors.surface,
+      backgroundColor: "#38B8B3",
       padding: scaleSize(12), // Reduced padding for upcoming meetings
       minHeight: scaleSize(90), // Reduced min height for more visibility
       marginBottom: scaleSize(8), // Reduced margin between cards
@@ -48,28 +42,29 @@ export const useStyles = () => {
     },
     label: {
       fontSize: scaleSize(12),
-      fontWeight: 'bold',
+      fontFamily: fontFamily.bold,
       color: themeColors.textSecondary,
       letterSpacing: 1,
       textTransform: 'uppercase',
     },
     timeRange: {
       fontSize: scaleSize(16),
-      fontWeight: '600',
+      fontFamily: fontFamily.semiBold,
       color: themeColors.text,
     },
     timeRangeNext: {
       fontSize: scaleSize(12), // Smaller font for upcoming meetings
-      fontWeight: '600',
+      fontFamily: fontFamily.semiBold,
       color: themeColors.text,
     },
     timeRangeCurrent: {
       fontSize: scaleSize(20),
+      fontFamily: fontFamily.regular,
       color: '#FFFFFF',
     },
     title: {
       fontSize: scaleSize(24),
-      fontWeight: 'bold',
+      fontFamily: fontFamily.bold,
       color: themeColors.text,
       marginBottom: scaleSize(8),
     },
@@ -78,41 +73,85 @@ export const useStyles = () => {
     },
     titleNext: {
       fontSize: scaleSize(18), // Smaller font for upcoming meetings
-      fontWeight: '600',
+      fontFamily: fontFamily.semiBold,
       color: themeColors.text,
       marginBottom: scaleSize(4),
     },
     organizer: {
       fontSize: scaleSize(16),
+      fontFamily: fontFamily.regular,
       color: themeColors.textSecondary,
       marginBottom: scaleSize(8),
     },
     organizerNext: {
       fontSize: scaleSize(12), // Smaller font for upcoming meetings
+      fontFamily: fontFamily.regular,
       color: themeColors.textSecondary,
       marginBottom: scaleSize(4),
     },
     description: {
       fontSize: scaleSize(14),
+      fontFamily: fontFamily.regular,
       color: themeColors.textSecondary,
       marginBottom: scaleSize(12),
       lineHeight: scaleSize(20),
     },
     descriptionNext: {
       fontSize: scaleSize(11), // Smaller font for upcoming meetings
+      fontFamily: fontFamily.regular,
       color: themeColors.textSecondary,
       marginBottom: scaleSize(6),
       lineHeight: scaleSize(16),
     },
     attendees: {
       fontSize: scaleSize(14),
+      fontFamily: fontFamily.medium,
       color: themeColors.textSecondary,
-      fontWeight: '500',
     },
     attendeesNext: {
       fontSize: scaleSize(11), // Smaller font for upcoming meetings
+      fontFamily: fontFamily.medium,
       color: themeColors.textSecondary,
-      fontWeight: '500',
+    },
+    // New styles for ongoing meeting card
+    inMeetingLabel: {
+      fontSize: scaleSize(30), // Large font size
+      fontFamily: fontFamily.bold,
+      color: '#FFFFFF',
+      marginBottom: scaleSize(8), // Reduced margin below
+      lineHeight: scaleSize(38), // Add lineHeight to prevent text clipping (1.2x fontSize)
+    },
+    divider: {
+      height: 1,
+      backgroundColor: '#FFFFFF',
+      marginTop: 0, // No spacing above
+      marginBottom: scaleSize(16), // Spacing below
+      width: '95%', // Almost full width with padding on sides
+      alignSelf: 'flex-start', // Left-aligned
+    },
+    fieldLabel: {
+      fontSize: scaleSize(14), // Smaller font size
+      fontFamily: fontFamily.regular,
+      color: '#FFFFFF',
+      marginBottom: scaleSize(4), // Small margin below
+      opacity: 0.9, // Slightly transparent
+    },
+    meetingTitle: {
+      fontSize: scaleSize(20), // Larger than label
+      fontFamily: fontFamily.semiBold,
+      color: '#FFFFFF',
+      marginBottom: scaleSize(16), // Noticeable margin below
+    },
+    timeValue: {
+      fontSize: scaleSize(16), // Larger than label
+      fontFamily: fontFamily.regular,
+      color: '#FFFFFF',
+      marginBottom: scaleSize(16), // Noticeable margin below
+    },
+    organizerValue: {
+      fontSize: scaleSize(16), // Larger than label
+      fontFamily: fontFamily.regular,
+      color: '#FFFFFF',
     },
   });
 };

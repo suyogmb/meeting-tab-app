@@ -7,6 +7,7 @@ import {M_18} from 'utils/SizeUtility';
 import {useTheme} from '../contexts/ThemeContext';
 import {getTypographyStyle, TypographyStyleEnum} from '../utils/Typography';
 import {useTranslation} from 'react-i18next';
+import {fontFamily} from '../utils/FontUtils';
 
 const Header = ({title, showBackButton = true, onBackPress, rightComponent}: HeaderProps) => {
   const navigation = useNavigation();
@@ -70,7 +71,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     flex: 1,
     fontSize: M_18,
-    fontWeight: '600',
+    fontFamily: fontFamily.semiBold,
   },
   placeholder: {
     width: 30,

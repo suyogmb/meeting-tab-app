@@ -22,7 +22,7 @@
   },
   "adminAccess": {
     "title": "Admin Access",
-    "subtitle": "Enter your administrator password to access system settings",
+    "subtitle": "Enter your password to access system settings",
     "passwordPlaceholder": "Enter administrator password",
     "toast": {
       "missingPassword": "Please enter admin password",
@@ -42,15 +42,52 @@
       "toastSuccessTitle": "Room Reset",
       "toastSuccessMessage": "Room configuration has been reset",
       "toastErrorMessage": "Failed to reset room configuration"
+    },
+    "syncStatus": {
+      "title": "Sync Status",
+      "menuSubtitle": "View sync status and queue information",
+      "network": "Network",
+      "queueSize": "Pending Requests",
+      "cacheStatus": "Cache Status",
+      "staleMeetings": "Stale Meetings",
+      "backgroundSync": "Background Sync",
+      "valid": "Valid",
+      "stale": "Stale",
+      "running": "Running",
+      "stopped": "Stopped",
+      "manualSync": "Sync Now"
+    },
+    "ledTest": {
+      "title": "LED Test",
+      "menuSubtitle": "Test Philips display LED colors",
+      "description": "Tap a button to change the LED color on the display",
+      "info": "Note: This requires a Philips display connected to the same network. Ensure SICP port is enabled (Settings → Signage Display → SICP port) and set to port 5000.",
+      "colors": {
+        "off": "LED OFF",
+        "red": "LED RED",
+        "blue": "LED BLUE",
+        "yellow": "LED YELLOW"
+      },
+      "successTitle": "LED Updated",
+      "successMessage": "LED set to {{color}}",
+      "errorTitle": "LED Error"
     }
   },
   "dashboard": {
     "errorRoomConfiguration": "Please check your room configuration",
-    "noUpcomingMeetings": "No upcoming meetings"
+    "noUpcomingMeetings": "No upcoming meetings",
+    "errorTitle": "Unable to Load Dashboard",
+    "offline": {
+      "title": "Device Offline",
+      "description": "Device not connected to the internet.",
+      "hint": "Meeting data may not sync until device is back online."
+    }
   },
   "roomInfo": {
     "defaultName": "Conference Room",
-    "unknownRoom": "Unknown Room"
+    "unknownRoom": "Unknown Room",
+    "capacity": "{{count}} people",
+    "people": "people"
   },
   "status": {
     "available": "Available",
@@ -72,26 +109,27 @@
   "firstRun": {
     "welcomeTitle": "Welcome",
     "welcomeSubtitle": "Let's set up your kiosk device",
-    "stepIndicator": "Step {{current}} of {{total}}",
+    "title": "Room Setup",
+    "subtitle": "Configure the device for this meeting room.",
     "section": {
-      "roomInformation": "Room Information",
+      "roomInformation": "Room Setup",
       "adminPassword": "Admin Password"
     },
     "description": {
       "adminPassword": "Set a password to access admin settings. Minimum 8 characters."
     },
-    "summary": {
-      "roomName": "Room Name",
-      "roomId": "Room ID"
-    },
     "placeholder": {
       "roomId": "Room ID",
-      "roomName": "Room Name",
+      "roomNumberOrId": "Enter Room Number",
       "adminPassword": "Admin Password",
-      "confirmPassword": "Confirm Password"
+      "enterAdminPassword": "Enter Admin Password",
+      "confirmPassword": "Confirm Password",
+      "confirmAdminPassword": "Confirm Admin Password"
     },
     "button": {
-      "completeSetup": "Complete Setup"
+      "completeSetup": "Complete Setup",
+      "saveConfiguration": "Save Configuration",
+      "saving": "Saving..."
     },
     "toast": {
       "successTitle": "Setup Complete",
@@ -100,7 +138,6 @@
     },
     "validation": {
       "roomIdRequired": "Room ID is required",
-      "roomNameRequired": "Room name is required",
       "passwordRequired": "Admin password is required",
       "passwordLength": "Password must be at least 8 characters",
       "confirmPasswordRequired": "Please confirm your password",
@@ -131,10 +168,53 @@
       "unauthorized": "Unauthorized access. Please check your credentials.",
       "forbidden": "Access forbidden.",
       "server": "Server error. Please try again later.",
-      "generic": "Something went wrong"
+      "generic": "Something went wrong",
+      "offline": "No internet connection. Please check your network settings.",
+      "network": "Network error. Please check your connection and try again."
     }
   },
   "validation": {
     "failed": "Validation failed"
+  },
+  "sync": {
+    "lastSync": "Last synced",
+    "neverSynced": "Never synced",
+    "justNow": "Just now",
+    "minutesAgo_one": "{{count}} minute ago",
+    "minutesAgo_other": "{{count}} minutes ago",
+    "hoursAgo_one": "{{count}} hour ago",
+    "hoursAgo_other": "{{count}} hours ago",
+    "daysAgo_one": "{{count}} day ago",
+    "daysAgo_other": "{{count}} days ago",
+    "online": "Online",
+    "offline": "Offline",
+    "stale": "Data may be outdated"
+  },
+  "error": {
+    "title": "Something Went Wrong",
+    "networkHint": "Please check your internet connection and try again.",
+    "syncFailed": "Failed to sync data. Please try again.",
+    "loadFailed": "Failed to load data. Please try again.",
+    "generic": "An unexpected error occurred. Please try again.",
+    "autoRetryIn": "Auto-retry in {{seconds}}s",
+    "cancelAutoRetry": "Cancel",
+    "recovering": "Attempting recovery...",
+    "retrying": "Retrying",
+    "retryMessage": "Attempting to recover from error...",
+    "retryButton": "Retry Now",
+    "retryFailed": "Retry Failed",
+    "retryFailedMessage": "Unable to recover automatically. Try other options.",
+    "goToDashboard": "Go to Dashboard",
+    "goToAdmin": "Admin Settings",
+    "clearCache": "Clear Cache & Retry",
+    "cacheClearedTitle": "Cache Cleared",
+    "cacheClearedMessage": "Local cache has been cleared. Restarting...",
+    "clearCacheFailed": "Failed to clear cache",
+    "resetApp": "Reset App Configuration",
+    "appResetTitle": "App Reset",
+    "appResetMessage": "App has been reset. Please set up again.",
+    "resetFailed": "Reset Failed",
+    "showDetails": "Show Technical Details",
+    "hideDetails": "Hide Technical Details"
   }
 }

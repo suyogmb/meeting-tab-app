@@ -24,7 +24,7 @@ export const useStyles = () => {
     settingsButtonContainer: {
       position: 'absolute',
       bottom: scaleSize(24),
-      left: scaleSize(24), // Changed from right to left
+      left: scaleSize(40), // Changed from right to left
       zIndex: 1000, // Ensure it's on top
       // Position on bottom left of the screen
     },
@@ -42,15 +42,18 @@ export const useStyles = () => {
     },
     leftPaneContent: {
       flex: 1,
-      paddingTop: scaleSize(8), // Small top padding for spacing
+      paddingTop: scaleSize(5), // Small top padding for spacing
+      paddingLeft: scaleSize(25),
+      paddingRight: scaleSize(0),
       // Horizontal and bottom padding handled by TimeDisplay and RoomInfo components
       // Optional: Add a subtle overlay for text readability if needed
       // backgroundColor: 'rgba(0, 0, 0, 0.2)',
+      gap: scaleSize(15),
     },
     rightPane: {
       width: '50%',
       // backgroundColor removed - using background image instead
-      padding: scaleSize(24),
+      padding: scaleSize(35),
       justifyContent: 'flex-start',
     },
     ongoingCardContainer: {
@@ -65,7 +68,6 @@ export const useStyles = () => {
     },
     upcomingTitle: {
       fontSize: scaleSize(20),
-      fontWeight: 'bold',
       fontFamily: fontFamily.bold, // Poppins Bold
       color: '#FFFFFF', // White text for light black background
       marginBottom: scaleSize(16),
@@ -93,14 +95,12 @@ export const useStyles = () => {
     },
     upcomingMeetingTitle: {
       fontSize: scaleSize(16),
-      fontWeight: '600',
       fontFamily: fontFamily.semiBold, // Poppins SemiBold
       color: '#FFFFFF', // White text for light black background
       marginBottom: scaleSize(8),
     },
     upcomingMeetingTime: {
       fontSize: scaleSize(14),
-      fontWeight: '600',
       fontFamily: fontFamily.semiBold, // Poppins SemiBold
       color: 'rgba(255, 255, 255, 0.8)', // Slightly transparent white for time
     },
@@ -111,6 +111,7 @@ export const useStyles = () => {
     },
     emptyUpcomingText: {
       fontSize: scaleSize(16),
+      fontFamily: fontFamily.regular,
       color: themeColors.textSecondary,
       textAlign: 'center',
     },
@@ -122,6 +123,7 @@ export const useStyles = () => {
     },
     loadingText: {
       fontSize: scaleSize(18),
+      fontFamily: fontFamily.regular,
       color: themeColors.textSecondary,
     },
     errorContainer: {
@@ -132,13 +134,14 @@ export const useStyles = () => {
     },
     errorText: {
       fontSize: scaleSize(20),
+      fontFamily: fontFamily.bold,
       color: themeColors.error || '#FF3B30',
-      fontWeight: 'bold',
       marginBottom: scaleSize(8),
       textAlign: 'center',
     },
     errorSubtext: {
       fontSize: scaleSize(16),
+      fontFamily: fontFamily.regular,
       color: themeColors.textSecondary,
       textAlign: 'center',
     },
@@ -153,6 +156,7 @@ export const useStyles = () => {
     },
     emptyCardText: {
       fontSize: scaleSize(20),
+      fontFamily: fontFamily.regular,
       color: themeColors.textSecondary,
       textAlign: 'center',
     },

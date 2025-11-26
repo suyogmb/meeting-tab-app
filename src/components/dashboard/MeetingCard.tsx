@@ -54,21 +54,52 @@ const MeetingCard: React.FC<MeetingCardProps> = ({
     }
   };
 
-  const CardContent = (
-      <View style={getCardStyle()}>
-        <View style={styles.cardHeader}>
-          <Text style={styles.label}>
-            {displayState === 'current'
-              ? t('meetingCard.currentLabel')
-              : t('meetingCard.nextLabel')}
-          </Text>
-          <Text style={[
-            displayState === 'current' ? styles.timeRangeCurrent : 
-            displayState === 'next' ? styles.timeRangeNext : 
-            styles.timeRange
-          ]}>
-            {formatTime(meeting.startTime)} - {formatTime(meeting.endTime)}
-          </Text>
+  const CardContent = displayState === 'current' ? (
+    <View style={getCardStyle()}>
+      {/* In Meeting - Bold */}
+      <Text style={styles.inMeetingLabel} includeFontPadding={false}>
+        In Meeting
+      </Text>
+      
+      {/* White Divider Line */}
+      <View style={styles.divider} />
+      
+      {/* Meeting Label */}
+      <Text style={styles.fieldLabel}>Meeting</Text>
+      
+      {/* Meeting Title - Semibold */}
+      <Text style={styles.meetingTitle}>{meeting.title}</Text>
+      
+      {/* Time Label */}
+      <Text style={styles.fieldLabel}>Time</Text>
+      
+      {/* Time Range - Normal, larger than label */}
+      <Text style={styles.timeValue}>
+        {formatTime(meeting.startTime)} - {formatTime(meeting.endTime)}
+      </Text>
+      
+      {/* Organized by Label */}
+      {meeting.organizer && (
+        <>
+          <Text style={styles.fieldLabel}>Organized by</Text>
+          
+          {/* Organizer Name - Normal, larger than label */}
+          <Text style={styles.organizerValue}>{meeting.organizer}</Text>
+        </>
+      )}
+    </View>
+  ) : (
+    <View style={getCardStyle()}>
+      <View style={styles.cardHeader}>
+        <Text style={styles.label}>
+          {displayState === 'next' ? t('meetingCard.nextLabel') : t('meetingCard.currentLabel')}
+        </Text>
+        <Text style={[
+          displayState === 'next' ? styles.timeRangeNext : 
+          styles.timeRange
+        ]}>
+          {formatTime(meeting.startTime)} - {formatTime(meeting.endTime)}
+        </Text>
       </View>
 
       <Text style={getTitleStyle()}>

@@ -40,6 +40,12 @@ export function useFCM(): UseFCMReturn {
       // If no saved token, get new token
       if (!token) {
         token = await FCMService.getToken();
+      } else {
+        // Console log for Registration Token loaded from storage
+        console.log('=== Registration Token (Loaded from Storage) ===');
+        console.log('A unique token string that identifies each client app instance.');
+        console.log('Registration Token:', token);
+        console.log('================================================');
       }
 
       setFcmToken(token);
@@ -106,6 +112,11 @@ export function useFCM(): UseFCMReturn {
     const handleTokenRefresh = async (token: string) => {
       setFcmToken(token);
       logger.info('FCM token refreshed via hook', { token: token.substring(0, 20) + '...' });
+      // Console log for Registration Token refresh
+      console.log('=== Registration Token Refreshed (useFCM Hook) ===');
+      console.log('A unique token string that identifies each client app instance.');
+      console.log('New Registration Token:', token);
+      console.log('==================================================');
     };
 
     FCMService.registerTokenRefreshHandler(handleTokenRefresh);

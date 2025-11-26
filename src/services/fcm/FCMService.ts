@@ -15,6 +15,10 @@ import {FCMMessage, FCMTokenInfo, NotificationHandler, TokenRefreshHandler} from
 import StorageService from '../../utils/StorageService';
 import {logger} from '../../utils/SecureLogger';
 import SyncService from '../sync/SyncService';
+import NetworkService from '../network/NetworkService';
+import RequestQueueService from '../queue/RequestQueueService';
+import HTTPService from '../../networkConfig/HttpServices';
+import {Endpoints} from '../../networkConfig/Endpoints';
 import i18n from '../../language/i18n';
 
 /**
@@ -106,6 +110,7 @@ class FCMServiceClass {
 
   /**
    * Get FCM token
+   * Network-aware: will attempt to register with backend when online
    */
   async getToken(): Promise<string | null> {
     try {
@@ -113,6 +118,16 @@ class FCMServiceClass {
       if (token) {
         await this.saveToken(token);
         logger.info('FCM token retrieved', {token: token.substring(0, 20) + '...'});
+        // Console log for Registration Token
+        console.log('=== Registration Token ===');
+        console.log('A unique token string that identifies each client app instance.');
+        console.log('Registration Token:', token);
+        console.log('==========================');
+        
+        // Attempt to register token with backend (non-blocking)
+        this.registerTokenWithBackend(token).catch((error) => {
+          logger.warn('Failed to register FCM token with backend', {error});
+        });
       }
       return token;
     } catch (error) {
@@ -490,7 +505,17 @@ class FCMServiceClass {
       // Set up token refresh handler
       this.onTokenRefreshListener = messaging().onTokenRefresh(async token => {
         logger.info('FCM token refreshed', {token: token.substring(0, 20) + '...'});
+        // Console log for Registration Token refresh
+        console.log('=== Registration Token Refreshed ===');
+        console.log('A unique token string that identifies each client app instance.');
+        console.log('New Registration Token:', token);
+        console.log('=====================================');
         await this.saveToken(token);
+
+        // Attempt to register new token with backend (non-blocking)
+        this.registerTokenWithBackend(token).catch((error) => {
+          logger.warn('Failed to register refreshed FCM token with backend', {error});
+        });
 
         // Call registered handlers
         for (const handler of this.tokenRefreshHandlers) {
@@ -503,6 +528,89 @@ class FCMServiceClass {
       });
     } catch (error) {
       logger.error('Failed to initialize FCM', {error});
+    }
+  }
+
+  /**
+   * Register FCM token with backend
+   * Network-aware: queues request if offline
+   * Note: This is a POST request, so it will be queued automatically by HTTP Service when offline
+   */
+  async registerTokenWithBackend(token: string): Promise<void> {
+    try {
+      // Check if room is configured
+      const roomInfo = await StorageService.getItem<{roomId: string}>(
+        StorageService.storageKeys.roomInfo,
+        false,
+      );
+
+      if (!roomInfo?.roomId) {
+        logger.debug('FCM token registration skipped: room not configured');
+        return;
+      }
+
+      // Check network connectivity
+      const isOnline = await NetworkService.isConnected();
+      const isInternetReachable = await NetworkService.isInternetReachable();
+
+      if (!isOnline || !isInternetReachable) {
+        logger.info('FCM token registration deferred: device is offline', {
+          token: token.substring(0, 20) + '...',
+        });
+        // Token registration will be queued automatically by HTTP Service
+        // when we attempt the POST request below
+      }
+
+      // Attempt to register token with backend
+      // Note: Since we don't have GET API yet, this endpoint might not exist
+      // The HTTP Service will queue this request if offline
+      try {
+        await HTTPService.post(`${Endpoints.device}/token`, {
+          token,
+          roomId: roomInfo.roomId,
+          platform: 'android',
+          timestamp: Date.now(),
+        });
+
+        logger.info('FCM token registered with backend', {
+          roomId: roomInfo.roomId,
+          token: token.substring(0, 20) + '...',
+        });
+      } catch (error) {
+        // If endpoint doesn't exist yet, just log and continue
+        // This is expected since we don't have the backend API yet
+        const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+        if (errorMessage.includes('404') || errorMessage.includes('NOT_FOUND')) {
+          logger.debug('FCM token registration endpoint not available yet', {
+            message: 'Backend API not implemented',
+          });
+        } else {
+          // For other errors (network, etc.), the request is already queued by HTTP Service
+          logger.warn('FCM token registration failed', {
+            error: errorMessage,
+            willRetry: !isOnline || !isInternetReachable,
+          });
+        }
+      }
+    } catch (error) {
+      logger.error('Failed to register FCM token with backend', {error});
+      // Don't throw - FCM should continue working even if backend registration fails
+    }
+  }
+
+  /**
+   * Retry token registration when connectivity is restored
+   * Called automatically by NetworkContext
+   */
+  async retryTokenRegistration(): Promise<void> {
+    try {
+      const token = await this.getSavedToken();
+      if (token) {
+        logger.info('Retrying FCM token registration after connectivity restore');
+        await this.registerTokenWithBackend(token);
+      }
+    } catch (error) {
+      logger.error('Failed to retry FCM token registration', {error});
     }
   }
 

@@ -5,6 +5,7 @@
 import {useTheme} from '../../contexts/ThemeContext';
 import {StyleSheet} from 'react-native';
 import {scaleSize} from '../../utils/SizeUtility';
+import {fontFamily} from '../../utils/FontUtils';
 
 export const useStyles = () => {
   const {themeColors} = useTheme();
@@ -21,6 +22,7 @@ export const useStyles = () => {
     },
     lastSyncText: {
       fontSize: scaleSize(12),
+      fontFamily: fontFamily.regular,
       color: themeColors.textSecondary,
       marginTop: scaleSize(8),
     },

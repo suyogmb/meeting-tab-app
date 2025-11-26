@@ -5,17 +5,16 @@
 import {useTheme} from '../../contexts/ThemeContext';
 import {StyleSheet} from 'react-native';
 import {scaleSize} from '../../utils/SizeUtility';
+import {fontFamily} from '../../utils/FontUtils';
 
 export const useStyles = () => {
   const {themeColors} = useTheme();
 
   return StyleSheet.create({
     card: {
-      backgroundColor: '#7133AE', // Primary color for available
+      backgroundColor: '#7133AE', // Default available color (greenish)
       borderRadius: scaleSize(16),
-      paddingTop: scaleSize(40),
-      paddingBottom: scaleSize(40),
-      paddingHorizontal: scaleSize(48),
+      padding: scaleSize(32),
       minHeight: scaleSize(300),
       justifyContent: 'center',
       alignItems: 'center', // Center align for available status
@@ -26,7 +25,7 @@ export const useStyles = () => {
       elevation: 8,
     },
     cardAvailable: {
-      backgroundColor: '#7133AE', // Primary color #7133AE
+      backgroundColor: '#38B8B3', // Greenish tone for available status
       alignItems: 'center', // Center align when available
     },
     cardBusy: {
@@ -35,7 +34,7 @@ export const useStyles = () => {
     },
     statusText: {
       fontSize: scaleSize(60),
-      fontWeight: 'bold',
+      fontFamily: fontFamily.bold,
       color: '#FFFFFF',
       marginBottom: scaleSize(16),
       lineHeight: scaleSize(56), // Add lineHeight to prevent text clipping
@@ -45,8 +44,8 @@ export const useStyles = () => {
     },
     timeRangeText: {
       fontSize: scaleSize(30),
+      fontFamily: fontFamily.medium,
       color: '#FFFFFF',
-      fontWeight: '500',
     },
     timeRangeTextCentered: {
       textAlign: 'center', // Center text when available

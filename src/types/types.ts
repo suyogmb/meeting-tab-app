@@ -37,6 +37,7 @@ export interface TextInputProps {
   isError?: boolean;
   errorMsg?: string;
   onBlur?: () => void;
+  eyeIconBottom?: number; // Bottom offset for eye icon positioning
 }
 
 export interface ThemeContextType {

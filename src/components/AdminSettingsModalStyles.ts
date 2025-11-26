@@ -2,23 +2,27 @@
 import { useTheme } from 'contexts/ThemeContext';
 import {StyleSheet} from 'react-native';
 import { scaleSize } from 'utils/SizeUtility';
+import { fontFamily } from 'utils/FontUtils';
 
 
 export const useStyles = () => {
   const {themeColors} = useTheme();
   const isDark = themeColors.background === '#0a0a0f' || themeColors.background === '#000814';
+  const neutralText = '#111827';
+  const secondaryText = '#4b5563';
+  const borderNeutral = '#d1d5db';
 
   return StyleSheet.create({
     modalOverlay: {
       flex: 1,
+      backgroundColor: '#f5f5f5',
       justifyContent: 'center',
       alignItems: 'center',
     },
     modalCardContainer: {
-    width:"50%",
-    height:"80%",
-    backgroundColor: 'white',
-    borderRadius: scaleSize(20),
+      width: '100%',
+      height: '100%',
+      backgroundColor: '#f5f5f5',
     },
     container: {
       flex: 1,
@@ -51,24 +55,17 @@ export const useStyles = () => {
       maxHeight: scaleSize(240),
     },
     titleContainer: {
-      paddingTop: scaleSize(16),
-      paddingBottom: scaleSize(16),
-      marginBottom: scaleSize(12),
-      minHeight: scaleSize(70),
-      justifyContent: 'center',
-      alignItems: 'center',
       width: '100%',
+      maxWidth: 500,
+      alignItems: 'center',
+      marginBottom: 40,
     },
     title: {
-      fontSize: scaleSize(42),
-      fontWeight: '700',
-      color: '#38b8b3',
+      fontSize: 32,
+      fontFamily: fontFamily.bold,
+      color: '#333',
+      padding: 5,
       textAlign: 'center',
-      letterSpacing: -0.5,
-      paddingHorizontal: scaleSize(10),
-      lineHeight: scaleSize(56),
-      includeFontPadding: false,
-      textTransform: 'none',
     },
     subtitleContainer: {
       paddingVertical: scaleSize(8),
@@ -79,10 +76,10 @@ export const useStyles = () => {
       width: '100%',
     },
     subtitle: {
-      fontSize: scaleSize(20),
-      color: themeColors.textSecondary,
+      fontSize: scaleSize(18),
+      color: secondaryText,
       textAlign: 'center',
-      lineHeight: scaleSize(30),
+      lineHeight: scaleSize(26),
       paddingHorizontal: scaleSize(20),
       includeFontPadding: false,
       textTransform: 'none',
@@ -94,7 +91,7 @@ export const useStyles = () => {
     inputLabel: {
       fontSize: scaleSize(15),
       fontWeight: '600',
-      color: '#7133ae',
+      color: neutralText,
       marginBottom: scaleSize(10),
       paddingLeft: scaleSize(4),
       textTransform: 'uppercase',
@@ -103,21 +100,21 @@ export const useStyles = () => {
     },
     passwordInput: {
       width: '100%',
-      minHeight: scaleSize(68),
-      backgroundColor: isDark ? 'rgba(56, 184, 179, 0.08)' : 'rgba(56, 184, 179, 0.05)',
-      borderRadius: scaleSize(14),
+      minHeight: scaleSize(64),
+      backgroundColor: isDark ? 'rgba(17, 24, 39, 0.2)' : 'rgba(17, 24, 39, 0.04)',
+      borderRadius: scaleSize(12),
       paddingHorizontal: scaleSize(24),
-      paddingVertical: scaleSize(20),
-      fontSize: scaleSize(20),
-      borderWidth: 2,
-      borderColor: '#38b8b3',
-      color: "black",
+      paddingVertical: scaleSize(18),
+      fontSize: scaleSize(18),
+      borderWidth: 1,
+      borderColor: borderNeutral,
+      color: neutralText,
       includeFontPadding: false,
       textAlignVertical: 'center',
     },
     passwordInputFocused: {
-      borderColor: '#7133ae',
-      backgroundColor: isDark ? 'rgba(113, 51, 174, 0.15)' : 'rgba(113, 51, 174, 0.08)',
+      borderColor: neutralText,
+      backgroundColor: isDark ? 'rgba(17, 24, 39, 0.28)' : 'rgba(17, 24, 39, 0.1)',
     },
     buttonRow: {
       flexDirection: 'row',
@@ -127,35 +124,35 @@ export const useStyles = () => {
     },
     cancelButton: {
       flex: 1,
-      minHeight: scaleSize(68),
-      backgroundColor: 'transparent',
-      borderRadius: scaleSize(14),
+      minHeight: scaleSize(60),
+      backgroundColor: '#FFFFFF',
+      borderRadius: scaleSize(12),
       justifyContent: 'center',
       alignItems: 'center',
-      borderWidth: 2,
-      borderColor: '#7133ae',
+      borderWidth: 1,
+      borderColor: borderNeutral,
     },
     cancelButtonText: {
-      fontSize: scaleSize(20),
+      fontSize: scaleSize(18),
       fontWeight: '600',
-      color: '#7133ae',
+      color: neutralText,
       includeFontPadding: false,
     },
     submitButton: {
       flex: 1,
-      minHeight: scaleSize(68),
-      backgroundColor: '#38b8b3',
-      borderRadius: scaleSize(14),
+      minHeight: scaleSize(60),
+      backgroundColor: neutralText,
+      borderRadius: scaleSize(12),
       justifyContent: 'center',
       alignItems: 'center',
       elevation: 6,
     },
     submitButtonDisabled: {
       opacity: 0.5,
-      backgroundColor: '#2a8a87',
+      backgroundColor: secondaryText,
     },
     submitButtonText: {
-      fontSize: scaleSize(20),
+      fontSize: scaleSize(18),
       fontWeight: '700',
       color: '#ffffff',
       letterSpacing: 0.5,
@@ -169,9 +166,13 @@ export const useStyles = () => {
     },
     content: {
       flex: 1,
+      backgroundColor: '#f5f5f5',
     },
     scrollContent: {
-      padding: scaleSize(24),
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      padding: 40,
     },
     header: {
       flexDirection: 'row',
@@ -184,27 +185,32 @@ export const useStyles = () => {
     headerTitle: {
       fontSize: scaleSize(28),
       fontWeight: '700',
-      color: themeColors.text,
+      color: neutralText,
     },
     closeButton: {
       width: scaleSize(40),
       height: scaleSize(40),
       borderRadius: scaleSize(20),
-      backgroundColor: themeColors.surface,
+      backgroundColor: '#f3f4f6',
       justifyContent: 'center',
       alignItems: 'center',
     },
     closeButtonText: {
       fontSize: scaleSize(24),
-      color: themeColors.text,
+      color: neutralText,
       fontWeight: 'bold',
     },
     menuContainer: {
-      gap: scaleSize(5),
+      width: '100%',
+      maxWidth: 500,
+      gap: 20,
     },
     menuItem: {
-      borderRadius: scaleSize(12),
-      padding: scaleSize(20)
+      backgroundColor: '#fff',
+      borderRadius: 8,
+      padding: 20,
+      borderWidth: 1,
+      borderColor: '#ddd',
     },
     menuItemContent: {
       flexDirection: 'row',
@@ -232,18 +238,19 @@ export const useStyles = () => {
       flex: 1,
     },
     menuItemTitle: {
-      fontSize: scaleSize(20),
-      fontWeight: 'bold',
-      color: themeColors.text,
-      marginBottom: scaleSize(4),
+      fontSize: 18,
+      fontFamily: fontFamily.semiBold,
+      color: '#333',
+      marginBottom: 4,
     },
     menuItemSubtitle: {
-      fontSize: scaleSize(14),
-      color: themeColors.textSecondary,
+      fontSize: 14,
+      fontFamily: fontFamily.regular,
+      color: '#666',
     },
     menuItemArrow: {
       fontSize: scaleSize(24),
-      color: themeColors.textSecondary,
+      color: secondaryText,
     },
     dangerText: {
       color: themeColors.error || '#FF3B30',
@@ -254,7 +261,7 @@ export const useStyles = () => {
     guideTitle: {
       fontSize: scaleSize(28),
       fontWeight: 'bold',
-      color: themeColors.text,
+      color: neutralText,
       marginBottom: scaleSize(16),
     },
     guideSection: {
@@ -263,12 +270,12 @@ export const useStyles = () => {
     guideSectionTitle: {
       fontSize: scaleSize(20),
       fontWeight: 'bold',
-      color: themeColors.text,
+      color: neutralText,
       marginBottom: scaleSize(8),
     },
     guideText: {
       fontSize: scaleSize(16),
-      color: themeColors.textSecondary,
+      color: secondaryText,
       lineHeight: scaleSize(24),
     },
     backButton: {
@@ -280,25 +287,25 @@ export const useStyles = () => {
     formTitle: {
       fontSize: scaleSize(24),
       fontWeight: 'bold',
-      color: themeColors.text,
+      color: neutralText,
     },
     formSubtitle: {
       fontSize: scaleSize(16),
-      color: themeColors.textSecondary,
+      color: secondaryText,
       marginBottom: scaleSize(8),
     },
     tokenContainer: {
-      backgroundColor: themeColors.surface,
+      backgroundColor: '#FFFFFF',
       borderRadius: scaleSize(8),
       padding: scaleSize(16),
       borderWidth: 1,
-      borderColor: themeColors.border || '#E0E0E0',
+      borderColor: borderNeutral,
       marginBottom: scaleSize(8),
     },
     tokenText: {
       fontSize: scaleSize(12),
       fontFamily: 'monospace',
-      color: themeColors.text,
+      color: neutralText,
       lineHeight: scaleSize(18),
     },
   });

@@ -11,6 +11,8 @@ export type RootStackParamList = {
   FirstRunSetup: undefined;
   Dashboard: undefined;
   ErrorScreen: {error?: string};
+  AdminAccess: undefined;
+  AdminSettings: undefined;
 };
 
 /**
@@ -25,5 +27,7 @@ export enum Routes {
   FIRST_RUN_SETUP = 'FirstRunSetup',
   DASHBOARD = 'Dashboard',
   ERROR_SCREEN = 'ErrorScreen',
+  ADMIN_ACCESS = 'AdminAccess',
+  ADMIN_SETTINGS = 'AdminSettings',
 }
 

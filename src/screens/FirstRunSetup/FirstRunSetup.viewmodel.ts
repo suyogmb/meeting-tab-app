@@ -3,21 +3,20 @@
  * Manages form state, validation, and setup workflow.
  */
 
-import {useCallback, useMemo, useState} from 'react';
+import {useCallback, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {useNavigation} from '@react-navigation/native';
 import Toast from 'react-native-toast-message';
 import AdminAuthService from '../../services/auth/AdminAuth';
 import DatabaseService from '../../database/DatabaseService';
 import StorageService from '../../utils/StorageService';
-import KioskService from '../../services/kiosk/KioskService';
 import FCMService from '../../services/fcm/FCMService';
+import RoomApiService from '../../services/api/RoomApiService';
 import {logger} from '../../utils/SecureLogger';
 import {RootStackNavigationProp, Routes} from '../../types/navigation';
 
 type FormErrors = {
   roomId?: string;
-  roomName?: string;
   adminPassword?: string;
   confirmPassword?: string;
 };
@@ -25,20 +24,13 @@ type FormErrors = {
 type FirstRunSetupViewModelReturn = {
   t: ReturnType<typeof useTranslation>['t'];
   roomId: string;
-  roomName: string;
   adminPassword: string;
   confirmPassword: string;
   errors: FormErrors;
   isLoading: boolean;
-  currentStep: number;
-  totalSteps: number;
-  isStepOne: boolean;
   onChangeRoomId: (value: string) => void;
-  onChangeRoomName: (value: string) => void;
   onChangeAdminPassword: (value: string) => void;
   onChangeConfirmPassword: (value: string) => void;
-  goToNextStep: () => void;
-  goToPreviousStep: () => void;
   handleSetup: () => Promise<void>;
 };
 
@@ -47,32 +39,10 @@ const useFirstRunSetupViewModel = (): FirstRunSetupViewModelReturn => {
   const navigation = useNavigation<RootStackNavigationProp>();
 
   const [roomId, setRoomId] = useState('');
-  const [roomName, setRoomName] = useState('');
   const [adminPassword, setAdminPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState<FormErrors>({});
-  const [currentStep, setCurrentStep] = useState<1 | 2>(1);
-  const totalSteps = 2;
-
-  const validateRoomInfo = useCallback((): boolean => {
-    const newErrors: FormErrors = {};
-    if (!roomId.trim()) {
-      newErrors.roomId = t('firstRun.validation.roomIdRequired');
-    }
-
-    if (!roomName.trim()) {
-      newErrors.roomName = t('firstRun.validation.roomNameRequired');
-    }
-
-    setErrors((prev) => ({
-      ...prev,
-      roomId: newErrors.roomId,
-      roomName: newErrors.roomName,
-    }));
-
-    return Object.keys(newErrors).length === 0;
-  }, [roomId, roomName, t]);
 
   const validatePasswords = useCallback((): boolean => {
     const newErrors: FormErrors = {};
@@ -99,14 +69,20 @@ const useFirstRunSetupViewModel = (): FirstRunSetupViewModelReturn => {
   }, [adminPassword, confirmPassword, t]);
 
   const handleSetup = useCallback(async () => {
-    const roomInfoValid = validateRoomInfo();
-    const passwordValid = validatePasswords();
+    const trimmedRoomId = roomId.trim();
+    const newErrors: FormErrors = {};
 
-    if (!roomInfoValid) {
-      setCurrentStep(1);
+    if (!trimmedRoomId) {
+      newErrors.roomId = t('firstRun.validation.roomIdRequired');
     }
 
-    if (!roomInfoValid || !passwordValid) {
+    const passwordValid = validatePasswords();
+
+    if (Object.keys(newErrors).length > 0 || !passwordValid) {
+      setErrors((prev) => ({
+        ...prev,
+        ...newErrors,
+      }));
       return;
     }
 
@@ -118,8 +94,8 @@ const useFirstRunSetupViewModel = (): FirstRunSetupViewModelReturn => {
       await StorageService.storeItem(
         StorageService.storageKeys.roomInfo,
         {
-          roomId: roomId.trim(),
-          roomName: roomName.trim(),
+          roomId: trimmedRoomId,
+          roomName: '',
         },
         false,
       );
@@ -139,7 +115,7 @@ const useFirstRunSetupViewModel = (): FirstRunSetupViewModelReturn => {
 
       logger.info('Room info saved', {
         saved: savedRoomInfo,
-        expected: {roomId: roomId.trim(), roomName: roomName.trim()},
+        expected: {roomId: trimmedRoomId, roomName: ''},
       });
 
       if (!savedRoomInfo?.roomId) {
@@ -147,24 +123,48 @@ const useFirstRunSetupViewModel = (): FirstRunSetupViewModelReturn => {
         throw new Error(t('firstRun.validation.saveRoomConfigurationFailed'));
       }
 
+      // Get FCM token and register with backend
       try {
-        await KioskService.startLockTask();
-      } catch (kioskError) {
-        logger.warn('Failed to start kiosk mode', {error: kioskError});
-      }
+        // Get FCM token
+        const fcmToken = await FCMService.getToken();
+        
+        if (fcmToken) {
+          // Register device token with room code via API
+          try {
+            await RoomApiService.registerDeviceToken(trimmedRoomId, fcmToken);
+            logger.info('Device token registered with backend', {
+              roomId: trimmedRoomId,
+              tokenLength: fcmToken.length,
+            });
+          } catch (registrationError) {
+            logger.warn('Failed to register device token with backend', {
+              error: registrationError,
+            });
+            // Don't fail setup if token registration fails - continue with FCM subscription
+          }
+        } else {
+          logger.warn('FCM token not available for registration');
+        }
 
-      try {
-        await FCMService.subscribeToRoom(roomId.trim());
-        logger.info('Subscribed to FCM room topic', {roomId: roomId.trim()});
-      } catch (subscriptionError) {
-        logger.warn('Failed to subscribe to FCM room topic', {
-          error: subscriptionError,
+        // Subscribe to FCM room topic
+        try {
+          await FCMService.subscribeToRoom(trimmedRoomId);
+          logger.info('Subscribed to FCM room topic', {roomId: trimmedRoomId});
+        } catch (subscriptionError) {
+          logger.warn('Failed to subscribe to FCM room topic', {
+            error: subscriptionError,
+          });
+        }
+      } catch (fcmError) {
+        logger.warn('FCM setup failed, continuing with setup', {
+          error: fcmError,
         });
+        // Don't fail setup if FCM fails - user can still use the app
       }
 
       logger.info('First run setup completed', {
-        roomId: roomId.trim(),
-        roomName: roomName.trim(),
+        roomId: trimmedRoomId,
+        roomName: '',
       });
 
       Toast.show({
@@ -192,57 +192,35 @@ const useFirstRunSetupViewModel = (): FirstRunSetupViewModelReturn => {
     adminPassword,
     navigation,
     roomId,
-    roomName,
     t,
     validatePasswords,
-    validateRoomInfo,
   ]);
 
   const onChangeRoomId = useCallback((value: string) => {
     setRoomId(value);
-  }, []);
-
-  const onChangeRoomName = useCallback((value: string) => {
-    setRoomName(value);
+    setErrors((prev) => ({...prev, roomId: undefined}));
   }, []);
 
   const onChangeAdminPassword = useCallback((value: string) => {
     setAdminPassword(value);
+    setErrors((prev) => ({...prev, adminPassword: undefined}));
   }, []);
 
   const onChangeConfirmPassword = useCallback((value: string) => {
     setConfirmPassword(value);
+    setErrors((prev) => ({...prev, confirmPassword: undefined}));
   }, []);
-
-  const goToNextStep = useCallback(() => {
-    if (validateRoomInfo()) {
-      setCurrentStep(2);
-    }
-  }, [validateRoomInfo]);
-
-  const goToPreviousStep = useCallback(() => {
-    setCurrentStep(1);
-  }, []);
-
-  const isStepOne = useMemo(() => currentStep === 1, [currentStep]);
 
   return {
     t,
     roomId,
-    roomName,
     adminPassword,
     confirmPassword,
     errors,
     isLoading,
-    currentStep,
-    totalSteps,
-    isStepOne,
     onChangeRoomId,
-    onChangeRoomName,
     onChangeAdminPassword,
     onChangeConfirmPassword,
-    goToNextStep,
-    goToPreviousStep,
     handleSetup,
   };
 };

@@ -570,27 +570,47 @@ class SecureLogger {
     if (this.config.enableConsoleLogging) {
       const logMessage = `[${entry.timestamp}] ${entry.level}: ${entry.message}`;
 
+      // Safely stringify and parse context, handling undefined/null values
+      let contextOutput: any = '';
+      if (entry.context !== undefined && entry.context !== null) {
+        try {
+          const stringified = JSON.stringify(entry.context);
+          if (stringified && stringified !== 'undefined') {
+            contextOutput = JSON.parse(stringified);
+          } else {
+            contextOutput = entry.context;
+          }
+        } catch (parseError) {
+          // If parsing fails, just use the stringified version or original context
+          try {
+            contextOutput = JSON.stringify(entry.context);
+          } catch (stringifyError) {
+            contextOutput = entry.context;
+          }
+        }
+      }
+
       // Use appropriate console method based on log level
       switch (entry.level) {
         case LOG_LEVELS.ERROR:
-          console.log(logMessage, JSON.parse(JSON.stringify(entry.context)) || '');
+          console.log(logMessage, contextOutput);
           // For errors, also log the full error stack
           // console.error(logMessage, JSON.stringify(entry.context) || '');
           break;
         case LOG_LEVELS.WARN:
-          console.log(logMessage, JSON.parse(JSON.stringify(entry.context)) || '');
+          console.log(logMessage, contextOutput);
           // For warnings, also log the full error stack
           // console.warn(logMessage, JSON.stringify(entry.context) || '');
           break;
         case LOG_LEVELS.DEBUG:
           // Only output debug logs if specifically enabled
           if (this.config.enableDebugLogs) {
-            console.log(logMessage, JSON.parse(JSON.stringify(entry.context)) || '');
+            console.log(logMessage, contextOutput);
           }
           break;
         case LOG_LEVELS.INFO:
         default:
-          console.log(logMessage, JSON.parse(JSON.stringify(entry.context)) || '');
+          console.log(logMessage, contextOutput);
       }
     }
   }

@@ -7,6 +7,9 @@ import {FCMMessage, MeetingNotificationData} from '../../types/notification';
 import SyncService from '../sync/SyncService';
 import StorageService from '../../utils/StorageService';
 import {logger} from '../../utils/SecureLogger';
+import MeetingsApiService from '../api/MeetingsApiService';
+import {upsertMeeting, meetingExists} from '../../database/queries/meetingQueries';
+import DatabaseService from '../../database/DatabaseService';
 
 /**
  * Notification Handler class
@@ -25,6 +28,7 @@ class NotificationHandlerClass {
       const notificationData: MeetingNotificationData = {
         type: message.data.type as MeetingNotificationData['type'],
         meetingId: message.data.meetingId,
+        meetingUuid: message.data.meetingUuid,
         roomId: message.data.roomId,
         timestamp: message.data.timestamp
           ? parseInt(message.data.timestamp, 10)
@@ -37,6 +41,7 @@ class NotificationHandlerClass {
       console.log('========================================');
       console.log('Notification Type:', notificationData.type);
       console.log('Meeting ID:', notificationData.meetingId || 'N/A');
+      console.log('Meeting UUID:', notificationData.meetingUuid || 'N/A');
       console.log('Room ID:', notificationData.roomId || 'N/A');
       console.log('Timestamp:', notificationData.timestamp || 'N/A');
       console.log('Full Data:', JSON.stringify(notificationData, null, 2));
@@ -61,6 +66,74 @@ class NotificationHandlerClass {
           notificationRoom: notificationData.roomId,
         });
         return;
+      }
+
+      // Handle meetingUuid from Firebase push notification
+      if (notificationData.meetingUuid && roomInfo?.roomId) {
+        console.log('📥 Processing meetingUuid from push notification');
+        console.log('Meeting UUID:', notificationData.meetingUuid);
+        console.log('Room Code:', roomInfo.roomId);
+
+        try {
+          // Initialize database if needed
+          await DatabaseService.initialize();
+
+          // Fetch meeting details from API
+          console.log('🌐 Fetching meeting details from API...');
+          const meeting = await MeetingsApiService.fetchMeetingByUuid(
+            roomInfo.roomId,
+            notificationData.meetingUuid,
+          );
+
+          if (!meeting) {
+            console.log('⚠️ Meeting not found in API response');
+            logger.warn('Meeting not found in API', {
+              meetingUuid: notificationData.meetingUuid,
+              roomCode: roomInfo.roomId,
+            });
+            // Continue with normal sync flow
+          } else {
+            console.log('✅ Meeting fetched from API:', {
+              id: meeting.id,
+              title: meeting.title,
+              startTime: new Date(meeting.startTime).toISOString(),
+            });
+
+            // Check if meeting exists in local storage
+            const exists = await meetingExists(meeting.id);
+            console.log('📦 Meeting exists in local storage:', exists);
+
+            if (exists) {
+              console.log('🔄 Replacing existing meeting in local storage');
+              logger.info('Replacing existing meeting', {
+                meetingId: meeting.id,
+                meetingUuid: notificationData.meetingUuid,
+              });
+            } else {
+              console.log('➕ Adding new meeting to local storage');
+              logger.info('Adding new meeting', {
+                meetingId: meeting.id,
+                meetingUuid: notificationData.meetingUuid,
+              });
+            }
+
+            // Upsert meeting (will replace if exists, add if not)
+            await upsertMeeting(meeting);
+            console.log('✅ Meeting saved to local storage successfully');
+            logger.info('Meeting saved to local storage', {
+              meetingId: meeting.id,
+              action: exists ? 'replaced' : 'added',
+            });
+          }
+        } catch (error) {
+          console.error('❌ Failed to process meetingUuid:', error);
+          logger.error('Failed to process meetingUuid', {
+            error,
+            meetingUuid: notificationData.meetingUuid,
+            roomCode: roomInfo.roomId,
+          });
+          // Continue with normal sync flow as fallback
+        }
       }
 
       // Handle different notification types

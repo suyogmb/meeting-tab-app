@@ -13,9 +13,10 @@ import StatusCard from '../../components/dashboard/StatusCard';
 import MeetingCard from '../../components/dashboard/MeetingCard';
 import SettingsButton from '../../components/dashboard/SettingsButton';
 import UpcomingMeetingsCarousel from '../../components/dashboard/UpcomingMeetingsCarousel';
+import SyncStatusDisplay from '../../components/dashboard/SyncStatusDisplay';
+import OfflineCard from '../../components/dashboard/OfflineCard';
+import ErrorDisplay from '../../components/ErrorDisplay';
 import Text from '../../components/Text';
-import AdminAccessModal from '../../components/AdminAccessModal';
-import AdminSettingsModal from '../../components/AdminSettingsModal';
 import {useTranslation} from 'react-i18next';
 import useDashboardViewModel from './Dashboard.viewmodel';
 
@@ -28,18 +29,15 @@ const Dashboard: React.FC = () => {
     currentMeeting,
     nextMeeting,
     upcomingMeetings,
-    showAdminAccess,
-    showAdminSettings,
+    roomDetails,
     openAdminAccess,
-    closeAdminAccess,
-    closeAdminSettings,
-    handleAdminAuthenticated,
+    refreshMeetings,
   } = useDashboardViewModel();
 
   // Show loading state initially or while loading
   if (isLoading) {
     return (
-      <SafeAreaView style={styles.container} edges={['top', 'left', 'right']}>
+      <SafeAreaView style={styles.container} edges={['left', 'right']}>
         <View style={styles.loadingContainer}>
           <Text style={styles.loadingText}>{t('loading.dashboard')}</Text>
         </View>
@@ -52,29 +50,33 @@ const Dashboard: React.FC = () => {
     return (
       <SafeAreaView style={styles.container} edges={['top', 'left', 'right']}>
         <View style={styles.errorContainer}>
-          <Text style={styles.errorText}>{error}</Text>
-          <Text style={styles.errorSubtext}>
-            {t('dashboard.errorRoomConfiguration')}
-          </Text>
+          <ErrorDisplay
+            error={error}
+            onRetry={refreshMeetings}
+            title={t('dashboard.errorTitle')}
+            showRetry={true}
+          />
         </View>
       </SafeAreaView>
     );
   }
 
   return (
-    <SafeAreaView style={styles.container} edges={['top', 'left', 'right']}>
+    <SafeAreaView style={styles.container} edges={['left', 'right']}>
       <ImageBackground
         source={{
-          uri: 'https://images.unsplash.com/photo-1762236096060-964c4acb6700?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1170',
+          uri: 'https://images.unsplash.com/photo-1502790671504-542ad42d5189?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1170',
         }}
         style={styles.backgroundImage}
         resizeMode="cover">
         <View style={styles.content}>
-          {/* Left Pane (50%): Time/Date + Room Info */}
+          {/* Left Pane (50%): Time/Date + Room Info + Sync Status + Offline Card */}
           <View style={styles.leftPane}>
             <View style={styles.leftPaneContent}>
               <TimeDisplay />
-              <RoomInfo />
+              <RoomInfo roomDetails={roomDetails} />
+              <SyncStatusDisplay compact={true} />
+              <OfflineCard />
             </View>
           </View>
 
@@ -115,19 +117,6 @@ const Dashboard: React.FC = () => {
         <View style={styles.settingsButtonContainer}>
           <SettingsButton onPress={openAdminAccess} />
         </View>
-
-        {/* Admin Access Modal */}
-        <AdminAccessModal
-          visible={showAdminAccess}
-          onClose={closeAdminAccess}
-          onAuthenticated={handleAdminAuthenticated}
-        />
-
-        {/* Admin Settings Modal */}
-        <AdminSettingsModal
-          visible={showAdminSettings}
-          onClose={closeAdminSettings}
-        />
       </View>
       </ImageBackground>
     </SafeAreaView>

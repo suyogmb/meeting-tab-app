@@ -1,21 +1,22 @@
 {
   "project_info": {
-    "project_number": "350541432717",
-    "project_id": "displayapp-18cdb",
-    "storage_bucket": "displayapp-18cdb.firebasestorage.app"
+    "project_number": "154633398807",
+    "firebase_url": "https://metrics-dev-acdc5-default-rtdb.firebaseio.com",
+    "project_id": "metrics-dev-acdc5",
+    "storage_bucket": "metrics-dev-acdc5.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:350541432717:android:52e8948251d0f72a385fc4",
+        "mobilesdk_app_id": "1:154633398807:android:171d5d208bc20064118a52",
         "android_client_info": {
-          "package_name": "com.mindbowser.meetingroomkiosk.development"
+          "package_name": "com.epicodev.scheduling"
         }
       },
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyB7HpBRLTzKawuiwAREEWEvDo6PFxA2W-w"
+          "current_key": "AIzaSyA6SKfjvtpyVlFuf48RBi-1D-2XDwZi2Hs"
         }
       ],
       "services": {

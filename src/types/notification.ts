@@ -31,6 +31,7 @@ export interface FCMMessage {
 export interface MeetingNotificationData {
   type: 'meeting_updated' | 'meeting_cancelled' | 'meeting_created' | 'sync_required';
   meetingId?: string;
+  meetingUuid?: string; // UUID of the meeting from Firebase push notification
   roomId?: string;
   timestamp?: number;
 }

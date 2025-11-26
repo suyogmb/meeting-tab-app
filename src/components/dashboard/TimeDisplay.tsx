@@ -20,12 +20,23 @@ const TimeDisplay: React.FC = () => {
     return () => clearInterval(interval);
   }, []);
 
-  const formatTime = (date: Date): string => {
-    return date.toLocaleTimeString('en-US', {
-      hour: '2-digit',
-      minute: '2-digit',
-      hour12: true,
-    });
+  const formatTime = (date: Date): {time: string; period: string} => {
+    const hours = date.getHours();
+    const minutes = date.getMinutes();
+    
+    // Determine AM/PM
+    const period = hours >= 12 ? 'PM' : 'AM';
+    
+    // Convert to 12-hour format
+    const hours12 = hours % 12 || 12;
+    
+    // Format time as "HH:MM"
+    const time = `${hours12.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+    
+    return {
+      time, // e.g., "5:29"
+      period, // e.g., "PM"
+    };
   };
 
   const formatDate = (date: Date): string => {
@@ -37,9 +48,14 @@ const TimeDisplay: React.FC = () => {
     });
   };
 
+  const {time, period} = formatTime(currentTime);
+
   return (
     <View style={styles.container}>
-      <Text style={styles.time}>{formatTime(currentTime)}</Text>
+      <View style={styles.timeContainer}>
+        <Text style={styles.time}>{time}</Text>
+        <Text style={styles.timePeriod}>{period}</Text>
+      </View>
       <Text style={styles.date}>{formatDate(currentTime)}</Text>
     </View>
   );

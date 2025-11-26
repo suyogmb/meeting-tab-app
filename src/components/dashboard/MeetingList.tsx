@@ -33,8 +33,32 @@ const MeetingList: React.FC<MeetingListProps> = ({
   };
 
   const renderMeetingItem = ({item}: {item: Meeting}) => {
-    const isPast = item.endTime < Date.now();
-    const isCurrent = item.startTime <= Date.now() && item.endTime >= Date.now();
+    const now = Date.now();
+    const isPast = item.endTime <= now; // Changed to <= to match query logic
+    const isCurrent = item.startTime <= now && item.endTime > now; // Changed >= to > to match query logic
+    
+    // Console log for debugging meeting list rendering
+    if (isCurrent) {
+      console.log('========================================');
+      console.log('🎯 MEETING LIST - CURRENT MEETING DETECTED');
+      console.log('========================================');
+      console.log('Meeting ID:', item.id);
+      console.log('Title:', item.title);
+      console.log('Start time (timestamp):', item.startTime);
+      console.log('Start time (ISO):', new Date(item.startTime).toISOString());
+      console.log('Start time (local):', new Date(item.startTime).toLocaleString());
+      console.log('End time (timestamp):', item.endTime);
+      console.log('End time (ISO):', new Date(item.endTime).toISOString());
+      console.log('End time (local):', new Date(item.endTime).toLocaleString());
+      console.log('Current time (timestamp):', now);
+      console.log('Current time (ISO):', new Date(now).toISOString());
+      console.log('Current time (local):', new Date(now).toLocaleString());
+      console.log('Is startTime <= now?', item.startTime <= now);
+      console.log('Is endTime >= now?', item.endTime >= now);
+      console.log('Time until start (ms):', item.startTime - now);
+      console.log('Time until end (ms):', item.endTime - now);
+      console.log('========================================');
+    }
 
     return (
       <View

@@ -65,6 +65,12 @@ class StorageManager {
     fcmToken: 'fcmToken',
     /** FCM token updated timestamp */
     fcmTokenUpdatedAt: 'fcmTokenUpdatedAt',
+    /** Request queue for offline retry */
+    requestQueue: 'requestQueue',
+    /** Background sync configuration */
+    backgroundSyncConfig: 'backgroundSyncConfig',
+    /** Room details (from API) */
+    roomDetails: 'roomDetails',
   };
 
   constructor() {

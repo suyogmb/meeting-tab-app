@@ -3,52 +3,50 @@
  * Encapsulates data fetching, state management, and side-effects.
  */
 
-import {useCallback, useEffect, useMemo, useState} from 'react';
+import {useCallback, useEffect, useMemo} from 'react';
 import {BackHandler, Platform} from 'react-native';
+import {useNavigation, useFocusEffect} from '@react-navigation/native';
 import DatabaseService from '../../database/DatabaseService';
-import KioskService from '../../services/kiosk/KioskService';
 import {useMeetings} from '../../hooks/useMeetings';
+import {RootStackNavigationProp, Routes} from '../../types/navigation';
+import {Meeting} from '../../types/meeting';
 
 type DashboardViewModelReturn = {
   isLoading: boolean;
   error: string | null;
   currentMeeting: ReturnType<typeof useMeetings>['currentMeeting'];
-  nextMeeting: ReturnType<typeof useMeetings>['nextMeeting'];
+  nextMeeting: Meeting | null;
   upcomingMeetings: ReturnType<typeof useMeetings>['todayMeetings'];
-  showAdminAccess: boolean;
-  showAdminSettings: boolean;
+  roomDetails: ReturnType<typeof useMeetings>['roomDetails'];
   openAdminAccess: () => void;
-  closeAdminAccess: () => void;
-  closeAdminSettings: () => void;
-  handleAdminAuthenticated: () => void;
+  refreshMeetings: () => Promise<void>;
 };
 
 const useDashboardViewModel = (): DashboardViewModelReturn => {
   const {
     currentMeeting,
-    nextMeeting,
     todayMeetings,
+    roomDetails,
     isLoading,
     error,
+    refreshMeetings,
+    refreshFromDatabase,
   } = useMeetings();
-
-  const [showAdminAccess, setShowAdminAccess] = useState(false);
-  const [showAdminSettings, setShowAdminSettings] = useState(false);
+  const navigation = useNavigation<RootStackNavigationProp>();
 
   useEffect(() => {
     DatabaseService.initialize().catch((err) => {
       console.error('Database initialization failed', err);
     });
 
-    KioskService.startLockTask().catch((err) => {
-      console.warn('Failed to start kiosk mode', err);
-    });
+    // Note: Kiosk mode is initialized in App.tsx globally
+    // No need to initialize here to avoid duplicate initialization
 
     if (Platform.OS === 'android') {
       const backHandler = BackHandler.addEventListener(
         'hardwareBackPress',
         () => {
-          setShowAdminAccess(true);
+          navigation.navigate(Routes.ADMIN_ACCESS);
           return true;
         },
       );
@@ -57,34 +55,51 @@ const useDashboardViewModel = (): DashboardViewModelReturn => {
         backHandler.remove();
       };
     }
-  }, []);
+  }, [navigation]);
+
+  // Refresh data when dashboard comes into focus (e.g., after returning from Admin Settings)
+  useFocusEffect(
+    useCallback(() => {
+      // Refresh from database only (no API calls) when screen comes into focus
+      // This ensures dashboard shows latest data after refresh in Admin Settings
+      // without making unnecessary API calls
+      refreshFromDatabase().catch((error) => {
+        console.error('Failed to refresh from database on focus', error);
+      });
+    }, [refreshFromDatabase]),
+  );
 
   const upcomingMeetings = useMemo(() => {
-    const now = Date.now();
-    return todayMeetings.filter((meeting) => {
-      const isFuture = meeting.startTime > now;
-      const isNotCurrent =
-        !currentMeeting || meeting.id !== currentMeeting.id;
-      return isFuture && isNotCurrent;
+    // Show ALL meetings in upcoming list
+    // Exclude only the current meeting (if it exists) from upcoming list
+    // The current meeting will be shown in the ongoing section
+    
+    const filtered = todayMeetings.filter((meeting) => {
+      // If there's a current meeting, exclude it from upcoming list
+      if (currentMeeting && meeting.id === currentMeeting.id) {
+        return false; // Don't show current meeting in upcoming
+      }
+      // Show all other meetings (future, past, etc.) in upcoming list
+      return true;
     });
+    
+    return filtered;
   }, [todayMeetings, currentMeeting]);
 
+  // Calculate nextMeeting from upcomingMeetings (first future meeting)
+  const nextMeeting = useMemo(() => {
+    const now = Date.now();
+    // Find the first meeting that starts in the future
+    const futureMeetings = upcomingMeetings.filter(
+      (meeting) => meeting.startTime > now && meeting.status !== 'cancelled'
+    );
+    // Sort by start time and get the first one
+    return futureMeetings.sort((a, b) => a.startTime - b.startTime)[0] || null;
+  }, [upcomingMeetings]);
+
   const openAdminAccess = useCallback(() => {
-    setShowAdminAccess(true);
-  }, []);
-
-  const closeAdminAccess = useCallback(() => {
-    setShowAdminAccess(false);
-  }, []);
-
-  const closeAdminSettings = useCallback(() => {
-    setShowAdminSettings(false);
-  }, []);
-
-  const handleAdminAuthenticated = useCallback(() => {
-    setShowAdminAccess(false);
-    setShowAdminSettings(true);
-  }, []);
+    navigation.navigate(Routes.ADMIN_ACCESS);
+  }, [navigation]);
 
   return {
     isLoading,
@@ -92,12 +107,9 @@ const useDashboardViewModel = (): DashboardViewModelReturn => {
     currentMeeting,
     nextMeeting,
     upcomingMeetings,
-    showAdminAccess,
-    showAdminSettings,
+    roomDetails,
     openAdminAccess,
-    closeAdminAccess,
-    closeAdminSettings,
-    handleAdminAuthenticated,
+    refreshMeetings,
   };
 };
 

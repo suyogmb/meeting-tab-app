@@ -8,7 +8,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {ErrorHandler} from 'components';
 import BootSplash from 'react-native-bootsplash';
 import {RootStackParamList, Routes} from '../types/navigation';
-import {FirstRunSetup, Dashboard, ErrorScreen} from '../screens';
+import {FirstRunSetup, Dashboard, ErrorScreen, AdminAccess, AdminSettings} from '../screens';
 import StorageService from '../utils/StorageService';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -70,6 +70,8 @@ const RootStackNavigator = () => {
           />
           <Stack.Screen name={Routes.DASHBOARD} component={Dashboard} />
           <Stack.Screen name={Routes.ERROR_SCREEN} component={ErrorScreen} />
+          <Stack.Screen name={Routes.ADMIN_ACCESS} component={AdminAccess} />
+          <Stack.Screen name={Routes.ADMIN_SETTINGS} component={AdminSettings} />
         </Stack.Navigator>
       </NavigationContainer>
     </ErrorHandler>

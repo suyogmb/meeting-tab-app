@@ -80,14 +80,54 @@ export async function getCurrentMeeting(roomId: string): Promise<Meeting | null>
     SELECT * FROM meetings
     WHERE room_id = ?
     AND start_time <= ?
-    AND end_time >= ?
+    AND end_time > ?
     AND status != 'cancelled'
     ORDER BY start_time DESC
     LIMIT 1
   `;
+  
+  // Console log for debugging current meeting query
+  console.log('========================================');
+  console.log('🔍 GETTING CURRENT MEETING');
+  console.log('========================================');
+  console.log('Room ID:', roomId);
+  console.log('Current time (timestamp):', now);
+  console.log('Current time (ISO):', new Date(now).toISOString());
+  console.log('Current time (local):', new Date(now).toLocaleString());
+  console.log('Query: start_time <=', now, 'AND end_time >', now, '(CHANGED: >= to >)');
+  console.log('========================================');
+  
   const results = await db.executeSql(sql, [roomId, now, now]);
   const rows = results[0].rows.raw() as MeetingDB[];
-  return rows.length > 0 ? dbToMeeting(rows[0]) : null;
+  
+  if (rows.length > 0) {
+    const meeting = dbToMeeting(rows[0]);
+    console.log('========================================');
+    console.log('✅ CURRENT MEETING FOUND');
+    console.log('========================================');
+    console.log('Meeting ID:', meeting.id);
+    console.log('Title:', meeting.title);
+    console.log('Start time (timestamp):', meeting.startTime);
+    console.log('Start time (ISO):', new Date(meeting.startTime).toISOString());
+    console.log('Start time (local):', new Date(meeting.startTime).toLocaleString());
+    console.log('End time (timestamp):', meeting.endTime);
+    console.log('End time (ISO):', new Date(meeting.endTime).toISOString());
+    console.log('End time (local):', new Date(meeting.endTime).toLocaleString());
+    console.log('Current time (timestamp):', now);
+    console.log('Current time (ISO):', new Date(now).toISOString());
+    console.log('Current time (local):', new Date(now).toLocaleString());
+    console.log('Is start_time <= now?', meeting.startTime <= now);
+    console.log('Is end_time > now?', meeting.endTime > now, '(CHANGED: >= to >)');
+    console.log('Time until start (ms):', meeting.startTime - now);
+    console.log('Time until end (ms):', meeting.endTime - now);
+    console.log('========================================');
+    return meeting;
+  } else {
+    console.log('========================================');
+    console.log('❌ NO CURRENT MEETING FOUND');
+    console.log('========================================');
+    return null;
+  }
 }
 
 /**
@@ -120,11 +160,49 @@ export async function getTodayMeetings(roomId: string): Promise<Meeting[]> {
 }
 
 /**
+ * Get all meetings for a room (no date filter)
+ */
+export async function getAllMeetings(roomId: string): Promise<Meeting[]> {
+  const db = DatabaseService.getDatabase();
+  const sql = `
+    SELECT * FROM meetings
+    WHERE room_id = ?
+    AND status != 'cancelled'
+    ORDER BY start_time ASC
+  `;
+  const results = await db.executeSql(sql, [roomId]);
+  const rows = results[0].rows.raw() as MeetingDB[];
+  return rows.map(dbToMeeting);
+}
+
+/**
  * Upsert meeting (insert or update)
  */
 export async function upsertMeeting(meeting: Meeting): Promise<void> {
   const db = DatabaseService.getDatabase();
   const meetingDB = meetingToDB(meeting);
+  
+  // Console log for debugging meeting upsert
+  console.log('========================================');
+  console.log('💾 UPSERTING MEETING TO DATABASE');
+  console.log('========================================');
+  console.log('Meeting ID:', meeting.id);
+  console.log('Title:', meeting.title);
+  console.log('Room ID:', meeting.roomId);
+  console.log('Start time (timestamp):', meeting.startTime);
+  console.log('Start time (ISO):', new Date(meeting.startTime).toISOString());
+  console.log('Start time (local):', new Date(meeting.startTime).toLocaleString());
+  console.log('End time (timestamp):', meeting.endTime);
+  console.log('End time (ISO):', new Date(meeting.endTime).toISOString());
+  console.log('End time (local):', new Date(meeting.endTime).toLocaleString());
+  console.log('Status:', meeting.status);
+  console.log('DB start_time:', meetingDB.start_time);
+  console.log('DB end_time:', meetingDB.end_time);
+  console.log('Current time (timestamp):', Date.now());
+  console.log('Current time (ISO):', new Date().toISOString());
+  console.log('Current time (local):', new Date().toLocaleString());
+  console.log('========================================');
+  
   const sql = `
     INSERT OR REPLACE INTO meetings (
       id, room_id, title, description, organizer,
@@ -147,6 +225,8 @@ export async function upsertMeeting(meeting: Meeting): Promise<void> {
     meetingDB.updated_at,
     meetingDB.synced_at,
   ]);
+  
+  console.log('✅ Meeting upserted successfully');
 }
 
 /**
@@ -197,6 +277,25 @@ export async function upsertMeetings(meetings: Meeting[]): Promise<void> {
       },
     );
   });
+}
+
+/**
+ * Get meeting by ID
+ */
+export async function getMeetingById(meetingId: string): Promise<Meeting | null> {
+  const db = DatabaseService.getDatabase();
+  const sql = 'SELECT * FROM meetings WHERE id = ? LIMIT 1';
+  const results = await db.executeSql(sql, [meetingId]);
+  const rows = results[0].rows.raw() as MeetingDB[];
+  return rows.length > 0 ? dbToMeeting(rows[0]) : null;
+}
+
+/**
+ * Check if meeting exists by ID
+ */
+export async function meetingExists(meetingId: string): Promise<boolean> {
+  const meeting = await getMeetingById(meetingId);
+  return meeting !== null;
 }
 
 /**

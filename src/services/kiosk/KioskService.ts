@@ -1,47 +1,56 @@
 /**
- * Kiosk Service - React Native bridge for kiosk mode operations
- * Handles lock task mode, device owner status, and kiosk exit
+ * Kiosk Service - Wrapper for react-native-kiosk-manager
+ * Handles kiosk mode, boot auto-start, and device admin management
  */
 
-import {NativeModules, Platform} from 'react-native';
-import {KioskModeState, LockTaskStatus} from '../../types/kiosk';
+import KioskManager from 'react-native-kiosk-manager';
+import {Platform} from 'react-native';
 import {logger} from '../../utils/SecureLogger';
-
-const {KioskModule} = NativeModules;
 
 /**
  * Kiosk Service interface
  */
 interface KioskServiceInterface {
   /**
-   * Start lock task mode (kiosk mode)
+   * Start kiosk mode (lock task mode)
    */
-  startLockTask(): Promise<boolean>;
+  startKiosk(): void;
 
   /**
-   * Stop lock task mode (exit kiosk)
+   * Stop kiosk mode
    */
-  stopLockTask(): Promise<boolean>;
+  stopKiosk(): void;
 
   /**
-   * Check if lock task is active
+   * Enable/disable boot auto-start
    */
-  isLockTaskActive(): Promise<boolean>;
+  enableBootAutoStart(enabled: boolean): void;
 
   /**
-   * Check if device is device owner
+   * Check if boot auto-start is enabled
+   */
+  isBootAutoStartEnabled(): Promise<boolean>;
+
+  /**
+   * Setup lock task package (required before starting kiosk)
+   */
+  setupLockTaskPackage(): Promise<boolean>;
+
+  /**
+   * Request device admin permission
+   */
+  requestDeviceAdmin(): Promise<boolean>;
+
+  /**
+   * Check if app is device owner
    */
   isDeviceOwner(): Promise<boolean>;
 
   /**
-   * Get kiosk mode state
+   * Initialize kiosk mode
+   * Sets up device admin, lock task package, and starts kiosk mode
    */
-  getKioskModeState(): Promise<KioskModeState>;
-
-  /**
-   * Exit kiosk mode (requires password verification via native)
-   */
-  exitKioskMode(password: string): Promise<boolean>;
+  initializeKioskMode(): Promise<boolean>;
 }
 
 /**
@@ -49,73 +58,116 @@ interface KioskServiceInterface {
  */
 class KioskService implements KioskServiceInterface {
   /**
-   * Start lock task mode (kiosk mode)
+   * Start kiosk mode (lock task mode)
    */
-  async startLockTask(): Promise<boolean> {
+  startKiosk(): void {
     if (Platform.OS !== 'android') {
       logger.warn('Kiosk mode is only available on Android');
-      return false;
+      return;
     }
 
     try {
-      if (!KioskModule) {
-        logger.error('KioskModule not available');
-        return false;
-      }
-
-      const result = await KioskModule.startLockTask();
-      logger.info('Lock task started', {result});
-      return result;
+      KioskManager.startKiosk();
+      logger.info('Kiosk mode started');
     } catch (error) {
-      logger.error('Failed to start lock task', {error});
-      return false;
+      logger.error('Failed to start kiosk mode', {error});
     }
   }
 
   /**
-   * Stop lock task mode (exit kiosk)
+   * Stop kiosk mode
    */
-  async stopLockTask(): Promise<boolean> {
+  stopKiosk(): void {
+    if (Platform.OS !== 'android') {
+      return;
+    }
+
+    try {
+      KioskManager.stopKiosk();
+      logger.info('Kiosk mode stopped');
+    } catch (error) {
+      logger.error('Failed to stop kiosk mode', {error});
+    }
+  }
+
+  /**
+   * Enable/disable boot auto-start
+   */
+  enableBootAutoStart(enabled: boolean): void {
+    if (Platform.OS !== 'android') {
+      return;
+    }
+
+    try {
+      KioskManager.enableBootAutoStart(enabled);
+      logger.info('Boot auto-start', {enabled});
+    } catch (error) {
+      logger.error('Failed to set boot auto-start', {error});
+    }
+  }
+
+  /**
+   * Check if boot auto-start is enabled
+   */
+  async isBootAutoStartEnabled(): Promise<boolean> {
     if (Platform.OS !== 'android') {
       return false;
     }
 
     try {
-      if (!KioskModule) {
-        logger.error('KioskModule not available');
-        return false;
-      }
-
-      const result = await KioskModule.stopLockTask();
-      logger.info('Lock task stopped', {result});
-      return result;
+      return await KioskManager.isBootAutoStartEnabled();
     } catch (error) {
-      logger.error('Failed to stop lock task', {error});
+      logger.error('Failed to check boot auto-start status', {error});
       return false;
     }
   }
 
   /**
-   * Check if lock task is active
+   * Setup lock task package (required before starting kiosk)
    */
-  async isLockTaskActive(): Promise<boolean> {
+  async setupLockTaskPackage(): Promise<boolean> {
     if (Platform.OS !== 'android') {
       return false;
     }
 
     try {
-      if (!KioskModule) {
-        return false;
+      const success = await KioskManager.setupLockTaskPackage();
+      if (success) {
+        logger.info('Lock task package setup successful');
+      } else {
+        logger.warn('Lock task package setup failed');
       }
-      return await KioskModule.isLockTaskActive();
+      return success;
     } catch (error) {
-      logger.error('Failed to check lock task status', {error});
+      logger.error('Failed to setup lock task package', {error});
       return false;
     }
   }
 
   /**
-   * Check if device is device owner
+   * Request device admin permission
+   */
+  async requestDeviceAdmin(): Promise<boolean> {
+    if (Platform.OS !== 'android') {
+      return false;
+    }
+
+    try {
+      const granted = await KioskManager.requestDeviceAdmin();
+      if (granted) {
+        logger.info('Device admin permission granted');
+      } else {
+        logger.warn('Device admin permission denied');
+      }
+      return granted;
+    } catch (error) {
+      logger.error('Failed to request device admin permission', {error});
+      return false;
+    }
+  }
+
+  /**
+   * Check if app is device owner
    */
   async isDeviceOwner(): Promise<boolean> {
     if (Platform.OS !== 'android') {
@@ -123,10 +175,7 @@ class KioskService implements KioskServiceInterface {
     }
 
     try {
-      if (!KioskModule) {
-        return false;
-      }
-      return await KioskModule.isDeviceOwner();
+      return await KioskManager.isDeviceOwner();
     } catch (error) {
       logger.error('Failed to check device owner status', {error});
       return false;
@@ -134,63 +183,133 @@ class KioskService implements KioskServiceInterface {
   }
 
   /**
-   * Get kiosk mode state
+   * Clear device owner status
+   * Note: This may require factory reset in some cases
    */
-  async getKioskModeState(): Promise<KioskModeState> {
-    if (Platform.OS !== 'android') {
-      return {
-        isKioskMode: false,
-        isLockTaskActive: false,
-        isDeviceOwner: false,
-        canExitKiosk: true,
-      };
-    }
-
-    try {
-      const [isLockTaskActive, isDeviceOwner] = await Promise.all([
-        this.isLockTaskActive(),
-        this.isDeviceOwner(),
-      ]);
-
-      return {
-        isKioskMode: isLockTaskActive,
-        isLockTaskActive,
-        isDeviceOwner,
-        canExitKiosk: !isDeviceOwner, // Can't exit if device owner
-      };
-    } catch (error) {
-      logger.error('Failed to get kiosk mode state', {error});
-      return {
-        isKioskMode: false,
-        isLockTaskActive: false,
-        isDeviceOwner: false,
-        canExitKiosk: true,
-      };
-    }
-  }
-
-  /**
-   * Exit kiosk mode (requires password verification)
-   * Note: Password verification happens in native code
-   */
-  async exitKioskMode(password: string): Promise<boolean> {
+  async clearDeviceOwner(): Promise<boolean> {
     if (Platform.OS !== 'android') {
       return false;
     }
 
     try {
-      if (!KioskModule) {
-        logger.error('KioskModule not available');
+      const success = await KioskManager.clearDeviceOwner();
+      if (success) {
+        logger.info('Device owner cleared');
+      } else {
+        logger.warn('Failed to clear device owner');
+      }
+      return success;
+    } catch (error) {
+      logger.error('Failed to clear device owner', {error});
+      return false;
+    }
+  }
+
+  /**
+   * Debug function to check boot auto-start status
+   * Useful for troubleshooting boot issues
+   */
+  async checkBootAutoStartStatus(): Promise<{
+    isEnabled: boolean;
+    isDeviceOwner: boolean;
+    hasDeviceAdmin: boolean;
+  }> {
+    if (Platform.OS !== 'android') {
+      return {
+        isEnabled: false,
+        isDeviceOwner: false,
+        hasDeviceAdmin: false,
+      };
+    }
+
+    try {
+      const [isEnabled, isOwner] = await Promise.all([
+        this.isBootAutoStartEnabled(),
+        this.isDeviceOwner(),
+      ]);
+
+      // Check device admin status by trying to setup lock task
+      const hasAdmin = await this.setupLockTaskPackage();
+
+      const status = {
+        isEnabled,
+        isDeviceOwner: isOwner,
+        hasDeviceAdmin: hasAdmin,
+      };
+
+      logger.info('Boot auto-start status check', status);
+      return status;
+    } catch (error) {
+      logger.error('Failed to check boot auto-start status', {error});
+      return {
+        isEnabled: false,
+        isDeviceOwner: false,
+        hasDeviceAdmin: false,
+      };
+    }
+  }
+
+  /**
+   * Initialize kiosk mode
+   * Sets up device admin, lock task package, and starts kiosk mode
+   */
+  async initializeKioskMode(): Promise<boolean> {
+    if (Platform.OS !== 'android') {
+      logger.warn('Kiosk mode is only available on Android');
+      return false;
+    }
+
+    try {
+      // Check if device owner (best case scenario)
+      const isOwner = await this.isDeviceOwner();
+      if (isOwner) {
+        logger.info('App is device owner, setting up kiosk mode');
+        const setupSuccess = await this.setupLockTaskPackage();
+        if (setupSuccess) {
+          this.startKiosk();
+          // Enable boot auto-start and verify
+          this.enableBootAutoStart(true);
+          const isEnabled = await this.isBootAutoStartEnabled();
+          logger.info('Boot auto-start enabled', {isEnabled});
+          return true;
+        }
         return false;
       }
 
-      const result = await KioskModule.exitKioskMode(password);
-      if (result) {
-        logger.warn('Kiosk mode exited');
+      // If not device owner, request device admin
+      logger.info('App is not device owner, requesting device admin');
+      const adminGranted = await this.requestDeviceAdmin();
+      if (adminGranted) {
+        const setupSuccess = await this.setupLockTaskPackage();
+        if (setupSuccess) {
+          this.startKiosk();
+          // Enable boot auto-start AFTER device admin is granted
+          this.enableBootAutoStart(true);
+          // Verify boot auto-start is enabled
+          const isEnabled = await this.isBootAutoStartEnabled();
+          logger.info('Boot auto-start status after setup', {isEnabled});
+          if (!isEnabled) {
+            logger.warn('Boot auto-start was not enabled, retrying...');
+            // Retry after a short delay
+            setTimeout(() => {
+              this.enableBootAutoStart(true);
+              this.isBootAutoStartEnabled().then((enabled) => {
+                logger.info('Boot auto-start retry result', {enabled});
+              });
+            }, 1000);
+          }
+          return true;
+        }
+      } else {
+        logger.warn('Device admin permission was not granted');
       }
-      return result;
+
+      logger.warn(
+        'Kiosk mode initialization incomplete. Device admin or device owner required.',
+      );
+      return false;
     } catch (error) {
-      logger.error('Failed to exit kiosk mode', {error});
+      logger.error('Failed to initialize kiosk mode', {error});
       return false;
     }
   }

@@ -8,6 +8,7 @@ import {View, Modal, TouchableOpacity, StyleSheet} from 'react-native';
 import {useTheme} from '../contexts/ThemeContext';
 import Text from './Text';
 import {scaleSize} from '../utils/SizeUtility';
+import {fontFamily} from '../utils/FontUtils';
 
 interface SimpleModalProps {
   visible: boolean;
@@ -111,7 +112,7 @@ const createSimpleModalStyles = (themeColors: any) => {
     },
     title: {
       fontSize: scaleSize(32),
-      fontWeight: '700',
+      fontFamily: fontFamily.bold,
       color: '#38b8b3',
       letterSpacing: -0.5,
     },
@@ -127,8 +128,8 @@ const createSimpleModalStyles = (themeColors: any) => {
     },
     closeButtonText: {
       fontSize: scaleSize(22),
+      fontFamily: fontFamily.bold,
       color: '#7133ae',
-      fontWeight: '700',
     },
     content: {
       padding: scaleSize(32),

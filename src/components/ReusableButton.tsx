@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import {M_16, M_20, M_8, V_10} from 'utils/SizeUtility';
 import {useTranslation} from 'react-i18next';
+import {fontFamily} from '../utils/FontUtils';
 
 type ReusableButtonProps = {
   title?: string;
@@ -55,7 +56,7 @@ const styles = StyleSheet.create({
   buttonText: {
     color: '#FFFFFF',
     fontSize: M_16,
-    fontWeight: 'bold',
+    fontFamily: fontFamily.bold,
   },
   disabledButton: {
     backgroundColor: '#B0BEC5',

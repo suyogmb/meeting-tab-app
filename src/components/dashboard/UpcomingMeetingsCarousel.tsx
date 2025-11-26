@@ -1,26 +1,46 @@
 /**
  * Upcoming Meetings List Component
- * Vertical scrolling list with expandable cards using FlatList
+ * Vertical scrolling list with meeting cards
  */
 
-import React, {useState} from 'react';
+import React from 'react';
 import {
   View,
   FlatList,
-  TouchableOpacity,
   ListRenderItem,
-  LayoutAnimation,
-  UIManager,
-  Platform,
 } from 'react-native';
 import {Meeting} from '../../types/meeting';
 import Text from '../Text';
+import ErrorDisplay from '../ErrorDisplay';
 import {useStyles} from './UpcomingMeetingsCarousel.styles';
 import {useTranslation} from 'react-i18next';
+import {scaleSize} from '../../utils/SizeUtility';
+import RoomNumberIcon from '../../assets/SVGs/room-number.svg';
+import RoomCapacityIcon from '../../assets/SVGs/room-capacity.svg';
+// Import SVG icons - will use fallback if they don't exist
+let OrganizerIcon: React.ComponentType<any> | null = null;
+let AttendeesIcon: React.ComponentType<any> | null = null;
 
-// Enable LayoutAnimation on Android
-if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental) {
-  UIManager.setLayoutAnimationEnabledExperimental(true);
+// Try to import organizer icon
+try {
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  OrganizerIcon = require('../../assets/SVGs/organizer.svg').default;
+} catch (e) {
+  // Icon doesn't exist, will skip icon
+}
+
+// Try to import attendees icon
+try {
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  AttendeesIcon = require('../../assets/SVGs/attendees.svg').default;
+} catch (e) {
+  // If attendees icon doesn't exist, use room-capacity icon as fallback
+  try {
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    AttendeesIcon = require('../../assets/SVGs/room-capacity.svg').default;
+  } catch (e2) {
+    // No icon available
+  }
 }
 
 interface UpcomingMeetingsCarouselProps {
@@ -34,7 +54,6 @@ const UpcomingMeetingsCarousel: React.FC<UpcomingMeetingsCarouselProps> = ({
 }) => {
   const styles = useStyles();
   const {t} = useTranslation();
-  const [expandedId, setExpandedId] = useState<string | null>(null);
 
   const formatTime = (timestamp: number): string => {
     return new Date(timestamp).toLocaleTimeString('en-US', {
@@ -44,86 +63,23 @@ const UpcomingMeetingsCarousel: React.FC<UpcomingMeetingsCarouselProps> = ({
     });
   };
 
-  const handleCardPress = (meeting: Meeting) => {
-    // Configure animation
-    LayoutAnimation.configureNext({
-      duration: 300,
-      create: {
-        type: LayoutAnimation.Types.easeInEaseOut,
-        property: LayoutAnimation.Properties.opacity,
-      },
-      update: {
-        type: LayoutAnimation.Types.easeInEaseOut,
-      },
+  const formatDate = (timestamp: number): string => {
+    return new Date(timestamp).toLocaleDateString('en-US', {
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric',
     });
-
-    // Toggle expanded state
-    if (expandedId === meeting.id) {
-      setExpandedId(null);
-    } else {
-      setExpandedId(meeting.id);
-    }
-
-    // Call optional onMeetingPress callback
-    if (onMeetingPress) {
-      onMeetingPress(meeting);
-    }
   };
 
   const renderItem: ListRenderItem<Meeting> = ({item}) => {
-    const isExpanded = expandedId === item.id;
-
     return (
-      <TouchableOpacity
-        onPress={() => handleCardPress(item)}
-        activeOpacity={0.8}
-        style={[
-          styles.touchableContainer,
-          isExpanded && styles.touchableContainerExpanded,
-        ]}>
-        <View style={[styles.card, isExpanded && styles.cardExpanded]}>
-          <View style={styles.cardHeader}>
-            <Text style={styles.title}>{item.title}</Text>
-            <Text style={styles.expandIndicator}>{isExpanded ? '−' : '+'}</Text>
-          </View>
-          <Text style={styles.time}>
-            {formatTime(item.startTime)} - {formatTime(item.endTime)}
-          </Text>
-
-          {isExpanded && (
-            <View style={styles.expandedContent}>
-              {item.description && (
-                <View style={styles.detailRow}>
-                  <Text style={styles.detailLabel}>
-                    {t('meetingDetails.descriptionLabel')}
-                  </Text>
-                  <Text style={styles.detailValue}>{item.description}</Text>
-                </View>
-              )}
-              {item.organizer && (
-                <View style={styles.detailRow}>
-                  <Text style={styles.detailLabel}>
-                    {t('meetingDetails.organizerLabel')}
-                  </Text>
-                  <Text style={styles.detailValue}>{item.organizer}</Text>
-                </View>
-              )}
-              {item.attendeeCount !== undefined && (
-                <View style={styles.detailRow}>
-                  <Text style={styles.detailLabel}>
-                    {t('meetingDetails.attendeesLabel')}
-                  </Text>
-                  <Text style={styles.detailValue}>
-                    {t('meetingDetails.attendeeCount', {
-                      count: item.attendeeCount,
-                    })}
-                  </Text>
-                </View>
-              )}
-            </View>
-          )}
+      <View style={styles.card}>
+    
+        <View style={styles.row1}>
+          <Text style={styles.title}>{item.title}</Text>
+          <Text style={styles.date}>{formatTime(item.startTime)} - {formatTime(item.endTime)}</Text>
         </View>
-      </TouchableOpacity>
+      </View>
     );
   };
 
